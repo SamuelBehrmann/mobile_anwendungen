@@ -8,6 +8,7 @@ class AppColors {
   static const Color primaryContainer = Color(0xFFC2E8FF);
 }
 
+// TODO: zu widget
 class CustomText extends StatelessWidget {
   final String text;
   final double fontSize;
