@@ -6,6 +6,8 @@ analyzer:
     - build/**
     - lib/*.g.dart
     - lib/*.freezed.dart
+  plugins: 
+    - custom_lint
 
   language: 
     strict-raw-types: true
