@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:medi_support/ui/screens/main/main_controller.dart';
 import 'package:medi_support/ui/screens/main/main_controller_impl.dart';
 import 'package:medi_support/ui/screens/main/main_model.dart';
 import 'package:medi_support/ui/widgets/bottom_navigation.dart' as bottom_nav;
@@ -11,7 +12,7 @@ class MainView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final MainControllerImpl controller =
+    final MainController controller =
         ref.watch(mainControllerImplProvider.notifier);
     final MainModel model = ref.watch(mainControllerImplProvider);
 
@@ -24,8 +25,8 @@ class MainView extends ConsumerWidget {
     );
   }
 
-  IconButton _buildShuffleButton(
-    MainControllerImpl controller,
+  Widget _buildShuffleButton(
+    MainController controller,
     MainModel model,
   ) =>
       IconButton(
