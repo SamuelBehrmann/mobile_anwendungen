@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:medi_support/ui/common/theme.dart' as theme;
 import 'package:collection/collection.dart';
 
 part 'bottom_navigation.freezed.dart';
@@ -14,7 +13,7 @@ class BottomNavigation extends StatefulWidget {
 
 class BottomNavigationState extends State<BottomNavigation> {
   static const double _iconSize = 24.0;
-  static const double _containerHeight = 56.0;
+  static const double _containerHeight = 36.0;
   static const double _containerWidth = 64.0;
 
   static const List<BottomNavBarItem> _items = <BottomNavBarItem>[
@@ -49,10 +48,11 @@ class BottomNavigationState extends State<BottomNavigation> {
         type: BottomNavigationBarType.fixed,
         items: _items
             .mapIndexed(
-                (int index, BottomNavBarItem item) => BottomNavigationBarItem(
-                      icon: _buildIcon(item.icon, index),
-                      label: item.label,
-                    ))
+              (int index, BottomNavBarItem item) => BottomNavigationBarItem(
+                icon: _buildIcon(item.icon, index),
+                label: item.label,
+              ),
+            )
             .toList(),
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -66,13 +66,13 @@ class BottomNavigationState extends State<BottomNavigation> {
         width: _containerWidth,
         decoration: ShapeDecoration(
           color: _selectedIndex == index
-              ? theme.AppColors.activeButtonNavBar
+              ? Theme.of(context).colorScheme.secondaryContainer
               : Colors.transparent,
           shape: const StadiumBorder(),
         ),
         child: Icon(
           iconData,
-          color: Theme.of(context).colorScheme.onSurface,
+          color: Theme.of(context).colorScheme.onSecondaryContainer,
           size: _iconSize,
         ),
       );
