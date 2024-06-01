@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart' hide State;
+import 'package:medi_support/ui/widgets/bottom_navigation.dart' as bottom_nav;
+import 'package:medi_support/ui/widgets/custom_app_bar.dart';
+import 'package:medi_support/ui/common/theme.dart';
+import 'package:medi_support/ui/pages/post/post_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,14 +12,17 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        title: 'Medi Support',
+        theme: theme,
+        home: const MyHomePage(title: 'Medi Support'),
+        routes: <String, WidgetBuilder>{
+          '/home': (BuildContext context) =>
+              const MyHomePage(title: 'Medi Support'),
+          '/post': (BuildContext context) => const PostView(),
+        },
       );
 }
 
@@ -28,38 +36,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _incrementCounter,
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
-        ),
+        appBar: CostumAppBar(title: some("Medi Support")),
+        bottomNavigationBar: const bottom_nav.BottomNavigation(),
       );
 }

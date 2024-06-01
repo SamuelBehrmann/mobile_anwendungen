@@ -1,13 +1,12 @@
-
 include: package:flutter_lints/flutter.yaml
 
-analyzer: 
+analyzer:
   exclude:
     - build/**
     - lib/*.g.dart
     - lib/*.freezed.dart
 
-  language: 
+  language:
     strict-raw-types: true
     strict-casts: true
 
@@ -23,7 +22,8 @@ linter:
     - cancel_subscriptions
     - cascade_invocations
     - prefer_expression_function_bodies
-    - sort_pub_dependencies 
+    - sort_pub_dependencies
     - unnecessary_this
     - use_is_even_rather_than_modulo
     - void_checks
+    - require_trailing_commas
