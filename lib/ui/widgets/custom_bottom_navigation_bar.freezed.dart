@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'bottom_navigation.dart';
+part of 'custom_bottom_navigation_bar.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,28 +15,29 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$BottomNavBarItem {
+mixin _$CustomBottomNavBarItem {
   IconData get icon => throw _privateConstructorUsedError;
   String get label => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $BottomNavBarItemCopyWith<BottomNavBarItem> get copyWith =>
+  $CustomBottomNavBarItemCopyWith<CustomBottomNavBarItem> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $BottomNavBarItemCopyWith<$Res> {
-  factory $BottomNavBarItemCopyWith(
-          BottomNavBarItem value, $Res Function(BottomNavBarItem) then) =
-      _$BottomNavBarItemCopyWithImpl<$Res, BottomNavBarItem>;
+abstract class $CustomBottomNavBarItemCopyWith<$Res> {
+  factory $CustomBottomNavBarItemCopyWith(CustomBottomNavBarItem value,
+          $Res Function(CustomBottomNavBarItem) then) =
+      _$CustomBottomNavBarItemCopyWithImpl<$Res, CustomBottomNavBarItem>;
   @useResult
   $Res call({IconData icon, String label});
 }
 
 /// @nodoc
-class _$BottomNavBarItemCopyWithImpl<$Res, $Val extends BottomNavBarItem>
-    implements $BottomNavBarItemCopyWith<$Res> {
-  _$BottomNavBarItemCopyWithImpl(this._value, this._then);
+class _$CustomBottomNavBarItemCopyWithImpl<$Res,
+        $Val extends CustomBottomNavBarItem>
+    implements $CustomBottomNavBarItemCopyWith<$Res> {
+  _$CustomBottomNavBarItemCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -64,7 +65,7 @@ class _$BottomNavBarItemCopyWithImpl<$Res, $Val extends BottomNavBarItem>
 
 /// @nodoc
 abstract class _$$BottomNavBarItemImplCopyWith<$Res>
-    implements $BottomNavBarItemCopyWith<$Res> {
+    implements $CustomBottomNavBarItemCopyWith<$Res> {
   factory _$$BottomNavBarItemImplCopyWith(_$BottomNavBarItemImpl value,
           $Res Function(_$BottomNavBarItemImpl) then) =
       __$$BottomNavBarItemImplCopyWithImpl<$Res>;
@@ -75,7 +76,7 @@ abstract class _$$BottomNavBarItemImplCopyWith<$Res>
 
 /// @nodoc
 class __$$BottomNavBarItemImplCopyWithImpl<$Res>
-    extends _$BottomNavBarItemCopyWithImpl<$Res, _$BottomNavBarItemImpl>
+    extends _$CustomBottomNavBarItemCopyWithImpl<$Res, _$BottomNavBarItemImpl>
     implements _$$BottomNavBarItemImplCopyWith<$Res> {
   __$$BottomNavBarItemImplCopyWithImpl(_$BottomNavBarItemImpl _value,
       $Res Function(_$BottomNavBarItemImpl) _then)
@@ -112,7 +113,7 @@ class _$BottomNavBarItemImpl implements _BottomNavBarItem {
 
   @override
   String toString() {
-    return 'BottomNavBarItem(icon: $icon, label: $label)';
+    return 'CustomBottomNavBarItem(icon: $icon, label: $label)';
   }
 
   @override
@@ -135,7 +136,7 @@ class _$BottomNavBarItemImpl implements _BottomNavBarItem {
           this, _$identity);
 }
 
-abstract class _BottomNavBarItem implements BottomNavBarItem {
+abstract class _BottomNavBarItem implements CustomBottomNavBarItem {
   const factory _BottomNavBarItem(
       {required final IconData icon,
       required final String label}) = _$BottomNavBarItemImpl;

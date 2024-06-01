@@ -6,24 +6,4 @@ class GoRouterNavigationService extends NavigationServiceAggregator {
   GoRouterNavigationService(
     this.goRouter,
   );
-
-  @override
-  void navigateToChat() {
-    goRouter.push('/chat');
-  }
-
-  @override
-  void navigateToHome() {
-    // TODO: implement navigateToHome
-  }
-
-  @override
-  void navigateToPosts() {
-    // TODO: implement navigateToPosts
-  }
-
-  @override
-  void navigateToProfile() {
-    // TODO: implement navigateToProfile
-  }
 }
