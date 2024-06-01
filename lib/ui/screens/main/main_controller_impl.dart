@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:medi_support/ui/screens/main/main_controller.dart';
 import 'package:medi_support/ui/screens/main/main_model.dart';
+import 'package:medi_support/ui/screens/main/services/main_navigation_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'main_controller_impl.g.dart';
@@ -10,7 +11,8 @@ part 'main_controller_impl.g.dart';
 class MainControllerImpl extends _$MainControllerImpl
     implements MainController {
   @override
-  MainModel build() => const MainModel(color: MainModelColor.red);
+  MainModel build(MainNavigationService navigationService) =>
+      const MainModel(color: MainModelColor.red);
 
   @override
   void changeColor() => state = state.copyWith(

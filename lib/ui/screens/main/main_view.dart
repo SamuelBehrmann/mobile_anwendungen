@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:medi_support/services/navigation/navigation_service.dart';
 import 'package:medi_support/ui/screens/main/main_controller.dart';
 import 'package:medi_support/ui/screens/main/main_controller_impl.dart';
 import 'package:medi_support/ui/screens/main/main_model.dart';
@@ -12,9 +13,11 @@ class MainView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final MainController controller =
-        ref.watch(mainControllerImplProvider.notifier);
-    final MainModel model = ref.watch(mainControllerImplProvider);
+    final MainControllerImplProvider provider = mainControllerImplProvider(
+      ref.watch(navigationServiceAggregatorProvider),
+    );
+    final MainController controller = ref.watch(provider.notifier);
+    final MainModel model = ref.watch(provider);
 
     return Scaffold(
       appBar: CostumAppBar(

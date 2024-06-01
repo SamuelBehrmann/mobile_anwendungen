@@ -24,7 +24,7 @@ class IconRow extends StatelessWidget {
               .map(
                 (IconWithLabel element) => IconButton(
                   iconSize: iconSize,
-                  onPressed: () => print('Icon pressed'),
+                  onPressed: () => debugPrint('Icon pressed'),
                   icon: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
