@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         title: 'Medi Support',
-        theme: theme,
+        theme: lightTheme,
+        darkTheme: darkTheme,
         home: const MainView(),
         routes: <String, WidgetBuilder>{
           '/home': (BuildContext context) => const MainView(),
