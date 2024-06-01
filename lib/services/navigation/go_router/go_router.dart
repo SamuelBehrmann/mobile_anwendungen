@@ -38,16 +38,6 @@ GoRouter goRouter(GoRouterRef ref) => GoRouter(
               ],
             ),
             StatefulShellBranch(
-              navigatorKey: postNavigatorKey,
-              routes: <RouteBase>[
-                GoRoute(
-                  path: '/post',
-                  builder: (BuildContext context, GoRouterState state) =>
-                      const PostView(),
-                ),
-              ],
-            ),
-            StatefulShellBranch(
               navigatorKey: chatNavigatorKey,
               routes: <RouteBase>[
                 GoRoute(
@@ -69,5 +59,37 @@ GoRouter goRouter(GoRouterRef ref) => GoRouter(
             ),
           ],
         ),
+        GoRoute(
+          path: '/post',
+          pageBuilder: (BuildContext context, GoRouterState state) =>
+              ModalBottomSheetPage<void>(
+            isScrollControlled: true,
+            builder: (_) => const PostView(),
+          ),
+        ),
       ],
     );
+
+class ModalBottomSheetPage<T> extends Page<T> {
+  final Widget Function(BuildContext context) builder;
+  final bool isScrollControlled;
+
+  const ModalBottomSheetPage({
+    required this.builder,
+    this.isScrollControlled = false,
+  });
+
+  @override
+  Route<T> createRoute(BuildContext context) => ModalBottomSheetRoute<T>(
+        settings: this,
+        useSafeArea: true,
+        modalBarrierColor: Colors.transparent,
+        sheetAnimationStyle: AnimationStyle(
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 300),
+        ),
+        builder: builder,
+        isScrollControlled: isScrollControlled,
+        enableDrag: false,
+      );
+}

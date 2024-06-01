@@ -9,8 +9,14 @@ class PostView extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: CostumAppBar(
           leading: some(
-            IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(Icons.close),
+            ),
           ),
         ),
+        backgroundColor: Colors.red,
       );
 }
