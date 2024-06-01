@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:medi_support/ui/common/theme.dart' as theme;
+import 'package:medi_support/ui/common/theme.dart';
+import 'package:medi_support/ui/screens/post/post_view.dart';
 import 'package:medi_support/ui/screens/main/main_view.dart';
 
 void main() {
@@ -16,10 +17,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: 'Flutter Demo',
-        theme: theme.appThemeData,
-        home: const MainView(
-          title: 'Flutter Demo Home Page',
-        ),
+        title: 'Medi Support',
+        theme: theme,
+        home: const MainView(),
+        routes: <String, WidgetBuilder>{
+          '/home': (BuildContext context) => const MainView(),
+          '/post': (BuildContext context) => const PostView(),
+        },
       );
 }
