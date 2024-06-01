@@ -7,7 +7,7 @@ part of 'main_controller_impl.dart';
 // **************************************************************************
 
 String _$mainControllerImplHash() =>
-    r'50d6a30efc71468e868f424323a25d3d20b2af36';
+    r'a704f05136babdc2d832497cd97a1e99423dd22e';
 
 /// See also [MainControllerImpl].
 @ProviderFor(MainControllerImpl)
