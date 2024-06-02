@@ -11,7 +11,7 @@ class Message extends StatelessWidget {
     super.key,
     required this.username,
     required this.userAvatar,
-    required this.userTitles,
+    this.userTitles = const <String>[],
     required this.message,
     required this.replyCallback,
   });
@@ -56,15 +56,17 @@ class Message extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          subtitle: Text(
-            userTitles.join(', '),
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onPrimaryContainer
-                      .withOpacity(0.6),
-                ),
-          ),
+          subtitle: userTitles.isEmpty
+              ? Text(
+                  userTitles.join(', '),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimaryContainer
+                            .withOpacity(0.6),
+                      ),
+                )
+              : null,
         ),
       );
 }
