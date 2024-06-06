@@ -34,6 +34,9 @@ GoRouter goRouter(GoRouterRef ref) => GoRouter(
                   path: '/',
                   builder: (BuildContext context, GoRouterState state) =>
                       const HomeView(),
+                  routes: <GoRoute>[
+                    _buildPostRoute(),
+                  ],
                 ),
               ],
             ),
@@ -44,6 +47,9 @@ GoRouter goRouter(GoRouterRef ref) => GoRouter(
                   path: '/chat',
                   builder: (BuildContext context, GoRouterState state) =>
                       const ChatView(),
+                  routes: <GoRoute>[
+                    _buildPostRoute(),
+                  ],
                 ),
               ],
             ),
@@ -54,20 +60,24 @@ GoRouter goRouter(GoRouterRef ref) => GoRouter(
                   path: '/profile',
                   builder: (BuildContext context, GoRouterState state) =>
                       const ProfileView(),
+                  routes: <GoRoute>[
+                    _buildPostRoute(),
+                  ],
                 ),
               ],
             ),
           ],
         ),
-        GoRoute(
-          path: '/post',
-          pageBuilder: (BuildContext context, GoRouterState state) =>
-              ModalBottomSheetPage<void>(
-            isScrollControlled: true,
-            builder: (_) => const PostView(),
-          ),
-        ),
       ],
+    );
+
+GoRoute _buildPostRoute() => GoRoute(
+      path: 'post',
+      pageBuilder: (BuildContext context, GoRouterState state) =>
+          ModalBottomSheetPage<void>(
+        isScrollControlled: true,
+        builder: (_) => const PostView(),
+      ),
     );
 
 class ModalBottomSheetPage<T> extends Page<T> {
