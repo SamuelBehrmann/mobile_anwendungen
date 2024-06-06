@@ -44,38 +44,46 @@ class BottomNavigationState extends State<BottomNavigation> {
   }
 
   @override
-  Widget build(BuildContext context) => BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: _items
-            .mapIndexed(
-              (int index, BottomNavBarItem item) => BottomNavigationBarItem(
-                icon: _buildIcon(item.icon, index),
-                label: item.label,
-              ),
-            )
-            .toList(),
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedLabelStyle: Theme.of(context).textTheme.bodyMedium,
-        unselectedLabelStyle: Theme.of(context).textTheme.bodyMedium,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-      );
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
 
-  Widget _buildIcon(IconData iconData, int index) => Container(
-        height: _containerHeight,
-        width: _containerWidth,
-        decoration: ShapeDecoration(
-          color: _selectedIndex == index
-              ? Theme.of(context).colorScheme.secondaryContainer
-              : Colors.transparent,
-          shape: const StadiumBorder(),
-        ),
-        child: Icon(
-          iconData,
-          color: Theme.of(context).colorScheme.onSecondaryContainer,
-          size: _iconSize,
-        ),
-      );
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      items: _items
+          .mapIndexed(
+            (int index, BottomNavBarItem item) => BottomNavigationBarItem(
+              icon: _buildIcon(item.icon, index),
+              label: item.label,
+            ),
+          )
+          .toList(),
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
+      selectedLabelStyle: theme.textTheme.bodyMedium,
+      unselectedLabelStyle: theme.textTheme.bodyMedium,
+      backgroundColor: theme.colorScheme.surfaceBright,
+    );
+  }
+
+  Widget _buildIcon(IconData iconData, int index) {
+    final ThemeData theme = Theme.of(context);
+
+    return Container(
+      height: _containerHeight,
+      width: _containerWidth,
+      decoration: ShapeDecoration(
+        color: _selectedIndex == index
+            ? theme.colorScheme.secondaryContainer
+            : Colors.transparent,
+        shape: const StadiumBorder(),
+      ),
+      child: Icon(
+        iconData,
+        color: theme.colorScheme.onSecondaryContainer,
+        size: _iconSize,
+      ),
+    );
+  }
 }
 
 @freezed
