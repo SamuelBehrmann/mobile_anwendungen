@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_support/services/navigation/navigation_service.dart';
 import 'package:medi_support/ui/screens/chats/chats_view.dart';
+import 'package:medi_support/ui/screens/create_post/create_post_view.dart';
 import 'package:medi_support/ui/screens/home/home_controller_impl.dart';
 import 'package:medi_support/ui/screens/home/home_view.dart';
 import 'package:medi_support/ui/screens/main/main_view.dart';
-import 'package:medi_support/ui/screens/post/post_view.dart';
 import 'package:medi_support/ui/screens/profile/profile_view.dart';
 import 'package:medi_support/ui/screens/search/search_view.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -59,9 +59,9 @@ GoRouter goRouter(GoRouterRef ref) => GoRouter(
             StatefulShellBranch(
               routes: <RouteBase>[
                 GoRoute(
-                  path: '/post',
+                  path: '/create-post',
                   builder: (BuildContext context, GoRouterState state) =>
-                      const PostView(),
+                      const CreatePostView(),
                 ),
               ],
             ),

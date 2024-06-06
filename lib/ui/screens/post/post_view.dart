@@ -8,8 +8,9 @@ class PostView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: CustomAppBar(
+          title: some('Title of the Post'),
           leading: some(
-            IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_back)),
           ),
         ),
       );
