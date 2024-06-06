@@ -1,16 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:medi_support/ui/screens/home/home_controller.dart';
+import 'package:medi_support/ui/screens/home/home_model.dart';
+import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/message.dart';
 import 'package:medi_support/ui/widgets/post_preview.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  final HomeModel model;
+  final HomeController controller;
+
+  const HomeView({
+    required this.model,
+    required this.controller,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Home'),
+        appBar: CustomAppBar(
+          actions: <Widget>[
+            _buildSearchButton(controller),
+          ],
+          title: some('MediSupp'),
         ),
         body: _buildContent(),
+      );
+
+  Widget _buildSearchButton(HomeController controller) => IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: controller.openSearch,
       );
 }
 

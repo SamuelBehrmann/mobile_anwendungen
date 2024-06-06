@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 
-class CostumAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Option<String> title;
   final Option<Widget> leading;
   final List<Widget> actions;
 
-  const CostumAppBar({
+  const CustomAppBar({
     super.key,
     this.title = const None(),
     this.leading = const None(),
