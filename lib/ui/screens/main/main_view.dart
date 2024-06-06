@@ -1,56 +1,89 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:medi_support/ui/widgets/custom_bottom_navigation_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:medi_support/ui/screens/main/main_controller.dart';
+import 'package:medi_support/ui/screens/main/main_controller_impl.dart';
+import 'package:medi_support/ui/screens/main/main_model.dart';
+import 'package:medi_support/ui/widgets/bottom_navigation.dart';
+import 'package:medi_support/ui/widgets/custom_app_bar.dart';
+import 'package:medi_support/ui/widgets/message.dart';
+import 'package:medi_support/ui/widgets/post_preview.dart';
 
-class MainView extends StatefulWidget {
-  final StatefulNavigationShell navigationShell;
-
-  const MainView({
-    super.key,
-    required this.navigationShell,
-  });
-
-  static const List<CustomBottomNavBarItem> bottomNavigationBarItems =
-      <CustomBottomNavBarItem>[
-    CustomBottomNavBarItem(
-      icon: Icons.home_rounded,
-      label: 'Home',
-    ),
-    CustomBottomNavBarItem(
-      icon: Icons.add_box,
-      label: 'Post',
-    ),
-    CustomBottomNavBarItem(
-      icon: Icons.chat,
-      label: 'Chat',
-    ),
-    CustomBottomNavBarItem(
-      icon: Icons.person_sharp,
-      label: 'Profile',
-    ),
-  ];
+class MainView extends ConsumerWidget {
+  const MainView({super.key});
 
   @override
-  State<MainView> createState() => _MainViewState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final MainController controller =
+        ref.watch(mainControllerImplProvider.notifier);
+    final MainModel model = ref.watch(mainControllerImplProvider);
 
-class _MainViewState extends State<MainView> {
-  void setIndex(int index) {
-    setState(() {
-      widget.navigationShell.goBranch(
-        index,
-        initialLocation: index == widget.navigationShell.currentIndex,
-      );
-    });
+    return Scaffold(
+      appBar: CostumAppBar(
+        title: some("Medi Support"),
+        actions: <Widget>[
+          _buildShuffleButton(controller, model),
+        ],
+      ),
+      body: _buildContent(),
+      bottomNavigationBar: const BottomNavigation(),
+    );
   }
 
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        body: widget.navigationShell,
-        bottomNavigationBar: CustomBottomNavigationBar(
-          currentIndex: widget.navigationShell.currentIndex,
-          onTap: setIndex,
-          items: MainView.bottomNavigationBarItems,
-        ),
+  Widget _buildContent() => CustomScrollView(
+        slivers: <Widget>[
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate(<Widget>[
+                Message(
+                  username: 'Name Surname',
+                  userAvatar: Uri.parse(
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=3276&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                  ),
+                  userTitles: const <String>['title1', 'title2'],
+                  message:
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporLorem ipsum dolor sit amet, consectetur adipiscing elit, ',
+                  replyCallback: (String messageId) {},
+                ),
+                const SizedBox(height: 24),
+              ]),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            sliver: SliverList.separated(
+              itemBuilder: (_, int index) => PostPreview(
+                title: 'Post Title',
+                content:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
+                account: PostPreviewAccount(
+                  name: 'Account Name',
+                  titles: <String>['Title 1', 'Title 2'],
+                  imageUrl: Uri.parse(
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=3276&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                  ),
+                ),
+                postId: 'test-post-id: $index',
+              ),
+              separatorBuilder: (_, __) => const SizedBox(height: 16),
+              itemCount: 1000,
+            ),
+          ),
+        ],
+      );
+
+  Widget _buildShuffleButton(
+    MainController controller,
+    MainModel model,
+  ) =>
+      IconButton(
+        onPressed: controller.changeColor,
+        icon: const Icon(Icons.shuffle),
+        color: switch (model.color) {
+          MainModelColor.red => Colors.red,
+          MainModelColor.green => Colors.green,
+          MainModelColor.blue => Colors.blue,
+        },
       );
 }
