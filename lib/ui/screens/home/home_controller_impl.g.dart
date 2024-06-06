@@ -7,7 +7,7 @@ part of 'home_controller_impl.dart';
 // **************************************************************************
 
 String _$homeControllerImplHash() =>
-    r'27ff9b556a690a6d686ec5e7a010cf9f5fa154c5';
+    r'c4038e896310caaf25db916f8a68fa334a0cf859';
 
 /// Copied from Dart SDK
 class _SystemHash {

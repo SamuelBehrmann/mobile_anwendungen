@@ -8,6 +8,7 @@ class PostPreview extends StatelessWidget {
   final String content;
   final String postId;
   final PostPreviewAccount account;
+  final void Function(String postId) onPostTap;
 
   const PostPreview({
     super.key,
@@ -15,6 +16,7 @@ class PostPreview extends StatelessWidget {
     required this.content,
     required this.account,
     required this.postId,
+    required this.onPostTap,
   });
 
   @override
@@ -68,10 +70,7 @@ class PostPreview extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FilledButton(
-            onPressed: () {
-              // TODO: Navigate to post view with postId
-              debugPrint('TODO: Navigate to post view with postId: $postId');
-            },
+            onPressed: () => onPostTap(postId),
             child: const Text('Lesen'),
           ),
         ],
