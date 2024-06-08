@@ -16,4 +16,8 @@ class HomeControllerImpl extends _$HomeControllerImpl
 
   @override
   void openSearch() => navigationService.openSearch();
+
+  @override
+  void openPost({required String postId}) =>
+      navigationService.openPost(postId: postId);
 }
