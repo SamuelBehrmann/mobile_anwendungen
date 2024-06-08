@@ -7,6 +7,7 @@ import 'package:medi_support/ui/screens/create_post/create_post_view.dart';
 import 'package:medi_support/ui/screens/home/home_controller_impl.dart';
 import 'package:medi_support/ui/screens/home/home_view.dart';
 import 'package:medi_support/ui/screens/main/main_view.dart';
+import 'package:medi_support/ui/screens/profile/profile_controller_impl.dart';
 import 'package:medi_support/ui/screens/profile/profile_view.dart';
 import 'package:medi_support/ui/screens/search/search_view.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -79,7 +80,20 @@ GoRouter goRouter(GoRouterRef ref) => GoRouter(
                 GoRoute(
                   path: '/profile',
                   builder: (BuildContext context, GoRouterState state) =>
-                      const ProfileView(),
+                      Consumer(
+                    builder: (_, WidgetRef ref, __) {
+                      final ProfileControllerImplProvider provider =
+                          profileControllerImplProvider(
+                        navigationService:
+                            ref.read(navigationServiceAggregatorProvider),
+                      );
+
+                      return ProfileView(
+                        controller: ref.watch(provider.notifier),
+                        model: ref.watch(provider),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

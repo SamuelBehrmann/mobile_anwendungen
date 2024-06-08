@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatefulWidget {
-  final bool includeTextField;
-  final String labelText;
-  final String hintText;
+  final String label;
+  final String hint;
   final IconData? icon;
+  final bool includeTextField;
+  final bool isPasswordField;
 
   const CustomTextFormField({
     super.key,
-    this.includeTextField = true,
-    required this.labelText,
-    required this.hintText,
+    required this.label,
+    required this.hint,
     this.icon,
+    this.includeTextField = true,
+    this.isPasswordField = false,
   });
 
   @override
@@ -19,14 +21,16 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class CustomTextFormFieldState extends State<CustomTextFormField> {
-  static const EdgeInsets _contentPadding = EdgeInsets.all(15);
-  static const EdgeInsets _paddingBetweenLabelField = EdgeInsets.only(top: 10);
+  static const EdgeInsets _contentPadding = EdgeInsets.all(16);
+  static const double _paddingBetweenLabelField = 10;
   late TextEditingController _controller;
+  bool _passwordVisible = false;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    _passwordVisible = !widget.isPasswordField;
   }
 
   @override
@@ -36,37 +40,41 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    List<Widget> widgets = <Widget>[];
-
-    if (widget.includeTextField) {
-      widgets.add(
-        Text(
-          widget.labelText,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      );
-    }
-
-    widgets.add(
-      Padding(
-        padding: widget.includeTextField ? _paddingBetweenLabelField : EdgeInsets.zero,
-        child: TextFormField(
-          controller: _controller,
-          decoration: InputDecoration(
-            contentPadding: _contentPadding,
-            hintText: widget.hintText,
-            border: const OutlineInputBorder(),
-            prefixIcon: widget.icon != null ? Icon(widget.icon) : null,
+  Widget build(BuildContext context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          if (widget.includeTextField) ...<Widget>[
+            Text(
+              widget.label,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          const SizedBox(height: _paddingBetweenLabelField),
+          ],
+          TextFormField(
+            controller: _controller,
+            obscureText: !widget.isPasswordField ? false : !_passwordVisible,
+            decoration: InputDecoration(
+              contentPadding: _contentPadding,
+              hintText: widget.hint,
+              border: const OutlineInputBorder(),
+              prefixIcon: widget.icon != null ? Icon(widget.icon) : null,
+              suffixIcon: widget.isPasswordField
+                  ? IconButton(
+                      icon: Icon(
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    )
+                  : null,
+            ),
+            maxLines: 1,
           ),
-          maxLines: 1,
-        ),
-      ),
-    );
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: widgets,
-    );
-  }
+        ],
+      );
 }

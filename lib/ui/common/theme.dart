@@ -1,11 +1,20 @@
 import "package:flutter/material.dart";
 
-const MaterialTheme materialTheme = MaterialTheme(TextTheme());
+MaterialTheme materialTheme = MaterialTheme(const TextTheme());
 
 class MaterialTheme {
-  final TextTheme textTheme;
+  static const double _logoutButtonWidth = 330;
+  static const double _logoutButtonHeight = 50;
 
-  const MaterialTheme(this.textTheme);
+  final TextTheme textTheme;
+  final OutlinedButtonThemeData outlinedButtonThemeData =
+      OutlinedButtonThemeData(
+    style: OutlinedButton.styleFrom(
+      minimumSize: const Size(_logoutButtonWidth, _logoutButtonHeight),
+    ),
+  );
+
+  MaterialTheme(this.textTheme);
 
   static MaterialScheme lightScheme() => const MaterialScheme(
         brightness: Brightness.light,
@@ -118,6 +127,7 @@ class MaterialTheme {
   ThemeData dark() => theme(darkScheme().toColorScheme());
 
   ThemeData theme(ColorScheme colorScheme) => ThemeData(
+        outlinedButtonTheme: outlinedButtonThemeData,
         useMaterial3: true,
         brightness: colorScheme.brightness,
         colorScheme: colorScheme,

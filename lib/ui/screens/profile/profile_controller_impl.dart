@@ -12,7 +12,15 @@ class ProfileControllerImpl extends _$ProfileControllerImpl
   ProfileModel build({
     required ProfileNavigationService navigationService,
   }) =>
-      const ProfileModel(user: dummyUser);
+      const ProfileModel(
+        user: User(
+          name: 'John Dow',
+          email: 'johnDow@gmail.com',
+          phoneNumber: '1234567890',
+          profilePicturePath:
+              'https://images.unsplash.com/photo-1638643391904-9b551ba91eaa?q=80&w=2592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        ),
+      );
 
   @override
   void editProfil() {}

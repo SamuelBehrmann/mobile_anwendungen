@@ -18,9 +18,3 @@ class ProfileModel with _$ProfileModel {
     required User user,
   }) = _ProfileModel;
 }
-
-const User dummyUser = User(
-  name: 'John Dow',
-  email: 'johnDow@gmail.com',
-  phoneNumber: '1234567890',
-);

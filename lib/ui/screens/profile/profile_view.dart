@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:medi_support/ui/screens/profile/profile_controller.dart';
 import 'package:medi_support/ui/screens/profile/profile_model.dart';
+import 'package:medi_support/ui/widgets/custom_app_bar.dart';
+import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 import 'package:medi_support/ui/widgets/custom_text_form_field.dart';
-import 'package:medi_support/ui/widgets/profile_password.dart';
-import 'package:medi_support/ui/widgets/custom_button.dart';
 
 class ProfileView extends StatelessWidget {
   static const EdgeInsets _screenPadding = EdgeInsets.all(16);
@@ -15,14 +17,19 @@ class ProfileView extends StatelessWidget {
   static const double _containerSize = 35;
   static const double _positionAvatarIcon = 10;
 
+  final ProfileModel model;
+  final ProfileController controller;
+
   const ProfileView({
     super.key,
+    required this.model,
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Profile'),
+        appBar: CustomAppBar(
+          title: some('Profile'),
         ),
         body: Column(
           children: <Widget>[
@@ -38,20 +45,22 @@ class ProfileView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       CustomTextFormField(
-                        labelText: 'Email',
-                        hintText: 'Edit your email',
+                        label: 'Email',
+                        hint: 'Edit your email',
                         icon: Icons.email_outlined,
                       ),
                       SizedBox(height: _spaceBetweenGroups),
                       CustomTextFormField(
-                        labelText: 'Phone Number',
-                        hintText: 'Edit your phone number',
+                        label: 'Phone Number',
+                        hint: 'Edit your phone number',
                         icon: Icons.smartphone_outlined,
                       ),
                       SizedBox(height: _spaceBetweenGroups),
-                      PasswordField(
-                        labelText: 'Password',
-                        hintText: 'Edit your password',
+                      CustomTextFormField(
+                        label: 'Password',
+                        hint: 'Edit your password',
+                        icon: Icons.lock_outline,
+                        isPasswordField: true,
                       ),
                       SizedBox(height: _emptySpaceAfterPassword),
                     ],
@@ -59,7 +68,17 @@ class ProfileView extends StatelessWidget {
                 ],
               ),
             ),
-            CustomButton(text: 'Logout', onPressed: () {}),
+            Padding(
+              padding: _screenPadding,
+              child: OutlinedButton(
+                onPressed: () => controller.logout,
+                style: Theme.of(context).outlinedButtonTheme.style,
+                child: Text(
+                  'Logout',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+            ),
           ],
         ),
       );
@@ -72,9 +91,14 @@ class ProfileView extends StatelessWidget {
             children: <Widget>[
               CircleAvatar(
                 radius: _avatarSize,
-                child: Image.asset(
-                  'assets/images/dummy_profile_pic.png',
-                ),
+                child: model.user.profilePicturePath != null
+                    ? CustomCachedNetworkImage(
+                        imageUrl: model.user.profilePicturePath!,
+                      )
+                    : const Icon(
+                        Icons.person_outline,
+                        size: _avatarSize,
+                      ),
               ),
               Positioned(
                 right: _positionAvatarIcon,
@@ -92,7 +116,7 @@ class ProfileView extends StatelessWidget {
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
                     onPressed: () {
-                      // TODO: implementation
+                      controller.editProfil();
                     },
                     padding: const EdgeInsets.all(_paddingAvatarIcon),
                   ),
@@ -107,7 +131,7 @@ class ProfileView extends StatelessWidget {
         builder: (BuildContext context) => Column(
           children: <Widget>[
             Text(
-              dummyUser.name,
+              model.user.name,
               style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
