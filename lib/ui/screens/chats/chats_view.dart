@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ChatView extends StatelessWidget {
-  const ChatView({super.key});
+class ChatsView extends StatelessWidget {
+  const ChatsView({super.key});
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Chat with x'),
+          title: const Text('Chats'),
         ),
       );
 }

@@ -6,4 +6,7 @@ class GoRouterNavigationService extends NavigationServiceAggregator {
   GoRouterNavigationService(
     this.goRouter,
   );
+
+  @override
+  void openSearch() => goRouter.go('/search');
 }
