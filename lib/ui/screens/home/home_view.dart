@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medi_support/ui/widgets/message.dart';
 import 'package:medi_support/ui/widgets/post_preview.dart';
+import 'package:medi_support/ui/widgets/search.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -9,6 +10,11 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
+          actions: const <Widget>[
+            CustomSearchBar(
+              items: <String>['item1', 'item2', 'item3'],
+            ),
+          ],
         ),
         body: _buildContent(),
       );
