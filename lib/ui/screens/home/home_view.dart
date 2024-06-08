@@ -5,6 +5,7 @@ import 'package:medi_support/ui/screens/home/home_model.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/message.dart';
 import 'package:medi_support/ui/widgets/post_preview.dart';
+import 'package:medi_support/ui/widgets/search.dart';
 
 class HomeView extends StatelessWidget {
   final HomeModel model;
@@ -18,11 +19,13 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: CustomAppBar(
-          actions: <Widget>[
-            _buildSearchButton(controller),
+        appBar: AppBar(
+          title: const Text('Home'),
+          actions: const <Widget>[
+            CustomSearchBar(
+              items: <String>['item1', 'item2', 'item3'],
+            ),
           ],
-          title: some('MediSupp'),
         ),
         body: _buildContent(),
       );
