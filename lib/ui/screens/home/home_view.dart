@@ -34,47 +34,49 @@ class HomeView extends StatelessWidget {
         icon: const Icon(Icons.search),
         onPressed: controller.openSearch,
       );
-}
 
-Widget _buildContent() => CustomScrollView(
-      slivers: <Widget>[
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          sliver: SliverList(
-            delegate: SliverChildListDelegate(<Widget>[
-              Message(
-                username: 'Name Surname',
-                userAvatar: Uri.parse(
-                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=3276&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  Widget _buildContent() => CustomScrollView(
+        slivers: <Widget>[
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate(<Widget>[
+                Message(
+                  username: 'Name Surname',
+                  userAvatar: Uri.parse(
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=3276&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                  ),
+                  userTitles: const <String>['title1', 'title2'],
+                  message:
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporLorem ipsum dolor sit amet, consectetur adipiscing elit, ',
+                  replyCallback: (String messageId) {},
                 ),
-                userTitles: const <String>['title1', 'title2'],
-                message:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporLorem ipsum dolor sit amet, consectetur adipiscing elit, ',
-                replyCallback: (String messageId) {},
-              ),
-              const SizedBox(height: 24),
-            ]),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          sliver: SliverList.separated(
-            itemBuilder: (_, int index) => PostPreview(
-              title: 'Post Title',
-              content:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
-              account: PostPreviewAccount(
-                name: 'Account Name',
-                titles: <String>['Title 1', 'Title 2'],
-                imageUrl: Uri.parse(
-                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=3276&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                ),
-              ),
-              postId: 'test-post-id: $index',
+                const SizedBox(height: 24),
+              ]),
             ),
-            separatorBuilder: (_, __) => const SizedBox(height: 16),
-            itemCount: 1000,
           ),
-        ),
-      ],
-    );
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            sliver: SliverList.separated(
+              itemBuilder: (_, int index) => PostPreview(
+                onPostTap: (String postId) =>
+                    controller.openPost(postId: postId),
+                title: 'Post Title',
+                content:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
+                account: PostPreviewAccount(
+                  name: 'Account Name',
+                  titles: <String>['Title 1', 'Title 2'],
+                  imageUrl: Uri.parse(
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=3276&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                  ),
+                ),
+                postId: 'test-post-id: $index',
+              ),
+              separatorBuilder: (_, __) => const SizedBox(height: 16),
+              itemCount: 1000,
+            ),
+          ),
+        ],
+      );
+}

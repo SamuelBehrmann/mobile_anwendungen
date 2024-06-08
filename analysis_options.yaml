@@ -2,9 +2,9 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude:
-    - build/**
-    - lib/*.g.dart
-    - lib/*.freezed.dart
+    - '**.freezed.dart'
+    - '**.g.dart'
+    - '**/generated_plugin_registrant.dart'
   plugins: 
     - custom_lint
 
