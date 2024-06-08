@@ -10,6 +10,7 @@ import 'package:medi_support/ui/screens/chats/chats_view.dart';
 import 'package:medi_support/ui/screens/create_post/create_post_view.dart';
 import 'package:medi_support/ui/screens/home/home_controller_impl.dart';
 import 'package:medi_support/ui/screens/home/home_view.dart';
+import 'package:medi_support/ui/screens/profile/profile_controller_impl.dart';
 import 'package:medi_support/ui/screens/profile/profile_view.dart';
 
 part 'go_router_shell_routes.g.dart';
@@ -79,6 +80,16 @@ class CreatePostRoute extends GoRouteData {
 @immutable
 class ProfileRoute extends GoRouteData {
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const ProfileView();
+  Widget build(BuildContext context, GoRouterState state) => Consumer(
+        builder: (BuildContext context, WidgetRef watch, Widget? child) {
+          final ProfileControllerImplProvider provider =
+              profileControllerImplProvider(
+            navigationService: watch.watch(navigationServiceAggregatorProvider),
+          );
+          return ProfileView(
+            model: watch.watch(provider),
+            controller: watch.watch(provider.notifier),
+          );
+        },
+      );
 }

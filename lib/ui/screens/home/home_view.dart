@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:medi_support/ui/screens/home/home_controller.dart';
 import 'package:medi_support/ui/screens/home/home_model.dart';
-import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/message.dart';
 import 'package:medi_support/ui/widgets/post_preview.dart';
 import 'package:medi_support/ui/widgets/search.dart';
