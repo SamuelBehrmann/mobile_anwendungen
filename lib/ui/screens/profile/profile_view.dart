@@ -4,14 +4,6 @@ import 'package:medi_support/ui/widgets/custom_text_form_field.dart';
 import 'package:medi_support/ui/widgets/profile_password.dart';
 import 'package:medi_support/ui/widgets/custom_button.dart';
 
-// TODO: user into model, define controller interface & implementation, controller method logout
-
-const User dummyUser = User(
-  name: 'John Dow',
-  email: 'johnDow@gmail.com',
-  phoneNumber: '1234567890',
-);
-
 class ProfileView extends StatelessWidget {
   static const EdgeInsets _screenPadding = EdgeInsets.all(16);
   static const double _spaceBetweenGroups = 30;
