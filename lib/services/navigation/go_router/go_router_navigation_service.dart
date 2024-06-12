@@ -23,4 +23,9 @@ class GoRouterNavigationService extends NavigationServiceAggregator {
   void goHome() {
     goRouter.go(HomeRoute().location);
   }
+
+  @override
+  void goBack() {
+    goRouter.pop();
+  }
 }
