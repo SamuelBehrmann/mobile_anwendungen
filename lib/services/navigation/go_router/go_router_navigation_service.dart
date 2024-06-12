@@ -18,4 +18,7 @@ class GoRouterNavigationService extends NavigationServiceAggregator {
   @override
   void openPost({required String postId}) =>
       unawaited(goRouter.push(PostRoute(postId: postId).location));
+
+  @override
+  void goBack() => goRouter.pop();
 }
