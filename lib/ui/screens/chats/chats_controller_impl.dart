@@ -1,5 +1,6 @@
 import 'package:medi_support/ui/screens/chats/chats_controller.dart';
 import 'package:medi_support/ui/screens/chats/chats_model.dart';
+import 'package:medi_support/ui/screens/chats/services/chats_navigation_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'chats_controller_impl.g.dart';
@@ -8,7 +9,9 @@ part 'chats_controller_impl.g.dart';
 class ChatsControllerImpl extends _$ChatsControllerImpl
     implements ChatsController {
   @override
-  ChatsModel build() => const ChatsModel(
+  ChatsModel build({
+    required ChatsNavigationService navigationService,
+  }) => const ChatsModel(
         chats: <SingleChat>[
           SingleChat(
             name: 'Alice',

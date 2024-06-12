@@ -6,6 +6,7 @@ import 'package:medi_support/services/navigation/go_router/routes/go_router_post
 import 'package:medi_support/services/navigation/go_router/routes/go_router_search_route.dart';
 import 'package:medi_support/services/navigation/route_paths.dart';
 import 'package:medi_support/services/navigation/navigation_service.dart';
+import 'package:medi_support/ui/screens/chats/chats_controller_impl.dart';
 import 'package:medi_support/ui/screens/chats/chats_view.dart';
 import 'package:medi_support/ui/screens/create_post/create_post_view.dart';
 import 'package:medi_support/ui/screens/home/home_controller_impl.dart';
@@ -57,7 +58,18 @@ class HomeRoute extends GoRouteData {
 @immutable
 class ChatsRoute extends GoRouteData {
   @override
-  Widget build(BuildContext context, GoRouterState state) => const ChatsView();
+  Widget build(BuildContext context, GoRouterState state) => Consumer(
+        builder: (BuildContext context, WidgetRef watch, Widget? child) {
+          final ChatsControllerImplProvider provider =
+              chatsControllerImplProvider(
+            navigationService: watch.watch(navigationServiceAggregatorProvider),
+          );
+          return ChatsView(
+            model: watch.watch(provider),
+            controller: watch.watch(provider.notifier),
+          );
+        },
+      );
 }
 
 // CreatePostShellRoute

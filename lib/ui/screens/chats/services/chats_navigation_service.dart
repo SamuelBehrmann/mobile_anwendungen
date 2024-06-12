@@ -1,3 +1,3 @@
 abstract interface class ChatsNavigationService {
-  void openChat(String chatId);
+  void openChat({required String chatId});
 }
