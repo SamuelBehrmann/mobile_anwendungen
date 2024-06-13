@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomSearchBar extends StatefulWidget {
-  const CustomSearchBar({super.key, required this.onSearch});
+  const CustomSearchBar({
+    super.key,
+    required this.onSearch,
+    required this.currentQuery,
+  });
   final void Function({required String query}) onSearch;
+  final String currentQuery;
 
   @override
   State<CustomSearchBar> createState() => _CustomSearchBarState();
@@ -13,8 +18,16 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
   @override
   void initState() {
-    _controller = TextEditingController();
+    _controller = TextEditingController(text: widget.currentQuery);
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(CustomSearchBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.currentQuery != oldWidget.currentQuery) {
+      _controller.text = widget.currentQuery;
+    }
   }
 
   @override
@@ -25,7 +38,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
   @override
   Widget build(BuildContext context) => Column(
-        children: [
+        children: <Widget>[
           TextFormField(
             controller: _controller,
             textAlign: TextAlign.center,

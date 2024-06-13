@@ -12,7 +12,14 @@ class SearchControllerImpl extends _$SearchControllerImpl
   SearchModel build({required SearchNavigationService navigationService}) {
     SearchModel searchModel = const SearchModel(
       query: "",
-      searchResults: <String>["test1", "test2", "test3", "test4", "test5"],
+      searchResults: <String>[
+        "test1",
+        "test2",
+        "test3",
+        "test4",
+        "test5",
+        "home",
+      ],
       filteredResults: <String>[],
     );
 
@@ -31,7 +38,9 @@ class SearchControllerImpl extends _$SearchControllerImpl
       return;
     }
     List<String> filteredResults = state.searchResults
-        .where((String item) => item.contains(query))
+        .where(
+          (String item) => item.toLowerCase().contains(query.toLowerCase()),
+        )
         .toList();
     state = state.copyWith(filteredResults: filteredResults, query: query);
   }
