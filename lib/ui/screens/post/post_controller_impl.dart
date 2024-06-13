@@ -37,7 +37,7 @@ class PostControllerImpl extends _$PostControllerImpl
   void goBack() => navigationService.goBack();
 
   @override
-  void selectMessageToReply({required String messageId}) =>
+  void setSelectedMessageToReply({required String? messageId}) =>
       state = state.copyWith(
         selectedReplyId: messageId,
       );

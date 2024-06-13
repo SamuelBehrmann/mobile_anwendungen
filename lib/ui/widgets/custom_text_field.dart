@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
   final void Function(String message) onSubmitted;
+  final VoidCallback? onTapOutside;
   const CustomTextField({
     super.key,
     required this.onSubmitted,
+    this.onTapOutside,
   });
 
   @override
@@ -29,7 +31,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) => TextField(
         controller: _controller,
-        onTapOutside: (_) => FocusScope.of(context).unfocus(),
+        onTapOutside: (_) {
+          FocusScope.of(context).unfocus();
+          widget.onTapOutside?.call();
+        },
         autofocus: true,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
