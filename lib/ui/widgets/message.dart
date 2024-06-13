@@ -5,7 +5,7 @@ class Message extends StatelessWidget {
   final Uri userAvatar;
   final Iterable<String> userTitles;
   final String message;
-  final void Function(String messageId) replyCallback;
+  final void Function() replyCallback;
 
   const Message({
     super.key,
@@ -23,21 +23,18 @@ class Message extends StatelessWidget {
         children: <Widget>[
           _buildHeader(),
           _buildMessage(),
-          _buildReplyButton(),
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: _buildReplyButton(),
+          ),
         ],
       );
 
   Widget _buildReplyButton() => GestureDetector(
-        onTap: () {
-          // TODO: Implement reply functionality with message id (possibly post id)
-          replyCallback('messageId');
-        },
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Icon(Icons.reply),
-            Text('Reply'),
-          ],
+        onTap: replyCallback,
+        child: const Icon(
+          Icons.reply,
+          size: 16,
         ),
       );
 

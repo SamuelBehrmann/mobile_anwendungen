@@ -37,24 +37,6 @@ class HomeView extends StatelessWidget {
         slivers: <Widget>[
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate(<Widget>[
-                Message(
-                  username: 'Name Surname',
-                  userAvatar: Uri.parse(
-                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=3276&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                  ),
-                  userTitles: const <String>['title1', 'title2'],
-                  message:
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporLorem ipsum dolor sit amet, consectetur adipiscing elit, ',
-                  replyCallback: (String messageId) {},
-                ),
-                const SizedBox(height: 24),
-              ]),
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
             sliver: SliverList.separated(
               itemBuilder: (_, int index) => PostPreview(
                 onPostTap: (String postId) =>

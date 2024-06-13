@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:medi_support/ui/screens/post/post_controller.dart';
@@ -7,6 +8,8 @@ import 'package:medi_support/ui/widgets/message.dart';
 
 class PostView extends StatelessWidget {
   static const EdgeInsets _screenPadding = EdgeInsets.all(16);
+  static const double _verticalDividerWidth = 32;
+
   final PostController controller;
   final PostModel model;
 
@@ -27,25 +30,34 @@ class PostView extends StatelessWidget {
             ),
           ),
         ),
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverPadding(
-              padding: _screenPadding.copyWith(bottom: 0),
-              sliver: SliverToBoxAdapter(
-                child: _buildPost(),
-              ),
-            ),
-            SliverPadding(
-              padding: _screenPadding.copyWith(top: 0, bottom: 0),
-              sliver: SliverList.separated(
-                itemCount: model.post.replies.length,
-                itemBuilder: (BuildContext context, int index) => _buildMessage(
-                  model.post.replies[index],
+        body: SafeArea(
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverPadding(
+                padding: _screenPadding.copyWith(bottom: 0),
+                sliver: SliverToBoxAdapter(
+                  child: _buildPost(),
                 ),
-                separatorBuilder: (_, __) => const SizedBox(height: 8),
               ),
-            ),
-          ],
+              SliverPadding(
+                padding: EdgeInsets.only(right: _screenPadding.right),
+                sliver: _buildMessages(),
+              ),
+            ],
+          ),
+        ),
+      );
+
+  Widget _buildMessages() => SliverList(
+        delegate: SliverChildListDelegate(
+          <Widget>[
+            ...model.post.replies
+                .mapIndexed(
+                  (int index, PostModelMessage message) =>
+                      _buildMessageRekursive(message, 1),
+                )
+                .flatten,
+          ].toList(),
         ),
       );
 
@@ -53,34 +65,52 @@ class PostView extends StatelessWidget {
         username: model.post.author.name,
         userAvatar: model.post.author.avatar,
         message: model.post.content,
-        replyCallback: (String message) => controller.reply(
+        replyCallback: () => controller.reply(
           id: model.post.id,
-          message: message,
+          message: 'message',
         ),
       );
 
-  Widget _buildMessage(PostModelMessage message) => Builder(
-        builder: (BuildContext context) => Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Message(
-              username: message.author.name,
-              userAvatar: message.author.avatar,
-              message: message.message,
-              replyCallback: (String reply) => controller.reply(
-                id: message.id,
-                message: reply,
+  List<Widget> _buildMessageRekursive(
+    PostModelMessage message,
+    int rekursionDepth,
+  ) =>
+      <Widget>[
+        IntrinsicHeight(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ...List<Widget>.generate(
+                rekursionDepth,
+                (_) => Builder(
+                  builder: (BuildContext context) => VerticalDivider(
+                    width: _verticalDividerWidth,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onPrimaryContainer
+                        .withOpacity(0.16),
+                  ),
+                ),
               ),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(left: 16),
-              itemCount: message.replies.length,
-              itemBuilder: (BuildContext context, int index) =>
-                  _buildMessage(message.replies[index]),
-            ),
-          ],
+              Expanded(
+                child: Message(
+                  username: message.author.name,
+                  userAvatar: message.author.avatar,
+                  message: message.message,
+                  replyCallback: () => controller.reply(
+                    id: message.id,
+                    message: 'message',
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      );
+        ...message.replies
+            .mapIndexed(
+              (int index, PostModelMessage reply) =>
+                  _buildMessageRekursive(reply, rekursionDepth + 1),
+            )
+            .flatten,
+      ];
 }
