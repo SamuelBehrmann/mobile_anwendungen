@@ -4,9 +4,11 @@ part 'post_model.freezed.dart';
 
 @freezed
 class PostModel with _$PostModel {
-  const factory PostModel(
-    PostModelPost post,
-  ) = _PostModel;
+  const factory PostModel({
+    required PostModelPost post,
+    required String? selectedReplyId,
+    required String currentUserId,
+  }) = _PostModel;
 }
 
 @freezed
@@ -25,7 +27,6 @@ class PostModelMessage with _$PostModelMessage {
   const factory PostModelMessage({
     required final String id,
     required final String message,
-    required final String title,
     required final PostModelUser author,
     required final List<PostModelMessage> replies,
   }) = _PostModelMessage;

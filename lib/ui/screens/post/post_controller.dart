@@ -1,4 +1,5 @@
 abstract interface class PostController {
   void goBack();
-  void reply({required String id, required String message});
+  void selectMessageToReply({required String messageId});
+  void submitReply({required final String message});
 }

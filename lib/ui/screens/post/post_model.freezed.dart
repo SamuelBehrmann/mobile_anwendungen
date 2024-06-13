@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$PostModel {
   PostModelPost get post => throw _privateConstructorUsedError;
+  String? get selectedReplyId => throw _privateConstructorUsedError;
+  String get currentUserId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PostModelCopyWith<PostModel> get copyWith =>
@@ -28,7 +30,8 @@ abstract class $PostModelCopyWith<$Res> {
   factory $PostModelCopyWith(PostModel value, $Res Function(PostModel) then) =
       _$PostModelCopyWithImpl<$Res, PostModel>;
   @useResult
-  $Res call({PostModelPost post});
+  $Res call(
+      {PostModelPost post, String? selectedReplyId, String currentUserId});
 
   $PostModelPostCopyWith<$Res> get post;
 }
@@ -47,12 +50,22 @@ class _$PostModelCopyWithImpl<$Res, $Val extends PostModel>
   @override
   $Res call({
     Object? post = null,
+    Object? selectedReplyId = freezed,
+    Object? currentUserId = null,
   }) {
     return _then(_value.copyWith(
       post: null == post
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
               as PostModelPost,
+      selectedReplyId: freezed == selectedReplyId
+          ? _value.selectedReplyId
+          : selectedReplyId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentUserId: null == currentUserId
+          ? _value.currentUserId
+          : currentUserId // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 
@@ -73,7 +86,8 @@ abstract class _$$PostModelImplCopyWith<$Res>
       __$$PostModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({PostModelPost post});
+  $Res call(
+      {PostModelPost post, String? selectedReplyId, String currentUserId});
 
   @override
   $PostModelPostCopyWith<$Res> get post;
@@ -91,12 +105,22 @@ class __$$PostModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? post = null,
+    Object? selectedReplyId = freezed,
+    Object? currentUserId = null,
   }) {
     return _then(_$PostModelImpl(
-      null == post
+      post: null == post
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
               as PostModelPost,
+      selectedReplyId: freezed == selectedReplyId
+          ? _value.selectedReplyId
+          : selectedReplyId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentUserId: null == currentUserId
+          ? _value.currentUserId
+          : currentUserId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -104,14 +128,21 @@ class __$$PostModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PostModelImpl implements _PostModel {
-  const _$PostModelImpl(this.post);
+  const _$PostModelImpl(
+      {required this.post,
+      required this.selectedReplyId,
+      required this.currentUserId});
 
   @override
   final PostModelPost post;
+  @override
+  final String? selectedReplyId;
+  @override
+  final String currentUserId;
 
   @override
   String toString() {
-    return 'PostModel(post: $post)';
+    return 'PostModel(post: $post, selectedReplyId: $selectedReplyId, currentUserId: $currentUserId)';
   }
 
   @override
@@ -119,11 +150,16 @@ class _$PostModelImpl implements _PostModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PostModelImpl &&
-            (identical(other.post, post) || other.post == post));
+            (identical(other.post, post) || other.post == post) &&
+            (identical(other.selectedReplyId, selectedReplyId) ||
+                other.selectedReplyId == selectedReplyId) &&
+            (identical(other.currentUserId, currentUserId) ||
+                other.currentUserId == currentUserId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, post);
+  int get hashCode =>
+      Object.hash(runtimeType, post, selectedReplyId, currentUserId);
 
   @JsonKey(ignore: true)
   @override
@@ -133,10 +169,17 @@ class _$PostModelImpl implements _PostModel {
 }
 
 abstract class _PostModel implements PostModel {
-  const factory _PostModel(final PostModelPost post) = _$PostModelImpl;
+  const factory _PostModel(
+      {required final PostModelPost post,
+      required final String? selectedReplyId,
+      required final String currentUserId}) = _$PostModelImpl;
 
   @override
   PostModelPost get post;
+  @override
+  String? get selectedReplyId;
+  @override
+  String get currentUserId;
   @override
   @JsonKey(ignore: true)
   _$$PostModelImplCopyWith<_$PostModelImpl> get copyWith =>
@@ -368,7 +411,6 @@ abstract class _PostModelPost implements PostModelPost {
 mixin _$PostModelMessage {
   String get id => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
   PostModelUser get author => throw _privateConstructorUsedError;
   List<PostModelMessage> get replies => throw _privateConstructorUsedError;
 
@@ -386,7 +428,6 @@ abstract class $PostModelMessageCopyWith<$Res> {
   $Res call(
       {String id,
       String message,
-      String title,
       PostModelUser author,
       List<PostModelMessage> replies});
 
@@ -408,7 +449,6 @@ class _$PostModelMessageCopyWithImpl<$Res, $Val extends PostModelMessage>
   $Res call({
     Object? id = null,
     Object? message = null,
-    Object? title = null,
     Object? author = null,
     Object? replies = null,
   }) {
@@ -420,10 +460,6 @@ class _$PostModelMessageCopyWithImpl<$Res, $Val extends PostModelMessage>
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
               as String,
       author: null == author
           ? _value.author
@@ -456,7 +492,6 @@ abstract class _$$PostModelMessageImplCopyWith<$Res>
   $Res call(
       {String id,
       String message,
-      String title,
       PostModelUser author,
       List<PostModelMessage> replies});
 
@@ -477,7 +512,6 @@ class __$$PostModelMessageImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? message = null,
-    Object? title = null,
     Object? author = null,
     Object? replies = null,
   }) {
@@ -489,10 +523,6 @@ class __$$PostModelMessageImplCopyWithImpl<$Res>
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
               as String,
       author: null == author
           ? _value.author
@@ -512,7 +542,6 @@ class _$PostModelMessageImpl implements _PostModelMessage {
   const _$PostModelMessageImpl(
       {required this.id,
       required this.message,
-      required this.title,
       required this.author,
       required final List<PostModelMessage> replies})
       : _replies = replies;
@@ -521,8 +550,6 @@ class _$PostModelMessageImpl implements _PostModelMessage {
   final String id;
   @override
   final String message;
-  @override
-  final String title;
   @override
   final PostModelUser author;
   final List<PostModelMessage> _replies;
@@ -535,7 +562,7 @@ class _$PostModelMessageImpl implements _PostModelMessage {
 
   @override
   String toString() {
-    return 'PostModelMessage(id: $id, message: $message, title: $title, author: $author, replies: $replies)';
+    return 'PostModelMessage(id: $id, message: $message, author: $author, replies: $replies)';
   }
 
   @override
@@ -545,13 +572,12 @@ class _$PostModelMessageImpl implements _PostModelMessage {
             other is _$PostModelMessageImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.title, title) || other.title == title) &&
             (identical(other.author, author) || other.author == author) &&
             const DeepCollectionEquality().equals(other._replies, _replies));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, message, title, author,
+  int get hashCode => Object.hash(runtimeType, id, message, author,
       const DeepCollectionEquality().hash(_replies));
 
   @JsonKey(ignore: true)
@@ -566,7 +592,6 @@ abstract class _PostModelMessage implements PostModelMessage {
   const factory _PostModelMessage(
       {required final String id,
       required final String message,
-      required final String title,
       required final PostModelUser author,
       required final List<PostModelMessage> replies}) = _$PostModelMessageImpl;
 
@@ -574,8 +599,6 @@ abstract class _PostModelMessage implements PostModelMessage {
   String get id;
   @override
   String get message;
-  @override
-  String get title;
   @override
   PostModelUser get author;
   @override

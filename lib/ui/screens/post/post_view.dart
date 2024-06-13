@@ -1,9 +1,12 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:medi_support/ui/screens/post/post_controller.dart';
 import 'package:medi_support/ui/screens/post/post_model.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
+import 'package:medi_support/ui/widgets/custom_text_field.dart';
 import 'package:medi_support/ui/widgets/message.dart';
 
 class PostView extends StatelessWidget {
@@ -21,6 +24,7 @@ class PostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: CustomAppBar(
           title: some(model.post.title),
           leading: some(
@@ -31,30 +35,44 @@ class PostView extends StatelessWidget {
           ),
         ),
         body: SafeArea(
-          child: CustomScrollView(
-            slivers: <Widget>[
-              SliverPadding(
-                padding: _screenPadding.copyWith(bottom: 0),
-                sliver: SliverToBoxAdapter(
-                  child: _buildPost(),
+          child: Stack(
+            children: <Widget>[
+              CustomScrollView(
+                slivers: <Widget>[
+                  SliverPadding(
+                    padding: _screenPadding.copyWith(bottom: 0),
+                    sliver: SliverToBoxAdapter(
+                      child: _buildPost(),
+                    ),
+                  ),
+                  SliverPadding(
+                    padding: EdgeInsets.only(right: _screenPadding.right),
+                    sliver: _buildReplies(),
+                  ),
+                ],
+              ),
+              if (model.selectedReplyId != null)
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: _buildTextInputField(),
+                  ),
                 ),
-              ),
-              SliverPadding(
-                padding: EdgeInsets.only(right: _screenPadding.right),
-                sliver: _buildMessages(),
-              ),
             ],
           ),
         ),
       );
 
-  Widget _buildMessages() => SliverList(
+  Widget _buildReplies() => SliverList(
         delegate: SliverChildListDelegate(
           <Widget>[
             ...model.post.replies
                 .mapIndexed(
                   (int index, PostModelMessage message) =>
-                      _buildMessageRekursive(message, 1),
+                      _buildReplyRekursive(message, 1),
                 )
                 .flatten,
           ].toList(),
@@ -65,13 +83,21 @@ class PostView extends StatelessWidget {
         username: model.post.author.name,
         userAvatar: model.post.author.avatar,
         message: model.post.content,
-        replyCallback: () => controller.reply(
-          id: model.post.id,
-          message: 'message',
+        replyCallback: () =>
+            controller.selectMessageToReply(messageId: model.post.id),
+      );
+
+  Widget _buildTextInputField() => Builder(
+        builder: (BuildContext context) => CustomTextField(
+          onSubmitted: (String message) {
+            controller.submitReply(
+              message: message,
+            );
+          },
         ),
       );
 
-  List<Widget> _buildMessageRekursive(
+  List<Widget> _buildReplyRekursive(
     PostModelMessage message,
     int rekursionDepth,
   ) =>
@@ -93,13 +119,13 @@ class PostView extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Message(
-                  username: message.author.name,
-                  userAvatar: message.author.avatar,
-                  message: message.message,
-                  replyCallback: () => controller.reply(
-                    id: message.id,
-                    message: 'message',
+                child: Builder(
+                  builder: (BuildContext context) => Message(
+                    username: message.author.name,
+                    userAvatar: message.author.avatar,
+                    message: message.message,
+                    replyCallback: () =>
+                        controller.selectMessageToReply(messageId: message.id),
                   ),
                 ),
               ),
@@ -109,7 +135,7 @@ class PostView extends StatelessWidget {
         ...message.replies
             .mapIndexed(
               (int index, PostModelMessage reply) =>
-                  _buildMessageRekursive(reply, rekursionDepth + 1),
+                  _buildReplyRekursive(reply, rekursionDepth + 1),
             )
             .flatten,
       ];
