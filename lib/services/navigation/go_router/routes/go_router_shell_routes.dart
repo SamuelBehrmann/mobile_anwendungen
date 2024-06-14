@@ -12,6 +12,7 @@ import 'package:medi_support/ui/screens/home/home_controller_impl.dart';
 import 'package:medi_support/ui/screens/home/home_view.dart';
 import 'package:medi_support/ui/screens/profile/profile_controller_impl.dart';
 import 'package:medi_support/ui/screens/profile/profile_view.dart';
+import 'package:medi_support/ui/screens/create_post/create_post_controller_impl.dart';
 
 part 'go_router_shell_routes.g.dart';
 
@@ -68,8 +69,19 @@ class ChatsRoute extends GoRouteData {
 @immutable
 class CreatePostRoute extends GoRouteData {
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const CreatePostView();
+  Widget build(BuildContext context, GoRouterState state) => Consumer(
+        builder: (_, WidgetRef ref, __) {
+          final NavigationServiceAggregator navigationService =
+              ref.read(navigationServiceAggregatorProvider);
+          final CreatePostControllerImplProvider provider =
+              createPostControllerImplProvider(
+            navigationService: navigationService,
+          );
+          return CreatePostView(
+            controller: ref.watch(provider.notifier),
+          );
+        },
+      );
 }
 
 // ProfileShellRoute
