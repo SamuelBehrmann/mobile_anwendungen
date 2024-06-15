@@ -24,6 +24,8 @@ class CreatePostView extends StatelessWidget {
           hint: "body",
           label: 'Body',
           controller: bodyController,
+          minLines: 5,
+          maxLines: 25,
         ),
       );
 
@@ -46,17 +48,19 @@ class CreatePostView extends StatelessWidget {
             ),
           ],
         ),
-        body: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _buildTitleField(),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _buildBodyField(),
-            ),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: _buildTitleField(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: _buildBodyField(),
+              ),
+            ],
+          ),
         ),
       );
 }
