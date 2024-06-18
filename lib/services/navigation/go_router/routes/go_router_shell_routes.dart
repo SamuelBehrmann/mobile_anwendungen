@@ -12,6 +12,7 @@ import 'package:medi_support/ui/screens/chats/chats_view.dart';
 import 'package:medi_support/ui/screens/create_post/create_post_view.dart';
 import 'package:medi_support/ui/screens/home/home_controller_impl.dart';
 import 'package:medi_support/ui/screens/home/home_view.dart';
+import 'package:medi_support/ui/screens/home/services/home_backend_service.dart';
 import 'package:medi_support/ui/screens/profile/profile_controller_impl.dart';
 import 'package:medi_support/ui/screens/profile/profile_view.dart';
 import 'package:medi_support/ui/screens/create_post/create_post_controller_impl.dart';
@@ -36,9 +37,12 @@ class HomeRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => Consumer(
         builder: (BuildContext context, WidgetRef watch, Widget? child) {
+          final BackendServiceAggregator backendService =
+              watch.watch(backendServiceAggregatorProvider);
           final HomeControllerImplProvider provider =
               homeControllerImplProvider(
             navigationService: watch.watch(navigationServiceAggregatorProvider),
+            backendService: backendService,
           );
           return HomeView(
             model: watch.watch(provider),

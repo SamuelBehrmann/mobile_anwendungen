@@ -1,9 +1,10 @@
-// ignore_for_file: invalid_annotation_target
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:medi_support/services/backend/backend_service.dart';
 import 'package:medi_support/ui/screens/chats/services/chats_backend_service.dart';
+import 'package:medi_support/ui/screens/home/home_model.dart';
 import 'package:medi_support/ui/screens/post/services/post_backend_service.dart';
 import 'package:uuid/uuid.dart';
 
@@ -186,6 +187,12 @@ class FirestoreBackendService extends BackendServiceAggregator {
                 ),
               )
               .toList();
+
+  @override
+  Future<List<HomeModelPost>> fetchPosts() {
+    // TODO: implement fetchPosts
+    throw UnimplementedError();
+  }
 }
 
 // convenience classes to work with Firestore data
