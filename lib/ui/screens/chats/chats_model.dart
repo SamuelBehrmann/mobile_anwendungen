@@ -6,6 +6,7 @@ part 'chats_model.freezed.dart';
 class ChatsModel with _$ChatsModel {
   const factory ChatsModel({
     required List<SingleChat> chats,
+    List<SingleChat>? filteredChats,
   }) = _ChatsModel;
 }
 

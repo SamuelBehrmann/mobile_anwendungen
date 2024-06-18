@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ChatsModel {
   List<SingleChat> get chats => throw _privateConstructorUsedError;
+  List<SingleChat>? get filteredChats => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatsModelCopyWith<ChatsModel> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $ChatsModelCopyWith<$Res> {
           ChatsModel value, $Res Function(ChatsModel) then) =
       _$ChatsModelCopyWithImpl<$Res, ChatsModel>;
   @useResult
-  $Res call({List<SingleChat> chats});
+  $Res call({List<SingleChat> chats, List<SingleChat>? filteredChats});
 }
 
 /// @nodoc
@@ -46,12 +47,17 @@ class _$ChatsModelCopyWithImpl<$Res, $Val extends ChatsModel>
   @override
   $Res call({
     Object? chats = null,
+    Object? filteredChats = freezed,
   }) {
     return _then(_value.copyWith(
       chats: null == chats
           ? _value.chats
           : chats // ignore: cast_nullable_to_non_nullable
               as List<SingleChat>,
+      filteredChats: freezed == filteredChats
+          ? _value.filteredChats
+          : filteredChats // ignore: cast_nullable_to_non_nullable
+              as List<SingleChat>?,
     ) as $Val);
   }
 }
@@ -64,7 +70,7 @@ abstract class _$$ChatsModelImplCopyWith<$Res>
       __$$ChatsModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<SingleChat> chats});
+  $Res call({List<SingleChat> chats, List<SingleChat>? filteredChats});
 }
 
 /// @nodoc
@@ -79,12 +85,17 @@ class __$$ChatsModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? chats = null,
+    Object? filteredChats = freezed,
   }) {
     return _then(_$ChatsModelImpl(
       chats: null == chats
           ? _value._chats
           : chats // ignore: cast_nullable_to_non_nullable
               as List<SingleChat>,
+      filteredChats: freezed == filteredChats
+          ? _value._filteredChats
+          : filteredChats // ignore: cast_nullable_to_non_nullable
+              as List<SingleChat>?,
     ));
   }
 }
@@ -92,8 +103,11 @@ class __$$ChatsModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ChatsModelImpl implements _ChatsModel {
-  const _$ChatsModelImpl({required final List<SingleChat> chats})
-      : _chats = chats;
+  const _$ChatsModelImpl(
+      {required final List<SingleChat> chats,
+      final List<SingleChat>? filteredChats})
+      : _chats = chats,
+        _filteredChats = filteredChats;
 
   final List<SingleChat> _chats;
   @override
@@ -103,9 +117,19 @@ class _$ChatsModelImpl implements _ChatsModel {
     return EqualUnmodifiableListView(_chats);
   }
 
+  final List<SingleChat>? _filteredChats;
+  @override
+  List<SingleChat>? get filteredChats {
+    final value = _filteredChats;
+    if (value == null) return null;
+    if (_filteredChats is EqualUnmodifiableListView) return _filteredChats;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'ChatsModel(chats: $chats)';
+    return 'ChatsModel(chats: $chats, filteredChats: $filteredChats)';
   }
 
   @override
@@ -113,12 +137,16 @@ class _$ChatsModelImpl implements _ChatsModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChatsModelImpl &&
-            const DeepCollectionEquality().equals(other._chats, _chats));
+            const DeepCollectionEquality().equals(other._chats, _chats) &&
+            const DeepCollectionEquality()
+                .equals(other._filteredChats, _filteredChats));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_chats));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_chats),
+      const DeepCollectionEquality().hash(_filteredChats));
 
   @JsonKey(ignore: true)
   @override
@@ -128,11 +156,14 @@ class _$ChatsModelImpl implements _ChatsModel {
 }
 
 abstract class _ChatsModel implements ChatsModel {
-  const factory _ChatsModel({required final List<SingleChat> chats}) =
-      _$ChatsModelImpl;
+  const factory _ChatsModel(
+      {required final List<SingleChat> chats,
+      final List<SingleChat>? filteredChats}) = _$ChatsModelImpl;
 
   @override
   List<SingleChat> get chats;
+  @override
+  List<SingleChat>? get filteredChats;
   @override
   @JsonKey(ignore: true)
   _$$ChatsModelImplCopyWith<_$ChatsModelImpl> get copyWith =>
