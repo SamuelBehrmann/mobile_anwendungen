@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatefulWidget {
-  final String label;
+  final String? label;
   final String hint;
   final IconData? icon;
-  final bool includeTextField;
   final bool isPasswordField;
+  final TextEditingController? controller;
+  final int minLines;
+  final int maxLines;
+  final void Function()? onTapOutside;
 
   const CustomTextFormField({
     super.key,
-    required this.label,
+    this.label,
     required this.hint,
     this.icon,
-    this.includeTextField = true,
     this.isPasswordField = false,
+    this.controller,
+    this.minLines = 1,
+    this.maxLines = 1,
+    this.onTapOutside,
   });
 
   @override
@@ -29,7 +35,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    _controller = widget.controller ?? TextEditingController();
     _passwordVisible = !widget.isPasswordField;
   }
 
@@ -43,16 +49,17 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          if (widget.includeTextField) ...<Widget>[
+          if (widget.label != null) ...<Widget>[
             Text(
-              widget.label,
+              widget.label ?? '',
               style: Theme.of(context).textTheme.titleMedium,
             ),
-          const SizedBox(height: _paddingBetweenLabelField),
+            const SizedBox(height: _paddingBetweenLabelField),
           ],
           TextFormField(
             controller: _controller,
             obscureText: !widget.isPasswordField ? false : !_passwordVisible,
+            onTapOutside: (_) => widget.onTapOutside?.call(),
             decoration: InputDecoration(
               contentPadding: _contentPadding,
               hintText: widget.hint,
@@ -73,7 +80,8 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
                     )
                   : null,
             ),
-            maxLines: 1,
+            maxLines: widget.maxLines,
+            minLines: widget.minLines,
           ),
         ],
       );
