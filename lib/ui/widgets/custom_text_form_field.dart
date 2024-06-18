@@ -8,6 +8,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   final int minLines;
   final int maxLines;
+  final void Function()? onTapOutside;
 
   const CustomTextFormField({
     super.key,
@@ -18,6 +19,7 @@ class CustomTextFormField extends StatefulWidget {
     this.controller,
     this.minLines = 1,
     this.maxLines = 1,
+    this.onTapOutside,
   });
 
   @override
@@ -57,6 +59,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
           TextFormField(
             controller: _controller,
             obscureText: !widget.isPasswordField ? false : !_passwordVisible,
+            onTapOutside: (_) => widget.onTapOutside?.call(),
             decoration: InputDecoration(
               contentPadding: _contentPadding,
               hintText: widget.hint,

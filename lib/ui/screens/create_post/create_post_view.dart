@@ -16,6 +16,7 @@ class CreatePostView extends StatelessWidget {
           hint: "Titel",
           label: 'Titel',
           controller: titleController,
+          onTapOutside: FocusScope.of(context).unfocus,
         ),
       );
 
@@ -26,6 +27,7 @@ class CreatePostView extends StatelessWidget {
           controller: bodyController,
           minLines: 5,
           maxLines: 25,
+          onTapOutside: FocusScope.of(context).unfocus,
         ),
       );
 
@@ -34,7 +36,11 @@ class CreatePostView extends StatelessWidget {
         appBar: CustomAppBar(
           leading: some(
             IconButton(
-              onPressed: controller.goHome,
+              onPressed: () {
+                controller.goHome();
+                bodyController.clear();
+                titleController.clear();
+              },
               icon: const Icon(Icons.close),
             ),
           ),
@@ -45,6 +51,8 @@ class CreatePostView extends StatelessWidget {
                   body: bodyController.text,
                   title: titleController.text,
                 );
+                bodyController.clear();
+                titleController.clear();
               },
               icon: const Icon(Icons.send),
             ),

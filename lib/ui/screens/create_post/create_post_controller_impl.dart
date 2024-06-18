@@ -9,24 +9,16 @@ part 'create_post_controller_impl.g.dart';
 class CreatePostControllerImpl extends _$CreatePostControllerImpl
     implements CreatePostController {
   @override
-  CreatePostModel build(
-      {required CreatePostNavigationService navigationService}) {
-    CreatePostModel model = const CreatePostModel(
-      title: null,
-      body: null,
-    );
-
-    return model;
-  }
+  CreatePostModel build({
+    required CreatePostNavigationService navigationService,
+  }) =>
+      const CreatePostModel();
 
   @override
   void send({required String title, required String body}) {
-    state = state.copyWith(
-      title: title,
-      body: body,
-    );
     print("controller title: " + title);
     print("controller body: " + body);
+    goHome();
   }
 
   @override
