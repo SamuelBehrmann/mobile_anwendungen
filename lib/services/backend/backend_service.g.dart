@@ -7,7 +7,7 @@ part of 'backend_service.dart';
 // **************************************************************************
 
 String _$backendServiceAggregatorHash() =>
-    r'3848e2e87413957a44a9e825d048e17f4428c5ed';
+    r'b441794b5ca2efbac4ed2702f84e006c73118f76';
 
 /// See also [backendServiceAggregator].
 @ProviderFor(backendServiceAggregator)
