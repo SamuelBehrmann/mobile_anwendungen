@@ -31,6 +31,7 @@ class SearchView extends StatelessWidget {
             CustomSearchBar(
               onSearch: controller.onSearch,
               currentQuery: model.query,
+              onDiscard: controller.discardQuery,
             ),
             ListView.builder(
               shrinkWrap: true,
@@ -47,7 +48,8 @@ class SearchView extends StatelessWidget {
                   IconWithLabel(Icons.home, 'Home'),
                   IconWithLabel(Icons.favorite, 'Favorites'),
                 ],
-                onIconPressed: controller.onSearch,
+                onIconPressed: ({required String value}) =>
+                    controller.onSearch(query: value),
               ),
               IconRow(
                 iconSize: 24,
@@ -56,7 +58,8 @@ class SearchView extends StatelessWidget {
                   IconWithLabel(Icons.home, 'Home'),
                   IconWithLabel(Icons.favorite, 'Favorites'),
                 ],
-                onIconPressed: controller.onSearch,
+                onIconPressed: ({required String value}) =>
+                    controller.onSearch(query: value),
               ),
             ],
           ],

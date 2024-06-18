@@ -49,4 +49,9 @@ class SearchControllerImpl extends _$SearchControllerImpl
   void openPost({required String postId}) {
     navigationService.openPost(postId: postId);
   }
+
+  @override
+  void discardQuery() {
+    state = state.copyWith(filteredResults: <String>[], query: "");
+  }
 }

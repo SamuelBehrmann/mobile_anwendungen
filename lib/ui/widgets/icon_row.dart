@@ -7,7 +7,7 @@ class IconRow extends StatelessWidget {
   final double iconSize;
   final Iterable<IconWithLabel> icons;
   final MainAxisAlignment mainAxisAlignment;
-  final void Function({required String query})? onIconPressed;
+  final void Function({required String value})? onIconPressed;
 
   const IconRow({
     super.key,
@@ -26,7 +26,7 @@ class IconRow extends StatelessWidget {
               .map(
                 (IconWithLabel element) => IconButton(
                   iconSize: iconSize,
-                  onPressed: () => onIconPressed?.call(query: element.label),
+                  onPressed: () => onIconPressed?.call(value: element.label),
                   icon: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[

@@ -5,8 +5,10 @@ class CustomSearchBar extends StatefulWidget {
     super.key,
     required this.onSearch,
     required this.currentQuery,
+    this.onDiscard,
   });
   final void Function({required String query}) onSearch;
+  final void Function()? onDiscard;
   final String currentQuery;
 
   @override
@@ -50,7 +52,10 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               suffixIcon: _controller.text.isNotEmpty
                   ? IconButton(
                       icon: const Icon(Icons.close),
-                      onPressed: () => setState(_controller.clear),
+                      onPressed: () {
+                        widget.onDiscard?.call();
+                        setState(_controller.clear);
+                      },
                     )
                   : const SizedBox(width: 48),
             ),
