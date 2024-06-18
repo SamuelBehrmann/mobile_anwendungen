@@ -3,7 +3,6 @@ import 'package:medi_support/ui/screens/home/home_controller.dart';
 import 'package:medi_support/ui/screens/home/home_model.dart';
 import 'package:medi_support/ui/widgets/message.dart';
 import 'package:medi_support/ui/widgets/post_preview.dart';
-import 'package:medi_support/ui/widgets/search.dart';
 
 class HomeView extends StatelessWidget {
   final HomeModel model;
@@ -19,16 +18,12 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
-          actions: const <Widget>[
-            CustomSearchBar(
-              items: <String>['item1', 'item2', 'item3'],
-            ),
-          ],
+          actions: <Widget>[_buildSearchButton()],
         ),
         body: _buildContent(),
       );
 
-  Widget _buildSearchButton(HomeController controller) => IconButton(
+  Widget _buildSearchButton() => IconButton(
         icon: const Icon(Icons.search),
         onPressed: controller.openSearch,
       );

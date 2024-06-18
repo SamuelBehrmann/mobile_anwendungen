@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'profile_controller_impl.dart';
+part of 'search_controller_impl.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$profileControllerImplHash() =>
-    r'8fac313d1cbfafc9a2c7b1116fe840c34ded5512';
+String _$searchControllerImplHash() =>
+    r'5844cc15aa9adc32d9074998ff09fc36ac4fa5eb';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,36 +30,36 @@ class _SystemHash {
   }
 }
 
-abstract class _$ProfileControllerImpl
-    extends BuildlessAutoDisposeNotifier<ProfileModel> {
-  late final ProfileNavigationService navigationService;
+abstract class _$SearchControllerImpl
+    extends BuildlessAutoDisposeNotifier<SearchModel> {
+  late final SearchNavigationService navigationService;
 
-  ProfileModel build({
-    required ProfileNavigationService navigationService,
+  SearchModel build({
+    required SearchNavigationService navigationService,
   });
 }
 
-/// See also [ProfileControllerImpl].
-@ProviderFor(ProfileControllerImpl)
-const profileControllerImplProvider = ProfileControllerImplFamily();
+/// See also [SearchControllerImpl].
+@ProviderFor(SearchControllerImpl)
+const searchControllerImplProvider = SearchControllerImplFamily();
 
-/// See also [ProfileControllerImpl].
-class ProfileControllerImplFamily extends Family<ProfileModel> {
-  /// See also [ProfileControllerImpl].
-  const ProfileControllerImplFamily();
+/// See also [SearchControllerImpl].
+class SearchControllerImplFamily extends Family<SearchModel> {
+  /// See also [SearchControllerImpl].
+  const SearchControllerImplFamily();
 
-  /// See also [ProfileControllerImpl].
-  ProfileControllerImplProvider call({
-    required ProfileNavigationService navigationService,
+  /// See also [SearchControllerImpl].
+  SearchControllerImplProvider call({
+    required SearchNavigationService navigationService,
   }) {
-    return ProfileControllerImplProvider(
+    return SearchControllerImplProvider(
       navigationService: navigationService,
     );
   }
 
   @override
-  ProfileControllerImplProvider getProviderOverride(
-    covariant ProfileControllerImplProvider provider,
+  SearchControllerImplProvider getProviderOverride(
+    covariant SearchControllerImplProvider provider,
   ) {
     return call(
       navigationService: provider.navigationService,
@@ -78,30 +78,30 @@ class ProfileControllerImplFamily extends Family<ProfileModel> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'profileControllerImplProvider';
+  String? get name => r'searchControllerImplProvider';
 }
 
-/// See also [ProfileControllerImpl].
-class ProfileControllerImplProvider extends AutoDisposeNotifierProviderImpl<
-    ProfileControllerImpl, ProfileModel> {
-  /// See also [ProfileControllerImpl].
-  ProfileControllerImplProvider({
-    required ProfileNavigationService navigationService,
+/// See also [SearchControllerImpl].
+class SearchControllerImplProvider
+    extends AutoDisposeNotifierProviderImpl<SearchControllerImpl, SearchModel> {
+  /// See also [SearchControllerImpl].
+  SearchControllerImplProvider({
+    required SearchNavigationService navigationService,
   }) : this._internal(
-          () => ProfileControllerImpl()..navigationService = navigationService,
-          from: profileControllerImplProvider,
-          name: r'profileControllerImplProvider',
+          () => SearchControllerImpl()..navigationService = navigationService,
+          from: searchControllerImplProvider,
+          name: r'searchControllerImplProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$profileControllerImplHash,
-          dependencies: ProfileControllerImplFamily._dependencies,
+                  : _$searchControllerImplHash,
+          dependencies: SearchControllerImplFamily._dependencies,
           allTransitiveDependencies:
-              ProfileControllerImplFamily._allTransitiveDependencies,
+              SearchControllerImplFamily._allTransitiveDependencies,
           navigationService: navigationService,
         );
 
-  ProfileControllerImplProvider._internal(
+  SearchControllerImplProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -111,11 +111,11 @@ class ProfileControllerImplProvider extends AutoDisposeNotifierProviderImpl<
     required this.navigationService,
   }) : super.internal();
 
-  final ProfileNavigationService navigationService;
+  final SearchNavigationService navigationService;
 
   @override
-  ProfileModel runNotifierBuild(
-    covariant ProfileControllerImpl notifier,
+  SearchModel runNotifierBuild(
+    covariant SearchControllerImpl notifier,
   ) {
     return notifier.build(
       navigationService: navigationService,
@@ -123,10 +123,10 @@ class ProfileControllerImplProvider extends AutoDisposeNotifierProviderImpl<
   }
 
   @override
-  Override overrideWith(ProfileControllerImpl Function() create) {
+  Override overrideWith(SearchControllerImpl Function() create) {
     return ProviderOverride(
       origin: this,
-      override: ProfileControllerImplProvider._internal(
+      override: SearchControllerImplProvider._internal(
         () => create()..navigationService = navigationService,
         from: from,
         name: null,
@@ -139,14 +139,14 @@ class ProfileControllerImplProvider extends AutoDisposeNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeNotifierProviderElement<ProfileControllerImpl, ProfileModel>
+  AutoDisposeNotifierProviderElement<SearchControllerImpl, SearchModel>
       createElement() {
-    return _ProfileControllerImplProviderElement(this);
+    return _SearchControllerImplProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ProfileControllerImplProvider &&
+    return other is SearchControllerImplProvider &&
         other.navigationService == navigationService;
   }
 
@@ -159,19 +159,19 @@ class ProfileControllerImplProvider extends AutoDisposeNotifierProviderImpl<
   }
 }
 
-mixin ProfileControllerImplRef on AutoDisposeNotifierProviderRef<ProfileModel> {
+mixin SearchControllerImplRef on AutoDisposeNotifierProviderRef<SearchModel> {
   /// The parameter `navigationService` of this provider.
-  ProfileNavigationService get navigationService;
+  SearchNavigationService get navigationService;
 }
 
-class _ProfileControllerImplProviderElement
-    extends AutoDisposeNotifierProviderElement<ProfileControllerImpl,
-        ProfileModel> with ProfileControllerImplRef {
-  _ProfileControllerImplProviderElement(super.provider);
+class _SearchControllerImplProviderElement
+    extends AutoDisposeNotifierProviderElement<SearchControllerImpl,
+        SearchModel> with SearchControllerImplRef {
+  _SearchControllerImplProviderElement(super.provider);
 
   @override
-  ProfileNavigationService get navigationService =>
-      (origin as ProfileControllerImplProvider).navigationService;
+  SearchNavigationService get navigationService =>
+      (origin as SearchControllerImplProvider).navigationService;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
