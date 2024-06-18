@@ -50,9 +50,11 @@ class CreatePostView extends StatelessWidget {
                 controller.send(
                   body: bodyController.text,
                   title: titleController.text,
+                  onSend: () {
+                    bodyController.clear();
+                    titleController.clear();
+                  },
                 );
-                bodyController.clear();
-                titleController.clear();
               },
               icon: const Icon(Icons.send),
             ),

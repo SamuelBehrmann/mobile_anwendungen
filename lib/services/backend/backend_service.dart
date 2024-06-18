@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medi_support/services/backend/firestore/firestore_backend_service.dart';
+import 'package:medi_support/ui/screens/create_post/services/create_post_backend_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'backend_service.g.dart';
@@ -10,4 +11,4 @@ BackendServiceAggregator backendServiceAggregator(
 ) =>
     FirestoreBackendService(FirebaseFirestore.instance);
 
-abstract class BackendServiceAggregator {}
+abstract class BackendServiceAggregator implements CreatePostBackendService {}

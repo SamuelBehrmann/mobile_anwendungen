@@ -7,4 +7,12 @@ class FirestoreBackendService extends BackendServiceAggregator {
   FirestoreBackendService(
     this.firestore,
   );
+
+  @override
+  Future<void> send({required String title, required String body}) async {
+    await firestore.collection('posts').add(<String, String>{
+      'title': title,
+      'body': body,
+    });
+  }
 }

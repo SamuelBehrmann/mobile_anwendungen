@@ -7,7 +7,7 @@ part of 'create_post_controller_impl.dart';
 // **************************************************************************
 
 String _$createPostControllerImplHash() =>
-    r'287464ac324ded4173b1f90aa6412b819cb8ce87';
+    r'd92dfda895f785c0f47be1aded1a6fccefc7e654';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -33,9 +33,11 @@ class _SystemHash {
 abstract class _$CreatePostControllerImpl
     extends BuildlessAutoDisposeNotifier<CreatePostModel> {
   late final CreatePostNavigationService navigationService;
+  late final CreatePostBackendService backendService;
 
   CreatePostModel build({
     required CreatePostNavigationService navigationService,
+    required CreatePostBackendService backendService,
   });
 }
 
@@ -51,9 +53,11 @@ class CreatePostControllerImplFamily extends Family<CreatePostModel> {
   /// See also [CreatePostControllerImpl].
   CreatePostControllerImplProvider call({
     required CreatePostNavigationService navigationService,
+    required CreatePostBackendService backendService,
   }) {
     return CreatePostControllerImplProvider(
       navigationService: navigationService,
+      backendService: backendService,
     );
   }
 
@@ -63,6 +67,7 @@ class CreatePostControllerImplFamily extends Family<CreatePostModel> {
   ) {
     return call(
       navigationService: provider.navigationService,
+      backendService: provider.backendService,
     );
   }
 
@@ -87,9 +92,11 @@ class CreatePostControllerImplProvider extends AutoDisposeNotifierProviderImpl<
   /// See also [CreatePostControllerImpl].
   CreatePostControllerImplProvider({
     required CreatePostNavigationService navigationService,
+    required CreatePostBackendService backendService,
   }) : this._internal(
-          () =>
-              CreatePostControllerImpl()..navigationService = navigationService,
+          () => CreatePostControllerImpl()
+            ..navigationService = navigationService
+            ..backendService = backendService,
           from: createPostControllerImplProvider,
           name: r'createPostControllerImplProvider',
           debugGetCreateSourceHash:
@@ -100,6 +107,7 @@ class CreatePostControllerImplProvider extends AutoDisposeNotifierProviderImpl<
           allTransitiveDependencies:
               CreatePostControllerImplFamily._allTransitiveDependencies,
           navigationService: navigationService,
+          backendService: backendService,
         );
 
   CreatePostControllerImplProvider._internal(
@@ -110,9 +118,11 @@ class CreatePostControllerImplProvider extends AutoDisposeNotifierProviderImpl<
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.navigationService,
+    required this.backendService,
   }) : super.internal();
 
   final CreatePostNavigationService navigationService;
+  final CreatePostBackendService backendService;
 
   @override
   CreatePostModel runNotifierBuild(
@@ -120,6 +130,7 @@ class CreatePostControllerImplProvider extends AutoDisposeNotifierProviderImpl<
   ) {
     return notifier.build(
       navigationService: navigationService,
+      backendService: backendService,
     );
   }
 
@@ -128,13 +139,16 @@ class CreatePostControllerImplProvider extends AutoDisposeNotifierProviderImpl<
     return ProviderOverride(
       origin: this,
       override: CreatePostControllerImplProvider._internal(
-        () => create()..navigationService = navigationService,
+        () => create()
+          ..navigationService = navigationService
+          ..backendService = backendService,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         navigationService: navigationService,
+        backendService: backendService,
       ),
     );
   }
@@ -148,13 +162,15 @@ class CreatePostControllerImplProvider extends AutoDisposeNotifierProviderImpl<
   @override
   bool operator ==(Object other) {
     return other is CreatePostControllerImplProvider &&
-        other.navigationService == navigationService;
+        other.navigationService == navigationService &&
+        other.backendService == backendService;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, navigationService.hashCode);
+    hash = _SystemHash.combine(hash, backendService.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -164,6 +180,9 @@ mixin CreatePostControllerImplRef
     on AutoDisposeNotifierProviderRef<CreatePostModel> {
   /// The parameter `navigationService` of this provider.
   CreatePostNavigationService get navigationService;
+
+  /// The parameter `backendService` of this provider.
+  CreatePostBackendService get backendService;
 }
 
 class _CreatePostControllerImplProviderElement
@@ -174,6 +193,9 @@ class _CreatePostControllerImplProviderElement
   @override
   CreatePostNavigationService get navigationService =>
       (origin as CreatePostControllerImplProvider).navigationService;
+  @override
+  CreatePostBackendService get backendService =>
+      (origin as CreatePostControllerImplProvider).backendService;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
