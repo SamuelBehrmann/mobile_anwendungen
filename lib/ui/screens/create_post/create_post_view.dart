@@ -13,16 +13,16 @@ class CreatePostView extends StatelessWidget {
 
   Widget _buildTitleField() => Builder(
         builder: (BuildContext context) => CustomTextFormField(
-          hint: "title",
-          label: 'Title',
+          hint: "Titel",
+          label: 'Titel',
           controller: titleController,
         ),
       );
 
   Widget _buildBodyField() => Builder(
         builder: (BuildContext context) => CustomTextFormField(
-          hint: "body",
-          label: 'Body',
+          hint: "Ich habe ...",
+          label: 'Beitrag',
           controller: bodyController,
           minLines: 5,
           maxLines: 25,
@@ -42,25 +42,25 @@ class CreatePostView extends StatelessWidget {
             IconButton(
               onPressed: () {
                 controller.send(
-                    body: bodyController.text, title: titleController.text);
+                  body: bodyController.text,
+                  title: titleController.text,
+                );
               },
               icon: const Icon(Icons.send),
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: _buildTitleField(),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: _buildBodyField(),
-              ),
-            ],
-          ),
+        body: ListView(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: _buildTitleField(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: _buildBodyField(),
+            ),
+          ],
         ),
       );
 }

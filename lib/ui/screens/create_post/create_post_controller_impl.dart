@@ -12,8 +12,8 @@ class CreatePostControllerImpl extends _$CreatePostControllerImpl
   CreatePostModel build(
       {required CreatePostNavigationService navigationService}) {
     CreatePostModel model = const CreatePostModel(
-      title: '',
-      body: '',
+      title: null,
+      body: null,
     );
 
     return model;
@@ -21,6 +21,10 @@ class CreatePostControllerImpl extends _$CreatePostControllerImpl
 
   @override
   void send({required String title, required String body}) {
+    state = state.copyWith(
+      title: title,
+      body: body,
+    );
     print("controller title: " + title);
     print("controller body: " + body);
   }

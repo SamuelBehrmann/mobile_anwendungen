@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CreatePostModel {
-  String get title => throw _privateConstructorUsedError;
-  String get body => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  String? get body => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreatePostModelCopyWith<CreatePostModel> get copyWith =>
@@ -30,7 +30,7 @@ abstract class $CreatePostModelCopyWith<$Res> {
           CreatePostModel value, $Res Function(CreatePostModel) then) =
       _$CreatePostModelCopyWithImpl<$Res, CreatePostModel>;
   @useResult
-  $Res call({String title, String body});
+  $Res call({String? title, String? body});
 }
 
 /// @nodoc
@@ -46,18 +46,18 @@ class _$CreatePostModelCopyWithImpl<$Res, $Val extends CreatePostModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = null,
-    Object? body = null,
+    Object? title = freezed,
+    Object? body = freezed,
   }) {
     return _then(_value.copyWith(
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      body: null == body
+              as String?,
+      body: freezed == body
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -70,7 +70,7 @@ abstract class _$$CreatePostModelImplCopyWith<$Res>
       __$$CreatePostModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, String body});
+  $Res call({String? title, String? body});
 }
 
 /// @nodoc
@@ -84,18 +84,18 @@ class __$$CreatePostModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = null,
-    Object? body = null,
+    Object? title = freezed,
+    Object? body = freezed,
   }) {
     return _then(_$CreatePostModelImpl(
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      body: null == body
+              as String?,
+      body: freezed == body
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -106,9 +106,9 @@ class _$CreatePostModelImpl implements _CreatePostModel {
   const _$CreatePostModelImpl({required this.title, required this.body});
 
   @override
-  final String title;
+  final String? title;
   @override
-  final String body;
+  final String? body;
 
   @override
   String toString() {
@@ -137,13 +137,13 @@ class _$CreatePostModelImpl implements _CreatePostModel {
 
 abstract class _CreatePostModel implements CreatePostModel {
   const factory _CreatePostModel(
-      {required final String title,
-      required final String body}) = _$CreatePostModelImpl;
+      {required final String? title,
+      required final String? body}) = _$CreatePostModelImpl;
 
   @override
-  String get title;
+  String? get title;
   @override
-  String get body;
+  String? get body;
   @override
   @JsonKey(ignore: true)
   _$$CreatePostModelImplCopyWith<_$CreatePostModelImpl> get copyWith =>
