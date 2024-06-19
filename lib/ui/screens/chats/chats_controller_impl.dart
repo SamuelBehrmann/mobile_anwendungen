@@ -8,54 +8,54 @@ part 'chats_controller_impl.g.dart';
 @riverpod
 class ChatsControllerImpl extends _$ChatsControllerImpl
     implements ChatsController {
-  final List<SingleChat> _chats = <SingleChat>[
-    const SingleChat(
+  final List<ChatsModelChat> _chats = <ChatsModelChat>[
+    const ChatsModelChat(
       name: 'Alice',
       message: 'Hey, how are you?',
       profilePicturePath:
           'https://expertphotography.b-cdn.net/wp-content/uploads/2020/08/profile-photos-4.jpg',
     ),
-    const SingleChat(
+    const ChatsModelChat(
       name: 'Bob',
       message: 'What\'s up?',
       profilePicturePath:
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6BkMQEKHWILXy8SzbX5aocWP6YWv0mZnSDA&s',
     ),
-    const SingleChat(
+    const ChatsModelChat(
       name: 'Charlie',
       message: 'Long time no see!',
     ),
-    const SingleChat(
+    const ChatsModelChat(
       name: 'Diana',
       message: 'Are you coming to the party?',
       profilePicturePath:
           'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
     ),
-    const SingleChat(
+    const ChatsModelChat(
       name: 'Ethan',
       message: 'Did you finish the project?',
     ),
-    const SingleChat(
+    const ChatsModelChat(
       name: 'Fiona',
       message: 'Let\'s meet for coffee tomorrow.',
       profilePicturePath:
           'https://preview.redd.it/the-best-poses-for-girls-profile-pictures-v0-k3kxvh4czthb1.jpg?width=911&format=pjpg&auto=webp&s=5928c38dc54f0dbe37fc68519b2f23f2507e6d15',
     ),
-    const SingleChat(
+    const ChatsModelChat(
       name: 'George',
       message: 'I\'ll call you later.',
     ),
-    const SingleChat(
+    const ChatsModelChat(
       name: 'Hannah',
       message: 'Happy Birthday!',
       profilePicturePath:
           'https://w0.peakpx.com/wallpaper/357/667/HD-wallpaper-ghost-profile-thumbnail.jpg',
     ),
-    const SingleChat(
+    const ChatsModelChat(
       name: 'Ian',
       message: 'Can you help me with my homework?',
     ),
-    const SingleChat(
+    const ChatsModelChat(
       name: 'Julia',
       message: 'I loved the gift, thank you!',
       profilePicturePath:
@@ -80,18 +80,17 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
   void deleteChat() {}
 
   @override
-  List<SingleChat> filterChats(String query) {
-    if (query.isEmpty) {
-      return _chats;
-    } else {
-      final List<SingleChat> filteredChats = _chats
+  void filterChats(String query) {
+    List<ChatsModelChat> currentChats = state.chats;
+    if (query.isNotEmpty) {
+      currentChats = _chats
           .where(
-            (SingleChat chat) =>
+            (ChatsModelChat chat) =>
                 chat.name.toLowerCase().contains(query.toLowerCase()) ||
                 chat.message.toLowerCase().contains(query.toLowerCase()),
           )
           .toList();
-      return filteredChats;
     }
+    state = state.copyWith(filteredChats: currentChats);
   }
 }

@@ -13,8 +13,6 @@ class ChatsSearchBar extends StatefulWidget {
 }
 
 class _ChatsSearchBarState extends State<ChatsSearchBar> {
-  static const EdgeInsets _searchPadding =
-      EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8);
   static const EdgeInsets _contentPadding = EdgeInsets.all(8);
   static const double _iconSize = 22;
   static const BorderRadius _borderRadius =
@@ -24,29 +22,26 @@ class _ChatsSearchBarState extends State<ChatsSearchBar> {
   String searchQuery = '';
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: _searchPadding,
-        child: SizedBox(
-          height: searchBarHeight,
-          child: TextField(
-            decoration: const InputDecoration(
-              contentPadding: _contentPadding,
-              prefixIcon: Icon(
-                Icons.search_outlined,
-                size: _iconSize,
-              ),
-              hintText: 'Search',
-              border: OutlineInputBorder(
-                borderRadius: _borderRadius,
-              ),
-            ),
-            onChanged: (String value) {
-              setState(() {
-                searchQuery = value;
-              });
-              widget.onSearchChanged(value);
-            },
-          ),
+  Widget build(BuildContext context) => SizedBox(
+    height: searchBarHeight,
+    child: TextField(
+      decoration: const InputDecoration(
+        contentPadding: _contentPadding,
+        prefixIcon: Icon(
+          Icons.search_outlined,
+          size: _iconSize,
         ),
-      );
+        hintText: 'Search',
+        border: OutlineInputBorder(
+          borderRadius: _borderRadius,
+        ),
+      ),
+      onChanged: (String value) {
+        setState(() {
+          searchQuery = value;
+        });
+        widget.onSearchChanged(value);
+      },
+    ),
+  );
 }

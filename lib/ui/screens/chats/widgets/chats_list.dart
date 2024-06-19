@@ -3,25 +3,23 @@ import 'package:medi_support/ui/screens/chats/chats_model.dart';
 import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 
 class ChatList extends StatelessWidget {
-  final String searchQuery;
-  final List<SingleChat> Function(String) onFilterChats;
+  final List<ChatsModelChat> chats;
   final Function(String) onChatSelected;
+  final EdgeInsets padding;
 
   const ChatList({
     super.key,
-    required this.searchQuery,
-    required this.onFilterChats,
+    required this.chats,
     required this.onChatSelected,
+    this.padding = const EdgeInsets.only(top: 8),
   });
 
   @override
-  Widget build(BuildContext context) {
-    final List<SingleChat> filteredChats = onFilterChats(searchQuery);
-
-    return ListView.builder(
-      itemCount: filteredChats.length,
+  Widget build(BuildContext context) => ListView.builder(
+      padding: padding,
+      itemCount: chats.length,
       itemBuilder: (BuildContext context, int index) {
-        final SingleChat chat = filteredChats[index];
+        final ChatsModelChat chat = chats[index];
         return ListTile(
           leading: CircleAvatar(
             child: chat.profilePicturePath != null
@@ -38,5 +36,4 @@ class ChatList extends StatelessWidget {
         );
       },
     );
-  }
 }

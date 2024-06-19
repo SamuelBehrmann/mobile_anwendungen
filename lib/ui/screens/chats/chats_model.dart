@@ -5,16 +5,16 @@ part 'chats_model.freezed.dart';
 @freezed
 class ChatsModel with _$ChatsModel {
   const factory ChatsModel({
-    required List<SingleChat> chats,
-    List<SingleChat>? filteredChats,
+    required List<ChatsModelChat> chats,
+    @Default(<ChatsModelChat>[]) List<ChatsModelChat> filteredChats,
   }) = _ChatsModel;
 }
 
 @freezed
-class SingleChat with _$SingleChat {
-  const factory SingleChat({
+class ChatsModelChat with _$ChatsModelChat {
+  const factory ChatsModelChat({
     required String name,
     required String message,
     String? profilePicturePath,
-  }) = _SingleChat;
+  }) = _ChatsModelChat;
 }

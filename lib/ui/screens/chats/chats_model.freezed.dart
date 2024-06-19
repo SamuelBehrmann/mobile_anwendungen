@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ChatsModel {
-  List<SingleChat> get chats => throw _privateConstructorUsedError;
-  List<SingleChat>? get filteredChats => throw _privateConstructorUsedError;
+  List<ChatsModelChat> get chats => throw _privateConstructorUsedError;
+  List<ChatsModelChat> get filteredChats => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatsModelCopyWith<ChatsModel> get copyWith =>
@@ -30,7 +30,7 @@ abstract class $ChatsModelCopyWith<$Res> {
           ChatsModel value, $Res Function(ChatsModel) then) =
       _$ChatsModelCopyWithImpl<$Res, ChatsModel>;
   @useResult
-  $Res call({List<SingleChat> chats, List<SingleChat>? filteredChats});
+  $Res call({List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats});
 }
 
 /// @nodoc
@@ -47,17 +47,17 @@ class _$ChatsModelCopyWithImpl<$Res, $Val extends ChatsModel>
   @override
   $Res call({
     Object? chats = null,
-    Object? filteredChats = freezed,
+    Object? filteredChats = null,
   }) {
     return _then(_value.copyWith(
       chats: null == chats
           ? _value.chats
           : chats // ignore: cast_nullable_to_non_nullable
-              as List<SingleChat>,
-      filteredChats: freezed == filteredChats
+              as List<ChatsModelChat>,
+      filteredChats: null == filteredChats
           ? _value.filteredChats
           : filteredChats // ignore: cast_nullable_to_non_nullable
-              as List<SingleChat>?,
+              as List<ChatsModelChat>,
     ) as $Val);
   }
 }
@@ -70,7 +70,7 @@ abstract class _$$ChatsModelImplCopyWith<$Res>
       __$$ChatsModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<SingleChat> chats, List<SingleChat>? filteredChats});
+  $Res call({List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats});
 }
 
 /// @nodoc
@@ -85,17 +85,17 @@ class __$$ChatsModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? chats = null,
-    Object? filteredChats = freezed,
+    Object? filteredChats = null,
   }) {
     return _then(_$ChatsModelImpl(
       chats: null == chats
           ? _value._chats
           : chats // ignore: cast_nullable_to_non_nullable
-              as List<SingleChat>,
-      filteredChats: freezed == filteredChats
+              as List<ChatsModelChat>,
+      filteredChats: null == filteredChats
           ? _value._filteredChats
           : filteredChats // ignore: cast_nullable_to_non_nullable
-              as List<SingleChat>?,
+              as List<ChatsModelChat>,
     ));
   }
 }
@@ -104,27 +104,26 @@ class __$$ChatsModelImplCopyWithImpl<$Res>
 
 class _$ChatsModelImpl implements _ChatsModel {
   const _$ChatsModelImpl(
-      {required final List<SingleChat> chats,
-      final List<SingleChat>? filteredChats})
+      {required final List<ChatsModelChat> chats,
+      final List<ChatsModelChat> filteredChats = const <ChatsModelChat>[]})
       : _chats = chats,
         _filteredChats = filteredChats;
 
-  final List<SingleChat> _chats;
+  final List<ChatsModelChat> _chats;
   @override
-  List<SingleChat> get chats {
+  List<ChatsModelChat> get chats {
     if (_chats is EqualUnmodifiableListView) return _chats;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_chats);
   }
 
-  final List<SingleChat>? _filteredChats;
+  final List<ChatsModelChat> _filteredChats;
   @override
-  List<SingleChat>? get filteredChats {
-    final value = _filteredChats;
-    if (value == null) return null;
+  @JsonKey()
+  List<ChatsModelChat> get filteredChats {
     if (_filteredChats is EqualUnmodifiableListView) return _filteredChats;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_filteredChats);
   }
 
   @override
@@ -157,13 +156,13 @@ class _$ChatsModelImpl implements _ChatsModel {
 
 abstract class _ChatsModel implements ChatsModel {
   const factory _ChatsModel(
-      {required final List<SingleChat> chats,
-      final List<SingleChat>? filteredChats}) = _$ChatsModelImpl;
+      {required final List<ChatsModelChat> chats,
+      final List<ChatsModelChat> filteredChats}) = _$ChatsModelImpl;
 
   @override
-  List<SingleChat> get chats;
+  List<ChatsModelChat> get chats;
   @override
-  List<SingleChat>? get filteredChats;
+  List<ChatsModelChat> get filteredChats;
   @override
   @JsonKey(ignore: true)
   _$$ChatsModelImplCopyWith<_$ChatsModelImpl> get copyWith =>
@@ -171,29 +170,29 @@ abstract class _ChatsModel implements ChatsModel {
 }
 
 /// @nodoc
-mixin _$SingleChat {
+mixin _$ChatsModelChat {
   String get name => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   String? get profilePicturePath => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $SingleChatCopyWith<SingleChat> get copyWith =>
+  $ChatsModelChatCopyWith<ChatsModelChat> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SingleChatCopyWith<$Res> {
-  factory $SingleChatCopyWith(
-          SingleChat value, $Res Function(SingleChat) then) =
-      _$SingleChatCopyWithImpl<$Res, SingleChat>;
+abstract class $ChatsModelChatCopyWith<$Res> {
+  factory $ChatsModelChatCopyWith(
+          ChatsModelChat value, $Res Function(ChatsModelChat) then) =
+      _$ChatsModelChatCopyWithImpl<$Res, ChatsModelChat>;
   @useResult
   $Res call({String name, String message, String? profilePicturePath});
 }
 
 /// @nodoc
-class _$SingleChatCopyWithImpl<$Res, $Val extends SingleChat>
-    implements $SingleChatCopyWith<$Res> {
-  _$SingleChatCopyWithImpl(this._value, this._then);
+class _$ChatsModelChatCopyWithImpl<$Res, $Val extends ChatsModelChat>
+    implements $ChatsModelChatCopyWith<$Res> {
+  _$ChatsModelChatCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -225,22 +224,22 @@ class _$SingleChatCopyWithImpl<$Res, $Val extends SingleChat>
 }
 
 /// @nodoc
-abstract class _$$SingleChatImplCopyWith<$Res>
-    implements $SingleChatCopyWith<$Res> {
-  factory _$$SingleChatImplCopyWith(
-          _$SingleChatImpl value, $Res Function(_$SingleChatImpl) then) =
-      __$$SingleChatImplCopyWithImpl<$Res>;
+abstract class _$$ChatsModelChatImplCopyWith<$Res>
+    implements $ChatsModelChatCopyWith<$Res> {
+  factory _$$ChatsModelChatImplCopyWith(_$ChatsModelChatImpl value,
+          $Res Function(_$ChatsModelChatImpl) then) =
+      __$$ChatsModelChatImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, String message, String? profilePicturePath});
 }
 
 /// @nodoc
-class __$$SingleChatImplCopyWithImpl<$Res>
-    extends _$SingleChatCopyWithImpl<$Res, _$SingleChatImpl>
-    implements _$$SingleChatImplCopyWith<$Res> {
-  __$$SingleChatImplCopyWithImpl(
-      _$SingleChatImpl _value, $Res Function(_$SingleChatImpl) _then)
+class __$$ChatsModelChatImplCopyWithImpl<$Res>
+    extends _$ChatsModelChatCopyWithImpl<$Res, _$ChatsModelChatImpl>
+    implements _$$ChatsModelChatImplCopyWith<$Res> {
+  __$$ChatsModelChatImplCopyWithImpl(
+      _$ChatsModelChatImpl _value, $Res Function(_$ChatsModelChatImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -250,7 +249,7 @@ class __$$SingleChatImplCopyWithImpl<$Res>
     Object? message = null,
     Object? profilePicturePath = freezed,
   }) {
-    return _then(_$SingleChatImpl(
+    return _then(_$ChatsModelChatImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -269,8 +268,8 @@ class __$$SingleChatImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SingleChatImpl implements _SingleChat {
-  const _$SingleChatImpl(
+class _$ChatsModelChatImpl implements _ChatsModelChat {
+  const _$ChatsModelChatImpl(
       {required this.name, required this.message, this.profilePicturePath});
 
   @override
@@ -282,14 +281,14 @@ class _$SingleChatImpl implements _SingleChat {
 
   @override
   String toString() {
-    return 'SingleChat(name: $name, message: $message, profilePicturePath: $profilePicturePath)';
+    return 'ChatsModelChat(name: $name, message: $message, profilePicturePath: $profilePicturePath)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SingleChatImpl &&
+            other is _$ChatsModelChatImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.profilePicturePath, profilePicturePath) ||
@@ -303,15 +302,16 @@ class _$SingleChatImpl implements _SingleChat {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SingleChatImplCopyWith<_$SingleChatImpl> get copyWith =>
-      __$$SingleChatImplCopyWithImpl<_$SingleChatImpl>(this, _$identity);
+  _$$ChatsModelChatImplCopyWith<_$ChatsModelChatImpl> get copyWith =>
+      __$$ChatsModelChatImplCopyWithImpl<_$ChatsModelChatImpl>(
+          this, _$identity);
 }
 
-abstract class _SingleChat implements SingleChat {
-  const factory _SingleChat(
+abstract class _ChatsModelChat implements ChatsModelChat {
+  const factory _ChatsModelChat(
       {required final String name,
       required final String message,
-      final String? profilePicturePath}) = _$SingleChatImpl;
+      final String? profilePicturePath}) = _$ChatsModelChatImpl;
 
   @override
   String get name;
@@ -321,6 +321,6 @@ abstract class _SingleChat implements SingleChat {
   String? get profilePicturePath;
   @override
   @JsonKey(ignore: true)
-  _$$SingleChatImplCopyWith<_$SingleChatImpl> get copyWith =>
+  _$$ChatsModelChatImplCopyWith<_$ChatsModelChatImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
