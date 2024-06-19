@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_support/services/backend/backend_service.dart';
 import 'package:medi_support/services/navigation/go_router/routes/go_router_chat_route.dart';
 import 'package:medi_support/services/navigation/go_router/routes/go_router_post_route.dart';
 import 'package:medi_support/services/navigation/go_router/routes/go_router_search_route.dart';
@@ -13,6 +14,7 @@ import 'package:medi_support/ui/screens/home/home_controller_impl.dart';
 import 'package:medi_support/ui/screens/home/home_view.dart';
 import 'package:medi_support/ui/screens/profile/profile_controller_impl.dart';
 import 'package:medi_support/ui/screens/profile/profile_view.dart';
+import 'package:medi_support/ui/screens/create_post/create_post_controller_impl.dart';
 
 part 'go_router_shell_routes.g.dart';
 
@@ -80,8 +82,22 @@ class ChatsRoute extends GoRouteData {
 @immutable
 class CreatePostRoute extends GoRouteData {
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const CreatePostView();
+  Widget build(BuildContext context, GoRouterState state) => Consumer(
+        builder: (_, WidgetRef ref, __) {
+          final NavigationServiceAggregator navigationService =
+              ref.read(navigationServiceAggregatorProvider);
+          final BackendServiceAggregator backendService =
+              ref.read(backendServiceAggregatorProvider);
+          final CreatePostControllerImplProvider provider =
+              createPostControllerImplProvider(
+            navigationService: navigationService,
+            backendService: backendService,
+          );
+          return CreatePostView(
+            controller: ref.watch(provider.notifier),
+          );
+        },
+      );
 }
 
 // ProfileShellRoute

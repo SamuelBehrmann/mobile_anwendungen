@@ -23,4 +23,14 @@ class GoRouterNavigationService extends NavigationServiceAggregator {
   @override
   void openChat({required String chatId}) =>
       unawaited(goRouter.push(ChatRoute(chatId: chatId).location));
+
+  @override
+  void goHome() {
+    goRouter.go(HomeRoute().location);
+  }
+
+  @override
+  void goBack() {
+    goRouter.pop();
+  }
 }
