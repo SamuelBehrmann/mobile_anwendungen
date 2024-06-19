@@ -1,5 +1,6 @@
 import 'package:medi_support/services/navigation/go_router/go_router.dart';
 import 'package:medi_support/services/navigation/go_router/go_router_navigation_service.dart';
+import 'package:medi_support/ui/screens/chats/services/chats_navigation_service.dart';
 import 'package:medi_support/ui/screens/create_post/services/create_post_navigation_service.dart';
 import 'package:medi_support/ui/screens/home/services/home_navigation_service.dart';
 import 'package:medi_support/ui/screens/profile/services/profile_navigation_service.dart';
@@ -21,4 +22,5 @@ abstract class NavigationServiceAggregator
         HomeNavigationService,
         ProfileNavigationService,
         CreatePostNavigationService,
+        ChatsNavigationService,
         SearchNavigationService {}

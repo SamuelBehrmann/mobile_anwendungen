@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:go_router/go_router.dart';
+import 'package:medi_support/services/navigation/go_router/routes/go_router_chat_route.dart';
 import 'package:medi_support/services/navigation/go_router/routes/go_router_shell_routes.dart';
 import 'package:medi_support/services/navigation/go_router/routes/go_router_post_route.dart';
 import 'package:medi_support/services/navigation/go_router/routes/go_router_search_route.dart';
@@ -18,6 +19,10 @@ class GoRouterNavigationService extends NavigationServiceAggregator {
   @override
   void openPost({required String postId}) =>
       unawaited(goRouter.push(PostRoute(postId: postId).location));
+
+  @override
+  void openChat({required String chatId}) =>
+      unawaited(goRouter.push(ChatRoute(chatId: chatId).location));
 
   @override
   void goHome() {

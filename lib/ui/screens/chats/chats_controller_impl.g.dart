@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_post_controller_impl.dart';
+part of 'chats_controller_impl.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$createPostControllerImplHash() =>
-    r'd0d03c2cd01dfd74b6d65c42384157928bcd1639';
+String _$chatsControllerImplHash() =>
+    r'0324dcf0dd092e50518ed4012600d207157f0575';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,40 +30,40 @@ class _SystemHash {
   }
 }
 
-abstract class _$CreatePostControllerImpl
-    extends BuildlessAutoDisposeNotifier<CreatePostModel> {
-  late final CreatePostNavigationService navigationService;
-  late final CreatePostBackendService backendService;
+abstract class _$ChatsControllerImpl
+    extends BuildlessAutoDisposeNotifier<ChatsModel> {
+  late final ChatsNavigationService navigationService;
+  late final ChatsBackendService backendService;
 
-  CreatePostModel build({
-    required CreatePostNavigationService navigationService,
-    required CreatePostBackendService backendService,
+  ChatsModel build({
+    required ChatsNavigationService navigationService,
+    required ChatsBackendService backendService,
   });
 }
 
-/// See also [CreatePostControllerImpl].
-@ProviderFor(CreatePostControllerImpl)
-const createPostControllerImplProvider = CreatePostControllerImplFamily();
+/// See also [ChatsControllerImpl].
+@ProviderFor(ChatsControllerImpl)
+const chatsControllerImplProvider = ChatsControllerImplFamily();
 
-/// See also [CreatePostControllerImpl].
-class CreatePostControllerImplFamily extends Family<CreatePostModel> {
-  /// See also [CreatePostControllerImpl].
-  const CreatePostControllerImplFamily();
+/// See also [ChatsControllerImpl].
+class ChatsControllerImplFamily extends Family<ChatsModel> {
+  /// See also [ChatsControllerImpl].
+  const ChatsControllerImplFamily();
 
-  /// See also [CreatePostControllerImpl].
-  CreatePostControllerImplProvider call({
-    required CreatePostNavigationService navigationService,
-    required CreatePostBackendService backendService,
+  /// See also [ChatsControllerImpl].
+  ChatsControllerImplProvider call({
+    required ChatsNavigationService navigationService,
+    required ChatsBackendService backendService,
   }) {
-    return CreatePostControllerImplProvider(
+    return ChatsControllerImplProvider(
       navigationService: navigationService,
       backendService: backendService,
     );
   }
 
   @override
-  CreatePostControllerImplProvider getProviderOverride(
-    covariant CreatePostControllerImplProvider provider,
+  ChatsControllerImplProvider getProviderOverride(
+    covariant ChatsControllerImplProvider provider,
   ) {
     return call(
       navigationService: provider.navigationService,
@@ -83,34 +83,34 @@ class CreatePostControllerImplFamily extends Family<CreatePostModel> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'createPostControllerImplProvider';
+  String? get name => r'chatsControllerImplProvider';
 }
 
-/// See also [CreatePostControllerImpl].
-class CreatePostControllerImplProvider extends AutoDisposeNotifierProviderImpl<
-    CreatePostControllerImpl, CreatePostModel> {
-  /// See also [CreatePostControllerImpl].
-  CreatePostControllerImplProvider({
-    required CreatePostNavigationService navigationService,
-    required CreatePostBackendService backendService,
+/// See also [ChatsControllerImpl].
+class ChatsControllerImplProvider
+    extends AutoDisposeNotifierProviderImpl<ChatsControllerImpl, ChatsModel> {
+  /// See also [ChatsControllerImpl].
+  ChatsControllerImplProvider({
+    required ChatsNavigationService navigationService,
+    required ChatsBackendService backendService,
   }) : this._internal(
-          () => CreatePostControllerImpl()
+          () => ChatsControllerImpl()
             ..navigationService = navigationService
             ..backendService = backendService,
-          from: createPostControllerImplProvider,
-          name: r'createPostControllerImplProvider',
+          from: chatsControllerImplProvider,
+          name: r'chatsControllerImplProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$createPostControllerImplHash,
-          dependencies: CreatePostControllerImplFamily._dependencies,
+                  : _$chatsControllerImplHash,
+          dependencies: ChatsControllerImplFamily._dependencies,
           allTransitiveDependencies:
-              CreatePostControllerImplFamily._allTransitiveDependencies,
+              ChatsControllerImplFamily._allTransitiveDependencies,
           navigationService: navigationService,
           backendService: backendService,
         );
 
-  CreatePostControllerImplProvider._internal(
+  ChatsControllerImplProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -121,12 +121,12 @@ class CreatePostControllerImplProvider extends AutoDisposeNotifierProviderImpl<
     required this.backendService,
   }) : super.internal();
 
-  final CreatePostNavigationService navigationService;
-  final CreatePostBackendService backendService;
+  final ChatsNavigationService navigationService;
+  final ChatsBackendService backendService;
 
   @override
-  CreatePostModel runNotifierBuild(
-    covariant CreatePostControllerImpl notifier,
+  ChatsModel runNotifierBuild(
+    covariant ChatsControllerImpl notifier,
   ) {
     return notifier.build(
       navigationService: navigationService,
@@ -135,10 +135,10 @@ class CreatePostControllerImplProvider extends AutoDisposeNotifierProviderImpl<
   }
 
   @override
-  Override overrideWith(CreatePostControllerImpl Function() create) {
+  Override overrideWith(ChatsControllerImpl Function() create) {
     return ProviderOverride(
       origin: this,
-      override: CreatePostControllerImplProvider._internal(
+      override: ChatsControllerImplProvider._internal(
         () => create()
           ..navigationService = navigationService
           ..backendService = backendService,
@@ -154,14 +154,14 @@ class CreatePostControllerImplProvider extends AutoDisposeNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeNotifierProviderElement<CreatePostControllerImpl, CreatePostModel>
+  AutoDisposeNotifierProviderElement<ChatsControllerImpl, ChatsModel>
       createElement() {
-    return _CreatePostControllerImplProviderElement(this);
+    return _ChatsControllerImplProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is CreatePostControllerImplProvider &&
+    return other is ChatsControllerImplProvider &&
         other.navigationService == navigationService &&
         other.backendService == backendService;
   }
@@ -176,26 +176,25 @@ class CreatePostControllerImplProvider extends AutoDisposeNotifierProviderImpl<
   }
 }
 
-mixin CreatePostControllerImplRef
-    on AutoDisposeNotifierProviderRef<CreatePostModel> {
+mixin ChatsControllerImplRef on AutoDisposeNotifierProviderRef<ChatsModel> {
   /// The parameter `navigationService` of this provider.
-  CreatePostNavigationService get navigationService;
+  ChatsNavigationService get navigationService;
 
   /// The parameter `backendService` of this provider.
-  CreatePostBackendService get backendService;
+  ChatsBackendService get backendService;
 }
 
-class _CreatePostControllerImplProviderElement
-    extends AutoDisposeNotifierProviderElement<CreatePostControllerImpl,
-        CreatePostModel> with CreatePostControllerImplRef {
-  _CreatePostControllerImplProviderElement(super.provider);
+class _ChatsControllerImplProviderElement
+    extends AutoDisposeNotifierProviderElement<ChatsControllerImpl, ChatsModel>
+    with ChatsControllerImplRef {
+  _ChatsControllerImplProviderElement(super.provider);
 
   @override
-  CreatePostNavigationService get navigationService =>
-      (origin as CreatePostControllerImplProvider).navigationService;
+  ChatsNavigationService get navigationService =>
+      (origin as ChatsControllerImplProvider).navigationService;
   @override
-  CreatePostBackendService get backendService =>
-      (origin as CreatePostControllerImplProvider).backendService;
+  ChatsBackendService get backendService =>
+      (origin as ChatsControllerImplProvider).backendService;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
