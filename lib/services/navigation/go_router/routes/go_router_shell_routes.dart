@@ -65,6 +65,7 @@ class ChatsRoute extends GoRouteData {
           final ChatsControllerImplProvider provider =
               chatsControllerImplProvider(
             navigationService: watch.watch(navigationServiceAggregatorProvider),
+            backendService: watch.watch(backendServiceAggregatorProvider),
           );
           return ChatsView(
             model: watch.watch(provider),

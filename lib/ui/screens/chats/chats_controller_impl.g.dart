@@ -7,7 +7,7 @@ part of 'chats_controller_impl.dart';
 // **************************************************************************
 
 String _$chatsControllerImplHash() =>
-    r'f52c2725e0875dcaca70a4d03f75567f25ef9607';
+    r'0324dcf0dd092e50518ed4012600d207157f0575';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -33,9 +33,11 @@ class _SystemHash {
 abstract class _$ChatsControllerImpl
     extends BuildlessAutoDisposeNotifier<ChatsModel> {
   late final ChatsNavigationService navigationService;
+  late final ChatsBackendService backendService;
 
   ChatsModel build({
     required ChatsNavigationService navigationService,
+    required ChatsBackendService backendService,
   });
 }
 
@@ -51,9 +53,11 @@ class ChatsControllerImplFamily extends Family<ChatsModel> {
   /// See also [ChatsControllerImpl].
   ChatsControllerImplProvider call({
     required ChatsNavigationService navigationService,
+    required ChatsBackendService backendService,
   }) {
     return ChatsControllerImplProvider(
       navigationService: navigationService,
+      backendService: backendService,
     );
   }
 
@@ -63,6 +67,7 @@ class ChatsControllerImplFamily extends Family<ChatsModel> {
   ) {
     return call(
       navigationService: provider.navigationService,
+      backendService: provider.backendService,
     );
   }
 
@@ -87,8 +92,11 @@ class ChatsControllerImplProvider
   /// See also [ChatsControllerImpl].
   ChatsControllerImplProvider({
     required ChatsNavigationService navigationService,
+    required ChatsBackendService backendService,
   }) : this._internal(
-          () => ChatsControllerImpl()..navigationService = navigationService,
+          () => ChatsControllerImpl()
+            ..navigationService = navigationService
+            ..backendService = backendService,
           from: chatsControllerImplProvider,
           name: r'chatsControllerImplProvider',
           debugGetCreateSourceHash:
@@ -99,6 +107,7 @@ class ChatsControllerImplProvider
           allTransitiveDependencies:
               ChatsControllerImplFamily._allTransitiveDependencies,
           navigationService: navigationService,
+          backendService: backendService,
         );
 
   ChatsControllerImplProvider._internal(
@@ -109,9 +118,11 @@ class ChatsControllerImplProvider
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.navigationService,
+    required this.backendService,
   }) : super.internal();
 
   final ChatsNavigationService navigationService;
+  final ChatsBackendService backendService;
 
   @override
   ChatsModel runNotifierBuild(
@@ -119,6 +130,7 @@ class ChatsControllerImplProvider
   ) {
     return notifier.build(
       navigationService: navigationService,
+      backendService: backendService,
     );
   }
 
@@ -127,13 +139,16 @@ class ChatsControllerImplProvider
     return ProviderOverride(
       origin: this,
       override: ChatsControllerImplProvider._internal(
-        () => create()..navigationService = navigationService,
+        () => create()
+          ..navigationService = navigationService
+          ..backendService = backendService,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         navigationService: navigationService,
+        backendService: backendService,
       ),
     );
   }
@@ -147,13 +162,15 @@ class ChatsControllerImplProvider
   @override
   bool operator ==(Object other) {
     return other is ChatsControllerImplProvider &&
-        other.navigationService == navigationService;
+        other.navigationService == navigationService &&
+        other.backendService == backendService;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, navigationService.hashCode);
+    hash = _SystemHash.combine(hash, backendService.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -162,6 +179,9 @@ class ChatsControllerImplProvider
 mixin ChatsControllerImplRef on AutoDisposeNotifierProviderRef<ChatsModel> {
   /// The parameter `navigationService` of this provider.
   ChatsNavigationService get navigationService;
+
+  /// The parameter `backendService` of this provider.
+  ChatsBackendService get backendService;
 }
 
 class _ChatsControllerImplProviderElement
@@ -172,6 +192,9 @@ class _ChatsControllerImplProviderElement
   @override
   ChatsNavigationService get navigationService =>
       (origin as ChatsControllerImplProvider).navigationService;
+  @override
+  ChatsBackendService get backendService =>
+      (origin as ChatsControllerImplProvider).backendService;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
