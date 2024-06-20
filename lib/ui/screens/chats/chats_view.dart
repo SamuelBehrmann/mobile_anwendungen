@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fpdart/fpdart.dart' hide State;
 import 'package:medi_support/ui/screens/chats/widgets/chats_list.dart';
 import 'package:medi_support/ui/widgets/chats_search_bar.dart';
 import 'package:medi_support/ui/screens/chats/chats_model.dart';
@@ -16,7 +15,7 @@ class ChatsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: CustomAppBar(title: some('Chats')),
+        appBar: const CustomAppBar(title: 'Chats'),
         body: Column(
           children: <Widget>[
             Padding(

@@ -45,7 +45,7 @@ class HomeView extends StatelessWidget {
                     'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=3276&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
                   ),
                 ),
-                postId: 'test-post-id: $index',
+                postId: 'aHQamzqK1eSG9mV3rw4A',
               ),
               separatorBuilder: (_, __) => const SizedBox(height: 16),
               itemCount: 1000,

@@ -7,7 +7,7 @@ part of 'post_controller_impl.dart';
 // **************************************************************************
 
 String _$postControllerImplHash() =>
-    r'55a5a91ec63b6eefbe80e662e515c70dc9b4caf5';
+    r'5bd9aad9e88299aa133367bf6a71a5038b12ff18';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -33,10 +33,12 @@ class _SystemHash {
 abstract class _$PostControllerImpl
     extends BuildlessAutoDisposeNotifier<PostModel> {
   late final PostNavigationService navigationService;
+  late final PostBackendService backendService;
   late final String postId;
 
   PostModel build({
     required PostNavigationService navigationService,
+    required PostBackendService backendService,
     required String postId,
   });
 }
@@ -53,10 +55,12 @@ class PostControllerImplFamily extends Family<PostModel> {
   /// See also [PostControllerImpl].
   PostControllerImplProvider call({
     required PostNavigationService navigationService,
+    required PostBackendService backendService,
     required String postId,
   }) {
     return PostControllerImplProvider(
       navigationService: navigationService,
+      backendService: backendService,
       postId: postId,
     );
   }
@@ -67,6 +71,7 @@ class PostControllerImplFamily extends Family<PostModel> {
   ) {
     return call(
       navigationService: provider.navigationService,
+      backendService: provider.backendService,
       postId: provider.postId,
     );
   }
@@ -92,10 +97,12 @@ class PostControllerImplProvider
   /// See also [PostControllerImpl].
   PostControllerImplProvider({
     required PostNavigationService navigationService,
+    required PostBackendService backendService,
     required String postId,
   }) : this._internal(
           () => PostControllerImpl()
             ..navigationService = navigationService
+            ..backendService = backendService
             ..postId = postId,
           from: postControllerImplProvider,
           name: r'postControllerImplProvider',
@@ -107,6 +114,7 @@ class PostControllerImplProvider
           allTransitiveDependencies:
               PostControllerImplFamily._allTransitiveDependencies,
           navigationService: navigationService,
+          backendService: backendService,
           postId: postId,
         );
 
@@ -118,10 +126,12 @@ class PostControllerImplProvider
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.navigationService,
+    required this.backendService,
     required this.postId,
   }) : super.internal();
 
   final PostNavigationService navigationService;
+  final PostBackendService backendService;
   final String postId;
 
   @override
@@ -130,6 +140,7 @@ class PostControllerImplProvider
   ) {
     return notifier.build(
       navigationService: navigationService,
+      backendService: backendService,
       postId: postId,
     );
   }
@@ -141,6 +152,7 @@ class PostControllerImplProvider
       override: PostControllerImplProvider._internal(
         () => create()
           ..navigationService = navigationService
+          ..backendService = backendService
           ..postId = postId,
         from: from,
         name: null,
@@ -148,6 +160,7 @@ class PostControllerImplProvider
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         navigationService: navigationService,
+        backendService: backendService,
         postId: postId,
       ),
     );
@@ -163,6 +176,7 @@ class PostControllerImplProvider
   bool operator ==(Object other) {
     return other is PostControllerImplProvider &&
         other.navigationService == navigationService &&
+        other.backendService == backendService &&
         other.postId == postId;
   }
 
@@ -170,6 +184,7 @@ class PostControllerImplProvider
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, navigationService.hashCode);
+    hash = _SystemHash.combine(hash, backendService.hashCode);
     hash = _SystemHash.combine(hash, postId.hashCode);
 
     return _SystemHash.finish(hash);
@@ -179,6 +194,9 @@ class PostControllerImplProvider
 mixin PostControllerImplRef on AutoDisposeNotifierProviderRef<PostModel> {
   /// The parameter `navigationService` of this provider.
   PostNavigationService get navigationService;
+
+  /// The parameter `backendService` of this provider.
+  PostBackendService get backendService;
 
   /// The parameter `postId` of this provider.
   String get postId;
@@ -192,6 +210,9 @@ class _PostControllerImplProviderElement
   @override
   PostNavigationService get navigationService =>
       (origin as PostControllerImplProvider).navigationService;
+  @override
+  PostBackendService get backendService =>
+      (origin as PostControllerImplProvider).backendService;
   @override
   String get postId => (origin as PostControllerImplProvider).postId;
 }

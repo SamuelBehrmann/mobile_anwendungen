@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 
 class Message extends StatelessWidget {
   final String username;
-  final Uri userAvatar;
+  final Uri? userAvatar;
   final Iterable<String> userTitles;
   final String message;
   final void Function() replyCallback;
@@ -45,7 +46,9 @@ class Message extends StatelessWidget {
           visualDensity: VisualDensity.compact,
           contentPadding: EdgeInsets.zero,
           leading: CircleAvatar(
-            backgroundImage: NetworkImage(userAvatar.toString()),
+            child: userAvatar != null
+                ? CustomCachedNetworkImage(imageUrl: userAvatar!.toString())
+                : const Icon(Icons.person_outline),
           ),
           title: Text(
             username,

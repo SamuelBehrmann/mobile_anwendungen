@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PostModel {
-  PostModelPost get post => throw _privateConstructorUsedError;
+  PostModelPost? get post => throw _privateConstructorUsedError;
   String? get selectedReplyId => throw _privateConstructorUsedError;
   String get currentUserId => throw _privateConstructorUsedError;
 
@@ -31,9 +31,9 @@ abstract class $PostModelCopyWith<$Res> {
       _$PostModelCopyWithImpl<$Res, PostModel>;
   @useResult
   $Res call(
-      {PostModelPost post, String? selectedReplyId, String currentUserId});
+      {PostModelPost? post, String? selectedReplyId, String currentUserId});
 
-  $PostModelPostCopyWith<$Res> get post;
+  $PostModelPostCopyWith<$Res>? get post;
 }
 
 /// @nodoc
@@ -49,15 +49,15 @@ class _$PostModelCopyWithImpl<$Res, $Val extends PostModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? post = null,
+    Object? post = freezed,
     Object? selectedReplyId = freezed,
     Object? currentUserId = null,
   }) {
     return _then(_value.copyWith(
-      post: null == post
+      post: freezed == post
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
-              as PostModelPost,
+              as PostModelPost?,
       selectedReplyId: freezed == selectedReplyId
           ? _value.selectedReplyId
           : selectedReplyId // ignore: cast_nullable_to_non_nullable
@@ -71,8 +71,12 @@ class _$PostModelCopyWithImpl<$Res, $Val extends PostModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $PostModelPostCopyWith<$Res> get post {
-    return $PostModelPostCopyWith<$Res>(_value.post, (value) {
+  $PostModelPostCopyWith<$Res>? get post {
+    if (_value.post == null) {
+      return null;
+    }
+
+    return $PostModelPostCopyWith<$Res>(_value.post!, (value) {
       return _then(_value.copyWith(post: value) as $Val);
     });
   }
@@ -87,10 +91,10 @@ abstract class _$$PostModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {PostModelPost post, String? selectedReplyId, String currentUserId});
+      {PostModelPost? post, String? selectedReplyId, String currentUserId});
 
   @override
-  $PostModelPostCopyWith<$Res> get post;
+  $PostModelPostCopyWith<$Res>? get post;
 }
 
 /// @nodoc
@@ -104,15 +108,15 @@ class __$$PostModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? post = null,
+    Object? post = freezed,
     Object? selectedReplyId = freezed,
     Object? currentUserId = null,
   }) {
     return _then(_$PostModelImpl(
-      post: null == post
+      post: freezed == post
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
-              as PostModelPost,
+              as PostModelPost?,
       selectedReplyId: freezed == selectedReplyId
           ? _value.selectedReplyId
           : selectedReplyId // ignore: cast_nullable_to_non_nullable
@@ -129,12 +133,10 @@ class __$$PostModelImplCopyWithImpl<$Res>
 
 class _$PostModelImpl implements _PostModel {
   const _$PostModelImpl(
-      {required this.post,
-      required this.selectedReplyId,
-      required this.currentUserId});
+      {this.post, this.selectedReplyId, required this.currentUserId});
 
   @override
-  final PostModelPost post;
+  final PostModelPost? post;
   @override
   final String? selectedReplyId;
   @override
@@ -170,12 +172,12 @@ class _$PostModelImpl implements _PostModel {
 
 abstract class _PostModel implements PostModel {
   const factory _PostModel(
-      {required final PostModelPost post,
-      required final String? selectedReplyId,
+      {final PostModelPost? post,
+      final String? selectedReplyId,
       required final String currentUserId}) = _$PostModelImpl;
 
   @override
-  PostModelPost get post;
+  PostModelPost? get post;
   @override
   String? get selectedReplyId;
   @override

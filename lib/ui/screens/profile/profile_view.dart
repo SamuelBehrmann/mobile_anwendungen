@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:medi_support/ui/screens/profile/profile_controller.dart';
 import 'package:medi_support/ui/screens/profile/profile_model.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
@@ -28,9 +27,7 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: CustomAppBar(
-          title: some('Profile'),
-        ),
+        appBar: CustomAppBar(title: 'Profile'),
         body: Column(
           children: <Widget>[
             Expanded(

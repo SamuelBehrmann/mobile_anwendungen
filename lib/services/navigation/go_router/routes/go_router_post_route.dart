@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_support/services/backend/backend_service.dart';
 import 'package:medi_support/services/navigation/go_router/navigator_keys.dart';
 import 'package:medi_support/services/navigation/navigation_service.dart';
 import 'package:medi_support/ui/screens/post/post_controller_impl.dart';
@@ -18,6 +19,7 @@ class PostRoute extends GoRouteData {
         builder: (_, WidgetRef ref, __) {
           final PostControllerImplProvider provider =
               postControllerImplProvider(
+            backendService: ref.read(backendServiceAggregatorProvider),
             postId: postId,
             navigationService: ref.read(navigationServiceAggregatorProvider),
           );
