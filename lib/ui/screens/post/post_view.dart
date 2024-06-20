@@ -89,6 +89,7 @@ class PostView extends StatelessWidget {
           color: Theme.of(context).colorScheme.surface,
           child: SafeArea(
             child: Padding(
+              // TODO: Extract
               padding: const EdgeInsets.all(8.0),
               child: CustomTextField(
                 onSubmitted: (String message) {

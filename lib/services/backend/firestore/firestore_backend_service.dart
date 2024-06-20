@@ -56,7 +56,6 @@ class FirestoreBackendService extends BackendServiceAggregator {
   }) =>
       firestore.collection('posts').doc(postId).snapshots().map(
         (DocumentSnapshot<Map<String, dynamic>> doc) {
-          // Add the document ID to the data map before parsing it
           Map<String, dynamic> data = doc.data()!;
           data['id'] = doc.id;
           return FirestoreBackendServicePost.fromJson(data);
