@@ -171,6 +171,7 @@ abstract class _ChatsModel implements ChatsModel {
 
 /// @nodoc
 mixin _$ChatsModelChat {
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   String? get profilePicturePath => throw _privateConstructorUsedError;
@@ -186,7 +187,8 @@ abstract class $ChatsModelChatCopyWith<$Res> {
           ChatsModelChat value, $Res Function(ChatsModelChat) then) =
       _$ChatsModelChatCopyWithImpl<$Res, ChatsModelChat>;
   @useResult
-  $Res call({String name, String message, String? profilePicturePath});
+  $Res call(
+      {String id, String name, String message, String? profilePicturePath});
 }
 
 /// @nodoc
@@ -202,11 +204,16 @@ class _$ChatsModelChatCopyWithImpl<$Res, $Val extends ChatsModelChat>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? message = null,
     Object? profilePicturePath = freezed,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -231,7 +238,8 @@ abstract class _$$ChatsModelChatImplCopyWith<$Res>
       __$$ChatsModelChatImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String message, String? profilePicturePath});
+  $Res call(
+      {String id, String name, String message, String? profilePicturePath});
 }
 
 /// @nodoc
@@ -245,11 +253,16 @@ class __$$ChatsModelChatImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? message = null,
     Object? profilePicturePath = freezed,
   }) {
     return _then(_$ChatsModelChatImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -270,8 +283,13 @@ class __$$ChatsModelChatImplCopyWithImpl<$Res>
 
 class _$ChatsModelChatImpl implements _ChatsModelChat {
   const _$ChatsModelChatImpl(
-      {required this.name, required this.message, this.profilePicturePath});
+      {required this.id,
+      required this.name,
+      required this.message,
+      this.profilePicturePath});
 
+  @override
+  final String id;
   @override
   final String name;
   @override
@@ -281,7 +299,7 @@ class _$ChatsModelChatImpl implements _ChatsModelChat {
 
   @override
   String toString() {
-    return 'ChatsModelChat(name: $name, message: $message, profilePicturePath: $profilePicturePath)';
+    return 'ChatsModelChat(id: $id, name: $name, message: $message, profilePicturePath: $profilePicturePath)';
   }
 
   @override
@@ -289,6 +307,7 @@ class _$ChatsModelChatImpl implements _ChatsModelChat {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChatsModelChatImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.profilePicturePath, profilePicturePath) ||
@@ -297,7 +316,7 @@ class _$ChatsModelChatImpl implements _ChatsModelChat {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, name, message, profilePicturePath);
+      Object.hash(runtimeType, id, name, message, profilePicturePath);
 
   @JsonKey(ignore: true)
   @override
@@ -309,10 +328,13 @@ class _$ChatsModelChatImpl implements _ChatsModelChat {
 
 abstract class _ChatsModelChat implements ChatsModelChat {
   const factory _ChatsModelChat(
-      {required final String name,
+      {required final String id,
+      required final String name,
       required final String message,
       final String? profilePicturePath}) = _$ChatsModelChatImpl;
 
+  @override
+  String get id;
   @override
   String get name;
   @override

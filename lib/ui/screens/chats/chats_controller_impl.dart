@@ -18,7 +18,8 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
   }) {
     scheduleMicrotask(
       () => backendService
-          .fetchData()
+      //TODO: Change the parameter to the actual user id
+          .getAllChats('person1')
           .then((List<ChatsBackendServiceChat> chats) {
         state = state.copyWith(
           chats: chats.map(ChatsModelChat.fromBackendServiceChat).toList(),

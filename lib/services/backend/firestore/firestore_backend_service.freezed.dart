@@ -172,7 +172,8 @@ class __$$FirestoreBackendServicePostImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$FirestoreBackendServicePostImpl extends _FirestoreBackendServicePost {
+class _$FirestoreBackendServicePostImpl extends _FirestoreBackendServicePost
+    with DiagnosticableTreeMixin {
   const _$FirestoreBackendServicePostImpl(
       {required this.id,
       required this.title,
@@ -204,8 +205,20 @@ class _$FirestoreBackendServicePostImpl extends _FirestoreBackendServicePost {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'FirestoreBackendServicePost(id: $id, title: $title, content: $content, author: $author, replies: $replies)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'FirestoreBackendServicePost'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('title', title))
+      ..add(DiagnosticsProperty('content', content))
+      ..add(DiagnosticsProperty('author', author))
+      ..add(DiagnosticsProperty('replies', replies));
   }
 
   @override
@@ -393,7 +406,8 @@ class __$$FirestoreBackendServiceUserImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$FirestoreBackendServiceUserImpl extends _FirestoreBackendServiceUser {
+class _$FirestoreBackendServiceUserImpl extends _FirestoreBackendServiceUser
+    with DiagnosticableTreeMixin {
   const _$FirestoreBackendServiceUserImpl(
       {required this.id,
       required this.name,
@@ -421,8 +435,19 @@ class _$FirestoreBackendServiceUserImpl extends _FirestoreBackendServiceUser {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'FirestoreBackendServiceUser(id: $id, name: $name, avatar: $avatar, titles: $titles)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'FirestoreBackendServiceUser'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('avatar', avatar))
+      ..add(DiagnosticsProperty('titles', titles));
   }
 
   @override
@@ -627,7 +652,7 @@ class __$$FirestoreBackendServiceMessageImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$FirestoreBackendServiceMessageImpl
-    extends _FirestoreBackendServiceMessage {
+    extends _FirestoreBackendServiceMessage with DiagnosticableTreeMixin {
   const _$FirestoreBackendServiceMessageImpl(
       {required this.id,
       required this.message,
@@ -655,8 +680,19 @@ class _$FirestoreBackendServiceMessageImpl
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'FirestoreBackendServiceMessage(id: $id, message: $message, author: $author, replies: $replies)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'FirestoreBackendServiceMessage'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('message', message))
+      ..add(DiagnosticsProperty('author', author))
+      ..add(DiagnosticsProperty('replies', replies));
   }
 
   @override

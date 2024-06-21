@@ -14,6 +14,7 @@ class ChatsModel with _$ChatsModel {
 @freezed
 class ChatsModelChat with _$ChatsModelChat {
   const factory ChatsModelChat({
+    required String id,
     required String name,
     required String message,
     String? profilePicturePath,
@@ -21,6 +22,7 @@ class ChatsModelChat with _$ChatsModelChat {
 
   factory ChatsModelChat.fromBackendServiceChat(ChatsBackendServiceChat chat) =>
       ChatsModelChat(
+        id: chat.id,
         name: chat.name,
         message: chat.message,
         profilePicturePath: chat.profilePicturePath,
