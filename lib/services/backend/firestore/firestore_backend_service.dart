@@ -14,6 +14,9 @@ typedef _$DocumentSnapshot = QueryDocumentSnapshot<Map<String, dynamic>>;
 typedef _$Snapshot = QuerySnapshot<Map<String, dynamic>>;
 
 class FirestoreBackendService extends BackendServiceAggregator {
+  static const String _postsCollection = 'posts';
+  static const String _chatsCollection = 'chats';
+
   final FirebaseFirestore firestore;
 
   FirestoreBackendService(
@@ -22,15 +25,15 @@ class FirestoreBackendService extends BackendServiceAggregator {
 
   @override
   Future<void> send({required String title, required String body}) async {
-    await firestore.collection('posts').add(<String, String>{
+    await firestore.collection(_postsCollection).add(<String, String>{
       'title': title,
       'body': body,
     });
   }
 
   @override
-  Future<List<ChatsBackendServiceChat>> fetchData() =>
-      firestore.collection('chats').get().then(
+  Future<List<ChatsBackendServiceChat>> fetchChats() =>
+      firestore.collection(_chatsCollection).get().then(
             (_$Snapshot snapshot) =>
                 Stream<_$DocumentSnapshot>.fromIterable(snapshot.docs)
                     .asyncMap((_$DocumentSnapshot doc) async {
@@ -54,7 +57,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
   Stream<PostBackendServicePost> getPostStream({
     required final String postId,
   }) =>
-      firestore.collection('posts').doc(postId).snapshots().map(
+      firestore.collection(_postsCollection).doc(postId).snapshots().map(
         (DocumentSnapshot<Map<String, dynamic>> doc) {
           Map<String, dynamic> data = doc.data()!;
           data['id'] = doc.id;
@@ -85,7 +88,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
     required String replyToMessageId,
   }) async {
     final DocumentReference<Map<String, dynamic>> postRefference =
-        firestore.collection('posts').doc(postId);
+        firestore.collection(_postsCollection).doc(postId);
 
     final Map<String, dynamic>? post = (await postRefference.get()).data();
 

@@ -8,6 +8,7 @@ import 'package:medi_support/ui/widgets/message.dart';
 
 class PostView extends StatelessWidget {
   static const EdgeInsets _screenPadding = EdgeInsets.all(16);
+  static const EdgeInsets _textInputFieldPadding = EdgeInsets.all(8);
   static const double _verticalDividerWidth = 32;
 
   final PostController controller;
@@ -29,10 +30,12 @@ class PostView extends StatelessWidget {
             onPressed: controller.goBack,
           ),
         ),
-        body: model.post == null ? _buildLoadingState() : _buildDataState(),
+        body: model.post == null
+            ? _buildLoadingState()
+            : _buildDataState(model.post!),
       );
 
-  Widget _buildDataState() => Builder(
+  Widget _buildDataState(final PostModelPost post) => Builder(
         builder: (BuildContext context) => Stack(
           children: <Widget>[
             SafeArea(
@@ -41,12 +44,12 @@ class PostView extends StatelessWidget {
                   SliverPadding(
                     padding: _screenPadding.copyWith(bottom: 0),
                     sliver: SliverToBoxAdapter(
-                      child: _buildPost(),
+                      child: _buildPost(post),
                     ),
                   ),
                   SliverPadding(
                     padding: EdgeInsets.only(right: _screenPadding.right),
-                    sliver: _buildReplies(),
+                    sliver: _buildReplies(replies: post.replies),
                   ),
                 ],
               ),
@@ -63,10 +66,11 @@ class PostView extends StatelessWidget {
   Widget _buildLoadingState() =>
       const Center(child: CircularProgressIndicator());
 
-  Widget _buildReplies() => SliverList(
+  Widget _buildReplies({required final List<PostModelMessage> replies}) =>
+      SliverList(
         delegate: SliverChildListDelegate(
           <Widget>[
-            ...model.post!.replies
+            ...replies
                 .mapIndexed(
                   (int index, PostModelMessage message) =>
                       _buildReplyRekursive(message, 1),
@@ -76,12 +80,12 @@ class PostView extends StatelessWidget {
         ),
       );
 
-  Widget _buildPost() => Message(
-        username: model.post!.author.name,
-        userAvatar: model.post?.author.avatar,
-        message: model.post!.content,
+  Widget _buildPost(final PostModelPost post) => Message(
+        username: post.author.name,
+        userAvatar: post.author.avatar,
+        message: post.content,
         replyCallback: () =>
-            controller.setSelectedMessageToReply(messageId: model.post!.id),
+            controller.setSelectedMessageToReply(messageId: post.id),
       );
 
   Widget _buildTextInputField() => Builder(
@@ -89,8 +93,7 @@ class PostView extends StatelessWidget {
           color: Theme.of(context).colorScheme.surface,
           child: SafeArea(
             child: Padding(
-              // TODO: Extract
-              padding: const EdgeInsets.all(8.0),
+              padding: _textInputFieldPadding,
               child: CustomTextField(
                 onSubmitted: (String message) {
                   controller.submitReply(

@@ -32,8 +32,8 @@ class PostModelPost with _$PostModelPost {
         author: PostModelUser.fromBackendServiceUser(post.author),
         replies: post.replies
             .map(
-              (PostBackendServiceMessage e) =>
-                  PostModelMessage.fromBackendServiceMessage(e),
+              (PostBackendServiceMessage message) =>
+                  PostModelMessage.fromBackendServiceMessage(message),
             )
             .toList(),
       );
