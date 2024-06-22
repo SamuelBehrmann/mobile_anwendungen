@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 
 class Message extends StatelessWidget {
   final String username;
-  final Uri userAvatar;
+  final Uri? userAvatar;
   final Iterable<String> userTitles;
   final String message;
-  final void Function(String messageId) replyCallback;
+  final void Function() replyCallback;
 
   const Message({
     super.key,
@@ -23,21 +24,18 @@ class Message extends StatelessWidget {
         children: <Widget>[
           _buildHeader(),
           _buildMessage(),
-          _buildReplyButton(),
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: _buildReplyButton(),
+          ),
         ],
       );
 
   Widget _buildReplyButton() => GestureDetector(
-        onTap: () {
-          // TODO: Implement reply functionality with message id (possibly post id)
-          replyCallback('messageId');
-        },
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Icon(Icons.reply),
-            Text('Reply'),
-          ],
+        onTap: replyCallback,
+        child: const Icon(
+          Icons.reply,
+          size: 16,
         ),
       );
 
@@ -48,7 +46,9 @@ class Message extends StatelessWidget {
           visualDensity: VisualDensity.compact,
           contentPadding: EdgeInsets.zero,
           leading: CircleAvatar(
-            backgroundImage: NetworkImage(userAvatar.toString()),
+            child: userAvatar != null
+                ? CustomCachedNetworkImage(imageUrl: userAvatar!.toString())
+                : const Icon(Icons.person_outline),
           ),
           title: Text(
             username,

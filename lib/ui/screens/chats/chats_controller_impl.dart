@@ -18,7 +18,7 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
   }) {
     scheduleMicrotask(
       () => backendService
-          .fetchData()
+          .fetchChats()
           .then((List<ChatsBackendServiceChat> chats) {
         state = state.copyWith(
           chats: chats.map(ChatsModelChat.fromBackendServiceChat).toList(),

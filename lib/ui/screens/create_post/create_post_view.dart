@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:medi_support/ui/screens/create_post/create_post_controller.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/custom_text_form_field.dart';
@@ -34,15 +33,13 @@ class CreatePostView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: CustomAppBar(
-          leading: some(
-            IconButton(
-              onPressed: () {
-                controller.goHome();
-                bodyController.clear();
-                titleController.clear();
-              },
-              icon: const Icon(Icons.close),
-            ),
+          leading: IconButton(
+            onPressed: () {
+              controller.goHome();
+              bodyController.clear();
+              titleController.clear();
+            },
+            icon: const Icon(Icons.close),
           ),
           actions: <Widget>[
             IconButton(

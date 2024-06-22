@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 import 'package:medi_support/ui/widgets/custom_card.dart';
 part 'post_preview.freezed.dart';
 
@@ -36,7 +37,8 @@ class PostPreview extends StatelessWidget {
   Widget _buildHeader() => ListTile(
         contentPadding: EdgeInsets.zero,
         leading: CircleAvatar(
-          backgroundImage: NetworkImage(account.imageUrl.toString()),
+          child:
+              CustomCachedNetworkImage(imageUrl: account.imageUrl.toString()),
         ),
         minTileHeight: 0,
         horizontalTitleGap: 16,

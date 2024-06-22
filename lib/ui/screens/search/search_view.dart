@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide SearchController;
-import 'package:fpdart/fpdart.dart';
 import 'package:medi_support/ui/screens/search/search_controller.dart';
 import 'package:medi_support/ui/screens/search/search_model.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
@@ -18,12 +17,10 @@ class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: CustomAppBar(
-          title: some('Search'),
-          leading: some(
-            IconButton(
-              onPressed: controller.goBack,
-              icon: const Icon(Icons.arrow_back),
-            ),
+          title: 'Search',
+          leading: IconButton(
+            onPressed: controller.goBack,
+            icon: const Icon(Icons.arrow_back),
           ),
         ),
         body: Column(
