@@ -35,6 +35,15 @@ class SearchView extends StatelessWidget {
               itemCount: model.filteredResults.length,
               itemBuilder: (BuildContext context, int index) => ListTile(
                 title: Text(model.filteredResults[index].title),
+                subtitle: Text('${model.filteredResults[index].body.substring(
+                  0,
+                  model.filteredResults[index].body.length < 50
+                      ? model.filteredResults[index].body.length
+                      : 50,
+                )} ...'),
+                onTap: () => controller.openPost(
+                  postId: model.filteredResults[index].id,
+                ),
               ),
             ),
             if (model.query.isEmpty) ...<Widget>[
