@@ -24,7 +24,7 @@ class ChatRoute extends GoRouteData {
           final ChatControllerImpl controller = ref.read(provider.notifier);
           final ChatModel model = ref.watch(provider);
 
-          return ChatView(model: model,);
+          return ChatView(model: model, controller: controller);
         },
       );
 }

@@ -259,10 +259,9 @@ class FirestoreBackendService extends BackendServiceAggregator {
 
           ChatBackendServiceChat chat = ChatBackendServiceChat(
             chatId: chatId,
-            chatPartner: persons.first,
+            chatPartner: persons.last,
             messages: messages,
           );
-
           return chat;
         },
       );
