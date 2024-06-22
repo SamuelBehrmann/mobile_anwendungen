@@ -40,7 +40,6 @@ class FirestoreBackendService extends BackendServiceAggregator {
   /// Returns a list of `ChatsBackendServiceChat` objects, each representing a chat.
   @override
   Future<List<ChatsBackendServiceChat>> getAllChats(String userId) async {
-    // Retrieve the user document from Firestore to get chat IDs.
     DocumentSnapshot<Map<String, dynamic>> userDocSnapshot =
         await firestore.collection('user').doc(userId).get();
     List<dynamic> chatIds =
@@ -49,65 +48,43 @@ class FirestoreBackendService extends BackendServiceAggregator {
     List<ChatsBackendServiceChat> chats = <ChatsBackendServiceChat>[];
     for (int i = 0; i < chatIds.length; i++) {
       dynamic chatId = chatIds[i];
-      // Retrieve each chat document using the chat ID.
       DocumentSnapshot<Map<String, dynamic>> chatDocSnapshot =
           await firestore.collection('chats').doc(chatId as String).get();
       if (!chatDocSnapshot.exists) continue;
 
-      // Assuming the 'persons' field is a map with keys like 'person3', 'person4', etc.
       Map<String, dynamic> personsMap =
           chatDocSnapshot.data()?['persons'] as Map<String, dynamic>? ??
               <String, dynamic>{};
 
-      Map<String, dynamic> otherPerson = {};
+      Map<String, dynamic> otherPerson = <String, dynamic>{};
       for (MapEntry<String, dynamic> entry in personsMap.entries) {
         Map<String, dynamic> personDetails =
             entry.value as Map<String, dynamic>? ?? <String, dynamic>{};
-        debugPrint(
-            "Checking person: ${entry.key} against userId: $userId"); // Adjusted to use entry.key for personId
         if (entry.key != userId) {
-          // Adjusted to compare entry.key (personId) with userId
           otherPerson = personDetails;
-          debugPrint(
-              "Found other person: ${otherPerson['name']}"); // Debugging log
-          break; // Found the other person, no need to continue the loop
+          break;
         }
       }
 
-      // Now you have the other person's details
       String otherPersonName = otherPerson['name'] as String? ?? 'Unknown';
       String? profilePicturePath = otherPerson['imageUrl'] as String?;
 
-      // Fetch the last message from the 'messages' subcollection or a dedicated field
-      var lastMessage = 'No messages yet';
-      debugPrint("Fetching last message for chatId: $chatId");
-      try {
-        DocumentSnapshot<Map<String, dynamic>> chatDocument =
-            await firestore.collection('chats').doc(chatId).get();
+      // Fetch the last message from the 'messages' subcollection
+      String lastMessage = 'No messages yet';
+      DocumentSnapshot<Map<String, dynamic>> chatDocument =
+          await firestore.collection('chats').doc(chatId).get();
 
-        if (chatDocument.exists &&
-            chatDocument.data()!.containsKey('messages')) {
-          List<dynamic> messages =
-              chatDocument.data()!['messages'] as List<dynamic>;
-          if (messages.isNotEmpty) {
-            Map<String, dynamic> lastMessageMap =
-                messages.last as Map<String, dynamic>;
-            if (lastMessageMap.containsKey('content')) {
-              lastMessage =
-                  lastMessageMap['content'] as String? ?? 'No messages yet';
-            } else {
-              debugPrint(
-                  "Error: 'content' field not found in the last message.");
-            }
-          } else {
-            debugPrint("No messages found in the array.");
+      if (chatDocument.exists && chatDocument.data()!.containsKey('messages')) {
+        List<dynamic> messages =
+            chatDocument.data()!['messages'] as List<dynamic>;
+        if (messages.isNotEmpty) {
+          Map<String, dynamic> lastMessageMap =
+              messages.last as Map<String, dynamic>;
+          if (lastMessageMap.containsKey('content')) {
+            lastMessage =
+                lastMessageMap['content'] as String? ?? 'No messages yet';
           }
-        } else {
-          debugPrint(
-              "Chat document does not exist or does not contain messages.");
         }
-      } catch (e) {
-        debugPrint("Error fetching last message: $e");
       }
 
       // Constructing ChatsBackendServiceChat Object with the other person's details and the last message
@@ -119,7 +96,6 @@ class FirestoreBackendService extends BackendServiceAggregator {
       );
       chats.add(chat);
     }
-    debugPrint(chats.toString());
     return chats;
   }
 
