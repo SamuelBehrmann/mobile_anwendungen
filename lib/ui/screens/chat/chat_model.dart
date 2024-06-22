@@ -9,7 +9,7 @@ class ChatModel with _$ChatModel {
     required String chatId,
     required String activeUserId,
     required ChatModelPerson chatPartner,
-    required List<ChatModelMessage> messages,
+    required List<MapEntry<String, List<ChatModelMessage>>> groupedMessages,
   }) = _ChatsModel;
 }
 

@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:collection';
 
+import 'package:collection/collection.dart';
 import 'package:medi_support/ui/screens/chat/chat_controller.dart';
 import 'package:medi_support/ui/screens/chat/chat_model.dart';
 import 'package:medi_support/ui/screens/chat/services/chat_backend_service.dart';
@@ -23,9 +25,16 @@ class ChatControllerImpl extends _$ChatControllerImpl
       (ChatBackendServiceChat chat) => state = state.copyWith(
         chatId: chat.chatId,
         chatPartner: ChatModelPerson.fromBackendServicePerson(chat.chatPartner),
-        messages: chat.messages
-            .map(ChatModelMessage.fromBackendServiceMessage)
-            .toList(),
+        groupedMessages: _groupMessages(
+          chat.messages
+              .map(
+                (ChatBackendServiceMessage message) =>
+                    ChatModelMessage.fromBackendServiceMessage(message),
+              )
+              .toList()
+              .reversed
+              .toList(),
+        ),
       ),
     );
 
@@ -42,26 +51,61 @@ class ChatControllerImpl extends _$ChatControllerImpl
         name: '',
         imageUrl: '',
       ),
-      messages: <ChatModelMessage>[],
+      groupedMessages: <MapEntry<String, List<ChatModelMessage>>>[],
     );
   }
 
   @override
   void sendMessage(String message) {
-    state = state.copyWith(
-      messages: <ChatModelMessage>[
-        ...state.messages,
-        ChatModelMessage(
-          content: message,
-          messageId: '1',
-          authorId: '1',
-        ),
-      ],
-    );
+    // state = state.copyWith(
+    //   groupedMessages: <ChatModelMessage>[
+    //     ...state.messages,
+    //     ChatModelMessage(
+    //       content: message,
+    //       messageId: '1',
+    //       authorId: '1',
+    //     ),
+    //   ],
+    // );
   }
 
   @override
   void deleteMessage(String messageId) {
     // TODO: implement deleteMessage
+  }
+
+  List<MapEntry<String, List<ChatModelMessage>>> _groupMessages(
+    List<ChatModelMessage> messages,
+  ) {
+    if (messages.isEmpty) {
+      return <MapEntry<String, List<ChatModelMessage>>>[];
+    }
+
+    List<MapEntry<String, List<ChatModelMessage>>> groupedMessages =
+        List<MapEntry<String, List<ChatModelMessage>>>.empty(growable: true);
+    String currentUserId = messages.first.authorId;
+    MapEntry<String, List<ChatModelMessage>> currentGroup =
+        MapEntry<String, List<ChatModelMessage>>(
+      currentUserId,
+      List<ChatModelMessage>.empty(growable: true),
+    );
+
+    for (int index = 0; index < messages.length; index++) {
+      final ChatModelMessage message = messages[index];
+      if (currentUserId == message.authorId) {
+        currentGroup.value.add(message);
+      } else {
+        currentUserId = message.authorId;
+        currentGroup = MapEntry<String, List<ChatModelMessage>>(
+          currentUserId,
+          <ChatModelMessage>[message],
+        );
+      }
+      if (index == messages.length - 1 ||
+          message.authorId != messages[index + 1].authorId) {
+        groupedMessages.add(currentGroup);
+      }
+    }
+    return groupedMessages;
   }
 }

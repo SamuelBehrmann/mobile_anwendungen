@@ -4,7 +4,6 @@ import 'package:medi_support/ui/screens/chat/chat_model.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 
-// TODO: scroll to last chat on open and on new message
 // TODO: implement send message functionality
 // TODO: clean up
 
@@ -36,63 +35,59 @@ class ChatView extends StatelessWidget {
         ),
       );
 
-  Widget _buildMessageList(ChatModel model) => ListView.builder(
-        itemCount: model.messages.length,
+  Widget _buildMessageList(ChatModel model) => ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+        separatorBuilder: (_, __) => const SizedBox(height: 8.0),
+        reverse: true,
+        itemCount: model.groupedMessages.length,
         itemBuilder: (BuildContext context, int index) {
-          final ChatModelMessage message = model.messages[index];
-          final bool isCurrentUser = message.authorId == model.chatPartner.id;
-          // Determine if this is the last message from the chat partner in a sequence
-          final bool isLastMessageFromPartner =
-              index + 1 == model.messages.length ||
-                  model.messages[index + 1].authorId != message.authorId;
+          final MapEntry<String, List<ChatModelMessage>> message =
+              model.groupedMessages.elementAt(index);
+          final bool isCurrentUser = message.key == model.chatPartner.id;
 
           return Align(
             alignment:
                 isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                if (!isCurrentUser)
-                  if (isLastMessageFromPartner)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        radius: 18,
-                        child: CustomCachedNetworkImage(
-                          imageUrl: model.chatPartner.imageUrl,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.75,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  if (!isCurrentUser)
+                    CircleAvatar(
+                      radius: 18,
+                      child: CustomCachedNetworkImage(
+                        imageUrl: model.chatPartner.imageUrl,
+                      ),
+                    ),
+                  const SizedBox(width: 8.0),
+                  Expanded(
+                    child: ListView.separated(
+                      padding: const EdgeInsets.all(0),
+                      separatorBuilder: (_, __) => const SizedBox(height: 8.0),
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: message.value.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          Container(
+                        padding: const EdgeInsets.all(6.0),
+                        decoration: BoxDecoration(
+                          color: isCurrentUser
+                              ? Theme.of(context).colorScheme.primaryContainer
+                              : Theme.of(context).colorScheme.outlineVariant,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          message.value[index].content,
                         ),
                       ),
-                    )
-                  else
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        radius: 18,
-                        backgroundColor: Colors.transparent,
-                      ),
-                    ),
-                Flexible(
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 4.0,
-                      horizontal: 8.0,
-                    ),
-                    constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width * 0.70,
-                    ),
-                    decoration: BoxDecoration(
-                      color: isCurrentUser
-                          ? Theme.of(context).colorScheme.primaryContainer
-                          : Theme.of(context).colorScheme.outlineVariant,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      message.content,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

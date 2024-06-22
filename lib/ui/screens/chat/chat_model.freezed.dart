@@ -19,7 +19,8 @@ mixin _$ChatModel {
   String get chatId => throw _privateConstructorUsedError;
   String get activeUserId => throw _privateConstructorUsedError;
   ChatModelPerson get chatPartner => throw _privateConstructorUsedError;
-  List<ChatModelMessage> get messages => throw _privateConstructorUsedError;
+  List<MapEntry<String, List<ChatModelMessage>>> get groupedMessages =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatModelCopyWith<ChatModel> get copyWith =>
@@ -35,7 +36,7 @@ abstract class $ChatModelCopyWith<$Res> {
       {String chatId,
       String activeUserId,
       ChatModelPerson chatPartner,
-      List<ChatModelMessage> messages});
+      List<MapEntry<String, List<ChatModelMessage>>> groupedMessages});
 
   $ChatModelPersonCopyWith<$Res> get chatPartner;
 }
@@ -56,7 +57,7 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
     Object? chatId = null,
     Object? activeUserId = null,
     Object? chatPartner = null,
-    Object? messages = null,
+    Object? groupedMessages = null,
   }) {
     return _then(_value.copyWith(
       chatId: null == chatId
@@ -71,10 +72,10 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
           ? _value.chatPartner
           : chatPartner // ignore: cast_nullable_to_non_nullable
               as ChatModelPerson,
-      messages: null == messages
-          ? _value.messages
-          : messages // ignore: cast_nullable_to_non_nullable
-              as List<ChatModelMessage>,
+      groupedMessages: null == groupedMessages
+          ? _value.groupedMessages
+          : groupedMessages // ignore: cast_nullable_to_non_nullable
+              as List<MapEntry<String, List<ChatModelMessage>>>,
     ) as $Val);
   }
 
@@ -99,7 +100,7 @@ abstract class _$$ChatsModelImplCopyWith<$Res>
       {String chatId,
       String activeUserId,
       ChatModelPerson chatPartner,
-      List<ChatModelMessage> messages});
+      List<MapEntry<String, List<ChatModelMessage>>> groupedMessages});
 
   @override
   $ChatModelPersonCopyWith<$Res> get chatPartner;
@@ -119,7 +120,7 @@ class __$$ChatsModelImplCopyWithImpl<$Res>
     Object? chatId = null,
     Object? activeUserId = null,
     Object? chatPartner = null,
-    Object? messages = null,
+    Object? groupedMessages = null,
   }) {
     return _then(_$ChatsModelImpl(
       chatId: null == chatId
@@ -134,10 +135,10 @@ class __$$ChatsModelImplCopyWithImpl<$Res>
           ? _value.chatPartner
           : chatPartner // ignore: cast_nullable_to_non_nullable
               as ChatModelPerson,
-      messages: null == messages
-          ? _value._messages
-          : messages // ignore: cast_nullable_to_non_nullable
-              as List<ChatModelMessage>,
+      groupedMessages: null == groupedMessages
+          ? _value._groupedMessages
+          : groupedMessages // ignore: cast_nullable_to_non_nullable
+              as List<MapEntry<String, List<ChatModelMessage>>>,
     ));
   }
 }
@@ -149,8 +150,9 @@ class _$ChatsModelImpl implements _ChatsModel {
       {required this.chatId,
       required this.activeUserId,
       required this.chatPartner,
-      required final List<ChatModelMessage> messages})
-      : _messages = messages;
+      required final List<MapEntry<String, List<ChatModelMessage>>>
+          groupedMessages})
+      : _groupedMessages = groupedMessages;
 
   @override
   final String chatId;
@@ -158,17 +160,17 @@ class _$ChatsModelImpl implements _ChatsModel {
   final String activeUserId;
   @override
   final ChatModelPerson chatPartner;
-  final List<ChatModelMessage> _messages;
+  final List<MapEntry<String, List<ChatModelMessage>>> _groupedMessages;
   @override
-  List<ChatModelMessage> get messages {
-    if (_messages is EqualUnmodifiableListView) return _messages;
+  List<MapEntry<String, List<ChatModelMessage>>> get groupedMessages {
+    if (_groupedMessages is EqualUnmodifiableListView) return _groupedMessages;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_messages);
+    return EqualUnmodifiableListView(_groupedMessages);
   }
 
   @override
   String toString() {
-    return 'ChatModel(chatId: $chatId, activeUserId: $activeUserId, chatPartner: $chatPartner, messages: $messages)';
+    return 'ChatModel(chatId: $chatId, activeUserId: $activeUserId, chatPartner: $chatPartner, groupedMessages: $groupedMessages)';
   }
 
   @override
@@ -181,12 +183,13 @@ class _$ChatsModelImpl implements _ChatsModel {
                 other.activeUserId == activeUserId) &&
             (identical(other.chatPartner, chatPartner) ||
                 other.chatPartner == chatPartner) &&
-            const DeepCollectionEquality().equals(other._messages, _messages));
+            const DeepCollectionEquality()
+                .equals(other._groupedMessages, _groupedMessages));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, chatId, activeUserId,
-      chatPartner, const DeepCollectionEquality().hash(_messages));
+      chatPartner, const DeepCollectionEquality().hash(_groupedMessages));
 
   @JsonKey(ignore: true)
   @override
@@ -200,7 +203,8 @@ abstract class _ChatsModel implements ChatModel {
       {required final String chatId,
       required final String activeUserId,
       required final ChatModelPerson chatPartner,
-      required final List<ChatModelMessage> messages}) = _$ChatsModelImpl;
+      required final List<MapEntry<String, List<ChatModelMessage>>>
+          groupedMessages}) = _$ChatsModelImpl;
 
   @override
   String get chatId;
@@ -209,7 +213,7 @@ abstract class _ChatsModel implements ChatModel {
   @override
   ChatModelPerson get chatPartner;
   @override
-  List<ChatModelMessage> get messages;
+  List<MapEntry<String, List<ChatModelMessage>>> get groupedMessages;
   @override
   @JsonKey(ignore: true)
   _$$ChatsModelImplCopyWith<_$ChatsModelImpl> get copyWith =>
