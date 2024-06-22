@@ -7,7 +7,7 @@ part of 'chats_controller_impl.dart';
 // **************************************************************************
 
 String _$chatsControllerImplHash() =>
-    r'22769dafceac15457444c6099598942f4c666c92';
+    r'4f26c95b732fc43d77ce7335366b2c73992b74f2';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -34,7 +34,7 @@ class SearchView extends StatelessWidget {
               shrinkWrap: true,
               itemCount: model.filteredResults.length,
               itemBuilder: (BuildContext context, int index) => ListTile(
-                title: Text(model.filteredResults[index]),
+                title: Text(model.filteredResults[index].title),
               ),
             ),
             if (model.query.isEmpty) ...<Widget>[

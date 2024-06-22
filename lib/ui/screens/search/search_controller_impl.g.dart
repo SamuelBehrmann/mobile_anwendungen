@@ -7,7 +7,7 @@ part of 'search_controller_impl.dart';
 // **************************************************************************
 
 String _$searchControllerImplHash() =>
-    r'eceeb0c88ebcb2bd612e03cb7b977926d02597a7';
+    r'328e876a2b1ee55908594d3fff47039e2e54cd8b';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -33,9 +33,11 @@ class _SystemHash {
 abstract class _$SearchControllerImpl
     extends BuildlessAutoDisposeNotifier<SearchModel> {
   late final SearchNavigationService navigationService;
+  late final SearchBackendService backendService;
 
   SearchModel build({
     required SearchNavigationService navigationService,
+    required SearchBackendService backendService,
   });
 }
 
@@ -51,9 +53,11 @@ class SearchControllerImplFamily extends Family<SearchModel> {
   /// See also [SearchControllerImpl].
   SearchControllerImplProvider call({
     required SearchNavigationService navigationService,
+    required SearchBackendService backendService,
   }) {
     return SearchControllerImplProvider(
       navigationService: navigationService,
+      backendService: backendService,
     );
   }
 
@@ -63,6 +67,7 @@ class SearchControllerImplFamily extends Family<SearchModel> {
   ) {
     return call(
       navigationService: provider.navigationService,
+      backendService: provider.backendService,
     );
   }
 
@@ -87,8 +92,11 @@ class SearchControllerImplProvider
   /// See also [SearchControllerImpl].
   SearchControllerImplProvider({
     required SearchNavigationService navigationService,
+    required SearchBackendService backendService,
   }) : this._internal(
-          () => SearchControllerImpl()..navigationService = navigationService,
+          () => SearchControllerImpl()
+            ..navigationService = navigationService
+            ..backendService = backendService,
           from: searchControllerImplProvider,
           name: r'searchControllerImplProvider',
           debugGetCreateSourceHash:
@@ -99,6 +107,7 @@ class SearchControllerImplProvider
           allTransitiveDependencies:
               SearchControllerImplFamily._allTransitiveDependencies,
           navigationService: navigationService,
+          backendService: backendService,
         );
 
   SearchControllerImplProvider._internal(
@@ -109,9 +118,11 @@ class SearchControllerImplProvider
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.navigationService,
+    required this.backendService,
   }) : super.internal();
 
   final SearchNavigationService navigationService;
+  final SearchBackendService backendService;
 
   @override
   SearchModel runNotifierBuild(
@@ -119,6 +130,7 @@ class SearchControllerImplProvider
   ) {
     return notifier.build(
       navigationService: navigationService,
+      backendService: backendService,
     );
   }
 
@@ -127,13 +139,16 @@ class SearchControllerImplProvider
     return ProviderOverride(
       origin: this,
       override: SearchControllerImplProvider._internal(
-        () => create()..navigationService = navigationService,
+        () => create()
+          ..navigationService = navigationService
+          ..backendService = backendService,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         navigationService: navigationService,
+        backendService: backendService,
       ),
     );
   }
@@ -147,13 +162,15 @@ class SearchControllerImplProvider
   @override
   bool operator ==(Object other) {
     return other is SearchControllerImplProvider &&
-        other.navigationService == navigationService;
+        other.navigationService == navigationService &&
+        other.backendService == backendService;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, navigationService.hashCode);
+    hash = _SystemHash.combine(hash, backendService.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -162,6 +179,9 @@ class SearchControllerImplProvider
 mixin SearchControllerImplRef on AutoDisposeNotifierProviderRef<SearchModel> {
   /// The parameter `navigationService` of this provider.
   SearchNavigationService get navigationService;
+
+  /// The parameter `backendService` of this provider.
+  SearchBackendService get backendService;
 }
 
 class _SearchControllerImplProviderElement
@@ -172,6 +192,9 @@ class _SearchControllerImplProviderElement
   @override
   SearchNavigationService get navigationService =>
       (origin as SearchControllerImplProvider).navigationService;
+  @override
+  SearchBackendService get backendService =>
+      (origin as SearchControllerImplProvider).backendService;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

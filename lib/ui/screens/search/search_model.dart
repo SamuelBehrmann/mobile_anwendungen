@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:medi_support/ui/screens/search/services/search_backend_service.dart';
 
 part 'search_model.freezed.dart';
 
@@ -6,7 +7,25 @@ part 'search_model.freezed.dart';
 class SearchModel with _$SearchModel {
   const factory SearchModel({
     required String query,
-    required List<String> searchResults,
-    required List<String> filteredResults,
+    required List<SearchModelPost> results,
+    required List<SearchModelPost> filteredResults,
   }) = _SearchModel;
+}
+
+@freezed
+class SearchModelPost with _$SearchModelPost {
+  const factory SearchModelPost({
+    required final String id,
+    required final String title,
+    required final String body,
+  }) = _SearchModelPost;
+
+  factory SearchModelPost.fromBackendServicePost(
+    final SearchBackendServicePost post,
+  ) =>
+      SearchModelPost(
+        id: post.postId,
+        title: post.title,
+        body: post.body,
+      );
 }
