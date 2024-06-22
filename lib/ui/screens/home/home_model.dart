@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:medi_support/ui/screens/home/services/home_backend_service.dart';
 
 part 'home_model.freezed.dart';
 
@@ -18,4 +19,12 @@ class HomeModelPost with _$HomeModelPost {
     required String title,
     required String body,
   }) = _HomeModelPost;
+
+  static HomeModelPost fromBackendServicePost(HomeBackendServicePost post) =>
+      HomeModelPost(
+        userId: post.userId,
+        postId: post.postId,
+        title: post.title,
+        body: post.body,
+      );
 }

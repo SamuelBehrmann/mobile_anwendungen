@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medi_support/ui/screens/home/home_controller.dart';
 import 'package:medi_support/ui/screens/home/home_model.dart';
+import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/post_preview.dart';
 
 class HomeView extends StatelessWidget {
@@ -15,8 +16,8 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Home'),
+        appBar: CustomAppBar(
+          title: 'Home',
           actions: <Widget>[_buildSearchButton()],
         ),
         body: _buildContent(),
@@ -30,7 +31,7 @@ class HomeView extends StatelessWidget {
   Widget _buildContent() => CustomScrollView(
         slivers: <Widget>[
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
             sliver: SliverList.separated(
               itemBuilder: (_, int index) {
                 final HomeModelPost post = model.posts[index];

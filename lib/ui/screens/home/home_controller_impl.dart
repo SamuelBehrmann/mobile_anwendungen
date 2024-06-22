@@ -11,17 +11,26 @@ part 'home_controller_impl.g.dart';
 @riverpod
 class HomeControllerImpl extends _$HomeControllerImpl
     implements HomeController {
+  StreamSubscription<List<HomeModelPost>>? _subscription;
+
   @override
   HomeModel build({
     required HomeNavigationService navigationService,
     required HomeBackendService backendService,
   }) {
     const HomeModel model = HomeModel(posts: <HomeModelPost>[]);
-    scheduleMicrotask(
-      () => backendService.fetchPosts().then((List<HomeModelPost> posts) {
-        state = state.copyWith(posts: posts);
-      }),
-    );
+
+    _subscription = backendService
+        .getHomePostsStream(maxCount: 20)
+        .map(
+          (List<HomeBackendServicePost> posts) =>
+              posts.map(HomeModelPost.fromBackendServicePost).toList(),
+        )
+        .listen(
+          (List<HomeModelPost> posts) => state = state.copyWith(posts: posts),
+        );
+
+    ref.onDispose(() => unawaited(_subscription?.cancel()));
     return model;
   }
 
