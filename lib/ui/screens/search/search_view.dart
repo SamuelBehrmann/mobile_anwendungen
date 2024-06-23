@@ -30,45 +30,54 @@ class SearchView extends StatelessWidget {
               currentQuery: model.query,
               onDiscard: controller.discardQuery,
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: model.filteredResults.length,
-              itemBuilder: (BuildContext context, int index) => ListTile(
-                title: Text(model.filteredResults[index].title),
-                subtitle: Text('${model.filteredResults[index].body.substring(
-                  0,
-                  model.filteredResults[index].body.length < 50
-                      ? model.filteredResults[index].body.length
-                      : 50,
-                )} ...'),
-                onTap: () => controller.openPost(
-                  postId: model.filteredResults[index].id,
-                ),
-              ),
-            ),
-            if (model.query.isEmpty) ...<Widget>[
-              IconRow(
-                iconSize: 24,
-                icons: const <IconWithLabel>[
-                  IconWithLabel(Icons.search, 'Search'),
-                  IconWithLabel(Icons.home, 'Home'),
-                  IconWithLabel(Icons.favorite, 'Favorites'),
-                ],
-                onIconPressed: ({required String value}) =>
-                    controller.onSearch(query: value),
-              ),
-              IconRow(
-                iconSize: 24,
-                icons: const <IconWithLabel>[
-                  IconWithLabel(Icons.search, 'Search'),
-                  IconWithLabel(Icons.home, 'Home'),
-                  IconWithLabel(Icons.favorite, 'Favorites'),
-                ],
-                onIconPressed: ({required String value}) =>
-                    controller.onSearch(query: value),
-              ),
-            ],
+            resultList(),
+            if (model.query.isEmpty) ...categories,
           ],
+        ),
+      );
+
+  List<Widget> get categories => <Widget>[
+        IconRow(
+          iconSize: 24,
+          icons: const <IconWithLabel>[
+            IconWithLabel(Icons.search, 'Search'),
+            IconWithLabel(Icons.home, 'Home'),
+            IconWithLabel(Icons.favorite, 'Favorites'),
+          ],
+          onIconPressed: ({required String value}) =>
+              controller.onSearch(query: value),
+        ),
+        IconRow(
+          iconSize: 24,
+          icons: const <IconWithLabel>[
+            IconWithLabel(Icons.search, 'Search'),
+            IconWithLabel(Icons.home, 'Home'),
+            IconWithLabel(Icons.favorite, 'Favorites'),
+          ],
+          onIconPressed: ({required String value}) =>
+              controller.onSearch(query: value),
+        ),
+      ];
+
+  ListView resultList() => ListView.builder(
+        shrinkWrap: true,
+        itemCount: model.filteredResults.length,
+        itemBuilder: (BuildContext context, int index) => ListTile(
+          title: Text(
+            model.filteredResults[index].title,
+            textAlign: TextAlign.left,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: Text(
+            model.filteredResults[index].body,
+            textAlign: TextAlign.left,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          onTap: () => controller.openPost(
+            postId: model.filteredResults[index].id,
+          ),
         ),
       );
 }
