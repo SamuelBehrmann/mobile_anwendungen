@@ -16,7 +16,6 @@ class SearchControllerImpl extends _$SearchControllerImpl
   }) {
     SearchModel searchModel = const SearchModel(
       query: "",
-      results: <SearchModelPost>[],
       filteredResults: <SearchModelPost>[],
     );
 
@@ -42,9 +41,7 @@ class SearchControllerImpl extends _$SearchControllerImpl
                   posts.map(SearchModelPost.fromBackendServicePost).toList(),
             );
 
-    state = state.copyWith(results: posts);
-
-    List<SearchModelPost> filteredResults = state.results
+    List<SearchModelPost> filteredResults = posts
         .map((SearchModelPost post) {
           if (post.title.toLowerCase().contains(query.toLowerCase().trim()) ||
               post.body.toLowerCase().contains(query.toLowerCase().trim())) {

@@ -30,13 +30,12 @@ class SearchView extends StatelessWidget {
               currentQuery: model.query,
               onDiscard: controller.discardQuery,
             ),
-            resultList(),
-            if (model.query.isEmpty) ...categories,
+            if (model.query.isEmpty) ..._categories else _resultList(),
           ],
         ),
       );
 
-  List<Widget> get categories => <Widget>[
+  List<Widget> get _categories => <Widget>[
         IconRow(
           iconSize: 24,
           icons: const <IconWithLabel>[
@@ -59,24 +58,26 @@ class SearchView extends StatelessWidget {
         ),
       ];
 
-  ListView resultList() => ListView.builder(
-        shrinkWrap: true,
-        itemCount: model.filteredResults.length,
-        itemBuilder: (BuildContext context, int index) => ListTile(
-          title: Text(
-            model.filteredResults[index].title,
-            textAlign: TextAlign.left,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          subtitle: Text(
-            model.filteredResults[index].body,
-            textAlign: TextAlign.left,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          onTap: () => controller.openPost(
-            postId: model.filteredResults[index].id,
+  Expanded _resultList() => Expanded(
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: model.filteredResults.length,
+          itemBuilder: (BuildContext context, int index) => ListTile(
+            title: Text(
+              model.filteredResults[index].title,
+              textAlign: TextAlign.left,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Text(
+              model.filteredResults[index].body,
+              textAlign: TextAlign.left,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            onTap: () => controller.openPost(
+              postId: model.filteredResults[index].id,
+            ),
           ),
         ),
       );

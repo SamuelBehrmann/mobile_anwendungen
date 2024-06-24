@@ -202,7 +202,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
                 )
                 .map(
                   (Map<String, dynamic> element) => SearchBackendServicePost(
-                    userId: element["userId"] as String? ?? "test",
+                    userId: element["userId"]! as String,
                     postId: element["postId"]! as String,
                     title: element["title"]! as String,
                     body: element["body"]! as String,

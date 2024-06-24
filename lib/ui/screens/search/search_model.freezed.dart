@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SearchModel {
   String get query => throw _privateConstructorUsedError;
-  List<SearchModelPost> get results => throw _privateConstructorUsedError;
   List<SearchModelPost> get filteredResults =>
       throw _privateConstructorUsedError;
 
@@ -32,10 +31,7 @@ abstract class $SearchModelCopyWith<$Res> {
           SearchModel value, $Res Function(SearchModel) then) =
       _$SearchModelCopyWithImpl<$Res, SearchModel>;
   @useResult
-  $Res call(
-      {String query,
-      List<SearchModelPost> results,
-      List<SearchModelPost> filteredResults});
+  $Res call({String query, List<SearchModelPost> filteredResults});
 }
 
 /// @nodoc
@@ -52,7 +48,6 @@ class _$SearchModelCopyWithImpl<$Res, $Val extends SearchModel>
   @override
   $Res call({
     Object? query = null,
-    Object? results = null,
     Object? filteredResults = null,
   }) {
     return _then(_value.copyWith(
@@ -60,10 +55,6 @@ class _$SearchModelCopyWithImpl<$Res, $Val extends SearchModel>
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
               as String,
-      results: null == results
-          ? _value.results
-          : results // ignore: cast_nullable_to_non_nullable
-              as List<SearchModelPost>,
       filteredResults: null == filteredResults
           ? _value.filteredResults
           : filteredResults // ignore: cast_nullable_to_non_nullable
@@ -80,10 +71,7 @@ abstract class _$$SearchModelImplCopyWith<$Res>
       __$$SearchModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String query,
-      List<SearchModelPost> results,
-      List<SearchModelPost> filteredResults});
+  $Res call({String query, List<SearchModelPost> filteredResults});
 }
 
 /// @nodoc
@@ -98,7 +86,6 @@ class __$$SearchModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? query = null,
-    Object? results = null,
     Object? filteredResults = null,
   }) {
     return _then(_$SearchModelImpl(
@@ -106,10 +93,6 @@ class __$$SearchModelImplCopyWithImpl<$Res>
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
               as String,
-      results: null == results
-          ? _value._results
-          : results // ignore: cast_nullable_to_non_nullable
-              as List<SearchModelPost>,
       filteredResults: null == filteredResults
           ? _value._filteredResults
           : filteredResults // ignore: cast_nullable_to_non_nullable
@@ -123,21 +106,11 @@ class __$$SearchModelImplCopyWithImpl<$Res>
 class _$SearchModelImpl implements _SearchModel {
   const _$SearchModelImpl(
       {required this.query,
-      required final List<SearchModelPost> results,
       required final List<SearchModelPost> filteredResults})
-      : _results = results,
-        _filteredResults = filteredResults;
+      : _filteredResults = filteredResults;
 
   @override
   final String query;
-  final List<SearchModelPost> _results;
-  @override
-  List<SearchModelPost> get results {
-    if (_results is EqualUnmodifiableListView) return _results;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_results);
-  }
-
   final List<SearchModelPost> _filteredResults;
   @override
   List<SearchModelPost> get filteredResults {
@@ -148,7 +121,7 @@ class _$SearchModelImpl implements _SearchModel {
 
   @override
   String toString() {
-    return 'SearchModel(query: $query, results: $results, filteredResults: $filteredResults)';
+    return 'SearchModel(query: $query, filteredResults: $filteredResults)';
   }
 
   @override
@@ -157,16 +130,12 @@ class _$SearchModelImpl implements _SearchModel {
         (other.runtimeType == runtimeType &&
             other is _$SearchModelImpl &&
             (identical(other.query, query) || other.query == query) &&
-            const DeepCollectionEquality().equals(other._results, _results) &&
             const DeepCollectionEquality()
                 .equals(other._filteredResults, _filteredResults));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      query,
-      const DeepCollectionEquality().hash(_results),
+  int get hashCode => Object.hash(runtimeType, query,
       const DeepCollectionEquality().hash(_filteredResults));
 
   @JsonKey(ignore: true)
@@ -179,14 +148,11 @@ class _$SearchModelImpl implements _SearchModel {
 abstract class _SearchModel implements SearchModel {
   const factory _SearchModel(
           {required final String query,
-          required final List<SearchModelPost> results,
           required final List<SearchModelPost> filteredResults}) =
       _$SearchModelImpl;
 
   @override
   String get query;
-  @override
-  List<SearchModelPost> get results;
   @override
   List<SearchModelPost> get filteredResults;
   @override

@@ -7,7 +7,6 @@ part 'search_model.freezed.dart';
 class SearchModel with _$SearchModel {
   const factory SearchModel({
     required String query,
-    required List<SearchModelPost> results,
     required List<SearchModelPost> filteredResults,
   }) = _SearchModel;
 }
