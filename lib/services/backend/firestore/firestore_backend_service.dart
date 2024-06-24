@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:medi_support/services/backend/backend_service.dart';
@@ -40,7 +38,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
   }) =>
       firestore
           .collection("posts")
-          .orderBy("timestamp", descending: true)
+          .orderBy("createdAt", descending: true)
           .limit(maxCount)
           .snapshots()
           .map(
@@ -218,12 +216,6 @@ class FirestoreBackendService extends BackendServiceAggregator {
                 ),
               )
               .toList();
-
-  @override
-  Future<List<HomeModelPost>> fetchPosts() {
-    // TODO: implement fetchPosts
-    throw UnimplementedError();
-  }
 }
 
 // convenience classes to work with Firestore data
