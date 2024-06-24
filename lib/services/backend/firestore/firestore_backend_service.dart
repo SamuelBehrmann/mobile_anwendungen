@@ -28,6 +28,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
     await firestore.collection(_postsCollection).add(<String, String>{
       'title': title,
       'body': body,
+      'createdAt': DateTime.now().toUtc().toIso8601String(),
     });
   }
 
