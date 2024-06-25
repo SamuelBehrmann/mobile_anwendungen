@@ -11,7 +11,7 @@ _$FirestoreBackendServicePostImpl _$$FirestoreBackendServicePostImplFromJson(
     _$FirestoreBackendServicePostImpl(
       id: json['id'] as String,
       title: json['title'] as String,
-      content: json['body'] as String,
+      content: json['content'] as String,
       author: FirestoreBackendServiceUser.fromJson(
           json['author'] as Map<String, dynamic>),
       replies: (json['replies'] as List<dynamic>)
@@ -25,7 +25,7 @@ Map<String, dynamic> _$$FirestoreBackendServicePostImplToJson(
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'body': instance.content,
+      'content': instance.content,
       'author': instance.author.toJson(),
       'replies': instance.replies.map((e) => e.toJson()).toList(),
     };
@@ -35,7 +35,7 @@ _$FirestoreBackendServiceUserImpl _$$FirestoreBackendServiceUserImplFromJson(
     _$FirestoreBackendServiceUserImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      avatar: Uri.parse(json['avatar'] as String),
+      imageUrl: Uri.parse(json['imageUrl'] as String),
       titles:
           (json['titles'] as List<dynamic>).map((e) => e as String).toList(),
     );
@@ -45,7 +45,7 @@ Map<String, dynamic> _$$FirestoreBackendServiceUserImplToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'avatar': instance.avatar.toString(),
+      'imageUrl': instance.imageUrl.toString(),
       'titles': instance.titles,
     };
 

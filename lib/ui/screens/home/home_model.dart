@@ -12,9 +12,10 @@ class HomeModel with _$HomeModel {
 
 @freezed
 class HomeModelPost with _$HomeModelPost {
+  const HomeModelPost._();
+
   const factory HomeModelPost({
-    //TODO: fille if we have users
-    required String userId,
+    required HomeModelUser user,
     required String postId,
     required String title,
     required String body,
@@ -22,9 +23,29 @@ class HomeModelPost with _$HomeModelPost {
 
   static HomeModelPost fromBackendServicePost(HomeBackendServicePost post) =>
       HomeModelPost(
-        userId: post.userId,
+        user: HomeModelUser.fromBackendServiceUser(post.user),
         postId: post.postId,
         title: post.title,
         body: post.body,
+      );
+}
+
+@freezed
+class HomeModelUser with _$HomeModelUser {
+  const HomeModelUser._();
+
+  const factory HomeModelUser({
+    required String id,
+    required String name,
+    required String avatarUrl,
+    @Default(<String>[]) List<String> titles,
+  }) = _HomeModelUser;
+
+  static HomeModelUser fromBackendServiceUser(HomeBackendServiceUser user) =>
+      HomeModelUser(
+        id: user.userId,
+        name: user.userName,
+        avatarUrl: user.userAvatarUrl,
+        titles: user.titles,
       );
 }
