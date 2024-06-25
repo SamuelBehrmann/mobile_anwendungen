@@ -5,6 +5,7 @@ import 'package:medi_support/ui/screens/chats/services/chats_backend_service.dar
 import 'package:medi_support/ui/screens/home/home_model.dart';
 import 'package:medi_support/ui/screens/home/services/home_backend_service.dart';
 import 'package:medi_support/ui/screens/post/services/post_backend_service.dart';
+import 'package:medi_support/ui/screens/search/services/search_backend_service.dart';
 import 'package:uuid/uuid.dart';
 
 part 'firestore_backend_service.freezed.dart';
@@ -216,6 +217,30 @@ class FirestoreBackendService extends BackendServiceAggregator {
                 ),
               )
               .toList();
+
+  @override
+  Future<List<SearchBackendServicePost>> search(
+          {required String query}) async =>
+      firestore.collection(_postsCollection).get().then(
+            (QuerySnapshot<Map<String, dynamic>> collection) => collection.docs
+                .map(
+                  (QueryDocumentSnapshot<Map<String, dynamic>> element) =>
+                      element.data()..["postId"] = element.id,
+                )
+                .where(
+                  (Map<String, dynamic> element) =>
+                      element["title"] != null && element["body"] != null,
+                )
+                .map(
+                  (Map<String, dynamic> element) => SearchBackendServicePost(
+                    userId: element["userId"]! as String,
+                    postId: element["postId"]! as String,
+                    title: element["title"]! as String,
+                    body: element["body"]! as String,
+                  ),
+                )
+                .toList(),
+          );
 }
 
 // convenience classes to work with Firestore data
