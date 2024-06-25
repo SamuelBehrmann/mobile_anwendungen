@@ -1,9 +1,9 @@
-// ignore_for_file: invalid_annotation_target
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:medi_support/services/backend/backend_service.dart';
 import 'package:medi_support/ui/screens/chats/services/chats_backend_service.dart';
+import 'package:medi_support/ui/screens/home/home_model.dart';
+import 'package:medi_support/ui/screens/home/services/home_backend_service.dart';
 import 'package:medi_support/ui/screens/post/services/post_backend_service.dart';
 import 'package:uuid/uuid.dart';
 
@@ -31,6 +31,36 @@ class FirestoreBackendService extends BackendServiceAggregator {
       'createdAt': DateTime.now().toUtc().toIso8601String(),
     });
   }
+
+  @override
+  Stream<List<HomeBackendServicePost>> getHomePostsStream({
+    required final int maxCount,
+  }) =>
+      firestore
+          .collection("posts")
+          .orderBy("createdAt", descending: true)
+          .limit(maxCount)
+          .snapshots()
+          .map(
+            (QuerySnapshot<Map<String, dynamic>> collection) => collection.docs
+                .map(
+                  (QueryDocumentSnapshot<Map<String, dynamic>> element) =>
+                      element.data()..["postId"] = element.id,
+                )
+                .where(
+                  (Map<String, dynamic> element) =>
+                      element["title"] != null && element["body"] != null,
+                )
+                .map(
+                  (Map<String, dynamic> element) => HomeBackendServicePost(
+                    userId: element["userId"] as String? ?? "test",
+                    postId: element["postId"]! as String,
+                    title: element["title"]! as String,
+                    body: element["body"]! as String,
+                  ),
+                )
+                .toList(),
+          );
 
   @override
   Future<List<ChatsBackendServiceChat>> fetchChats() =>
