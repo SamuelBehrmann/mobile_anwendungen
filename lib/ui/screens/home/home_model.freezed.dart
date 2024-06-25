@@ -141,8 +141,7 @@ abstract class _HomeModel implements HomeModel {
 
 /// @nodoc
 mixin _$HomeModelPost {
-//TODO: fille if we have users
-  String get userId => throw _privateConstructorUsedError;
+  HomeModelUser get user => throw _privateConstructorUsedError;
   String get postId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get body => throw _privateConstructorUsedError;
@@ -158,7 +157,9 @@ abstract class $HomeModelPostCopyWith<$Res> {
           HomeModelPost value, $Res Function(HomeModelPost) then) =
       _$HomeModelPostCopyWithImpl<$Res, HomeModelPost>;
   @useResult
-  $Res call({String userId, String postId, String title, String body});
+  $Res call({HomeModelUser user, String postId, String title, String body});
+
+  $HomeModelUserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -174,16 +175,16 @@ class _$HomeModelPostCopyWithImpl<$Res, $Val extends HomeModelPost>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
+    Object? user = null,
     Object? postId = null,
     Object? title = null,
     Object? body = null,
   }) {
     return _then(_value.copyWith(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as HomeModelUser,
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
@@ -198,6 +199,14 @@ class _$HomeModelPostCopyWithImpl<$Res, $Val extends HomeModelPost>
               as String,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $HomeModelUserCopyWith<$Res> get user {
+    return $HomeModelUserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -208,7 +217,10 @@ abstract class _$$HomeModelPostImplCopyWith<$Res>
       __$$HomeModelPostImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userId, String postId, String title, String body});
+  $Res call({HomeModelUser user, String postId, String title, String body});
+
+  @override
+  $HomeModelUserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -222,16 +234,16 @@ class __$$HomeModelPostImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
+    Object? user = null,
     Object? postId = null,
     Object? title = null,
     Object? body = null,
   }) {
     return _then(_$HomeModelPostImpl(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as HomeModelUser,
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
@@ -250,16 +262,16 @@ class __$$HomeModelPostImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeModelPostImpl implements _HomeModelPost {
+class _$HomeModelPostImpl extends _HomeModelPost {
   const _$HomeModelPostImpl(
-      {required this.userId,
+      {required this.user,
       required this.postId,
       required this.title,
-      required this.body});
+      required this.body})
+      : super._();
 
-//TODO: fille if we have users
   @override
-  final String userId;
+  final HomeModelUser user;
   @override
   final String postId;
   @override
@@ -269,7 +281,7 @@ class _$HomeModelPostImpl implements _HomeModelPost {
 
   @override
   String toString() {
-    return 'HomeModelPost(userId: $userId, postId: $postId, title: $title, body: $body)';
+    return 'HomeModelPost(user: $user, postId: $postId, title: $title, body: $body)';
   }
 
   @override
@@ -277,14 +289,14 @@ class _$HomeModelPostImpl implements _HomeModelPost {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeModelPostImpl &&
-            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.user, user) || other.user == user) &&
             (identical(other.postId, postId) || other.postId == postId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.body, body) || other.body == body));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userId, postId, title, body);
+  int get hashCode => Object.hash(runtimeType, user, postId, title, body);
 
   @JsonKey(ignore: true)
   @override
@@ -293,15 +305,16 @@ class _$HomeModelPostImpl implements _HomeModelPost {
       __$$HomeModelPostImplCopyWithImpl<_$HomeModelPostImpl>(this, _$identity);
 }
 
-abstract class _HomeModelPost implements HomeModelPost {
+abstract class _HomeModelPost extends HomeModelPost {
   const factory _HomeModelPost(
-      {required final String userId,
+      {required final HomeModelUser user,
       required final String postId,
       required final String title,
       required final String body}) = _$HomeModelPostImpl;
+  const _HomeModelPost._() : super._();
 
-  @override //TODO: fille if we have users
-  String get userId;
+  @override
+  HomeModelUser get user;
   @override
   String get postId;
   @override
@@ -311,5 +324,189 @@ abstract class _HomeModelPost implements HomeModelPost {
   @override
   @JsonKey(ignore: true)
   _$$HomeModelPostImplCopyWith<_$HomeModelPostImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$HomeModelUser {
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get avatarUrl => throw _privateConstructorUsedError;
+  List<String> get titles => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $HomeModelUserCopyWith<HomeModelUser> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $HomeModelUserCopyWith<$Res> {
+  factory $HomeModelUserCopyWith(
+          HomeModelUser value, $Res Function(HomeModelUser) then) =
+      _$HomeModelUserCopyWithImpl<$Res, HomeModelUser>;
+  @useResult
+  $Res call({String id, String name, String avatarUrl, List<String> titles});
+}
+
+/// @nodoc
+class _$HomeModelUserCopyWithImpl<$Res, $Val extends HomeModelUser>
+    implements $HomeModelUserCopyWith<$Res> {
+  _$HomeModelUserCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? avatarUrl = null,
+    Object? titles = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatarUrl: null == avatarUrl
+          ? _value.avatarUrl
+          : avatarUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      titles: null == titles
+          ? _value.titles
+          : titles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$HomeModelUserImplCopyWith<$Res>
+    implements $HomeModelUserCopyWith<$Res> {
+  factory _$$HomeModelUserImplCopyWith(
+          _$HomeModelUserImpl value, $Res Function(_$HomeModelUserImpl) then) =
+      __$$HomeModelUserImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String id, String name, String avatarUrl, List<String> titles});
+}
+
+/// @nodoc
+class __$$HomeModelUserImplCopyWithImpl<$Res>
+    extends _$HomeModelUserCopyWithImpl<$Res, _$HomeModelUserImpl>
+    implements _$$HomeModelUserImplCopyWith<$Res> {
+  __$$HomeModelUserImplCopyWithImpl(
+      _$HomeModelUserImpl _value, $Res Function(_$HomeModelUserImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? avatarUrl = null,
+    Object? titles = null,
+  }) {
+    return _then(_$HomeModelUserImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatarUrl: null == avatarUrl
+          ? _value.avatarUrl
+          : avatarUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      titles: null == titles
+          ? _value._titles
+          : titles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$HomeModelUserImpl extends _HomeModelUser {
+  const _$HomeModelUserImpl(
+      {required this.id,
+      required this.name,
+      required this.avatarUrl,
+      final List<String> titles = const <String>[]})
+      : _titles = titles,
+        super._();
+
+  @override
+  final String id;
+  @override
+  final String name;
+  @override
+  final String avatarUrl;
+  final List<String> _titles;
+  @override
+  @JsonKey()
+  List<String> get titles {
+    if (_titles is EqualUnmodifiableListView) return _titles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_titles);
+  }
+
+  @override
+  String toString() {
+    return 'HomeModelUser(id: $id, name: $name, avatarUrl: $avatarUrl, titles: $titles)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$HomeModelUserImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl) &&
+            const DeepCollectionEquality().equals(other._titles, _titles));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name, avatarUrl,
+      const DeepCollectionEquality().hash(_titles));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$HomeModelUserImplCopyWith<_$HomeModelUserImpl> get copyWith =>
+      __$$HomeModelUserImplCopyWithImpl<_$HomeModelUserImpl>(this, _$identity);
+}
+
+abstract class _HomeModelUser extends HomeModelUser {
+  const factory _HomeModelUser(
+      {required final String id,
+      required final String name,
+      required final String avatarUrl,
+      final List<String> titles}) = _$HomeModelUserImpl;
+  const _HomeModelUser._() : super._();
+
+  @override
+  String get id;
+  @override
+  String get name;
+  @override
+  String get avatarUrl;
+  @override
+  List<String> get titles;
+  @override
+  @JsonKey(ignore: true)
+  _$$HomeModelUserImplCopyWith<_$HomeModelUserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

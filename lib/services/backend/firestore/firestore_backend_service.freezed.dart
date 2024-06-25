@@ -23,7 +23,6 @@ FirestoreBackendServicePost _$FirestoreBackendServicePostFromJson(
 mixin _$FirestoreBackendServicePost {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  @JsonKey(name: 'body')
   String get content => throw _privateConstructorUsedError;
   FirestoreBackendServiceUser get author => throw _privateConstructorUsedError;
   List<FirestoreBackendServiceMessage> get replies =>
@@ -46,7 +45,7 @@ abstract class $FirestoreBackendServicePostCopyWith<$Res> {
   $Res call(
       {String id,
       String title,
-      @JsonKey(name: 'body') String content,
+      String content,
       FirestoreBackendServiceUser author,
       List<FirestoreBackendServiceMessage> replies});
 
@@ -118,7 +117,7 @@ abstract class _$$FirestoreBackendServicePostImplCopyWith<$Res>
   $Res call(
       {String id,
       String title,
-      @JsonKey(name: 'body') String content,
+      String content,
       FirestoreBackendServiceUser author,
       List<FirestoreBackendServiceMessage> replies});
 
@@ -176,7 +175,7 @@ class _$FirestoreBackendServicePostImpl extends _FirestoreBackendServicePost {
   const _$FirestoreBackendServicePostImpl(
       {required this.id,
       required this.title,
-      @JsonKey(name: 'body') required this.content,
+      required this.content,
       required this.author,
       required final List<FirestoreBackendServiceMessage> replies})
       : _replies = replies,
@@ -191,7 +190,6 @@ class _$FirestoreBackendServicePostImpl extends _FirestoreBackendServicePost {
   @override
   final String title;
   @override
-  @JsonKey(name: 'body')
   final String content;
   @override
   final FirestoreBackendServiceUser author;
@@ -245,7 +243,7 @@ abstract class _FirestoreBackendServicePost
   const factory _FirestoreBackendServicePost(
           {required final String id,
           required final String title,
-          @JsonKey(name: 'body') required final String content,
+          required final String content,
           required final FirestoreBackendServiceUser author,
           required final List<FirestoreBackendServiceMessage> replies}) =
       _$FirestoreBackendServicePostImpl;
@@ -259,7 +257,6 @@ abstract class _FirestoreBackendServicePost
   @override
   String get title;
   @override
-  @JsonKey(name: 'body')
   String get content;
   @override
   FirestoreBackendServiceUser get author;
@@ -280,7 +277,7 @@ FirestoreBackendServiceUser _$FirestoreBackendServiceUserFromJson(
 mixin _$FirestoreBackendServiceUser {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  Uri get avatar => throw _privateConstructorUsedError;
+  Uri get imageUrl => throw _privateConstructorUsedError;
   List<String> get titles => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -297,7 +294,7 @@ abstract class $FirestoreBackendServiceUserCopyWith<$Res> {
       _$FirestoreBackendServiceUserCopyWithImpl<$Res,
           FirestoreBackendServiceUser>;
   @useResult
-  $Res call({String id, String name, Uri avatar, List<String> titles});
+  $Res call({String id, String name, Uri imageUrl, List<String> titles});
 }
 
 /// @nodoc
@@ -316,7 +313,7 @@ class _$FirestoreBackendServiceUserCopyWithImpl<$Res,
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? avatar = null,
+    Object? imageUrl = null,
     Object? titles = null,
   }) {
     return _then(_value.copyWith(
@@ -328,9 +325,9 @@ class _$FirestoreBackendServiceUserCopyWithImpl<$Res,
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      avatar: null == avatar
-          ? _value.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as Uri,
       titles: null == titles
           ? _value.titles
@@ -349,7 +346,7 @@ abstract class _$$FirestoreBackendServiceUserImplCopyWith<$Res>
       __$$FirestoreBackendServiceUserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, Uri avatar, List<String> titles});
+  $Res call({String id, String name, Uri imageUrl, List<String> titles});
 }
 
 /// @nodoc
@@ -367,7 +364,7 @@ class __$$FirestoreBackendServiceUserImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? avatar = null,
+    Object? imageUrl = null,
     Object? titles = null,
   }) {
     return _then(_$FirestoreBackendServiceUserImpl(
@@ -379,9 +376,9 @@ class __$$FirestoreBackendServiceUserImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      avatar: null == avatar
-          ? _value.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as Uri,
       titles: null == titles
           ? _value._titles
@@ -397,7 +394,7 @@ class _$FirestoreBackendServiceUserImpl extends _FirestoreBackendServiceUser {
   const _$FirestoreBackendServiceUserImpl(
       {required this.id,
       required this.name,
-      required this.avatar,
+      required this.imageUrl,
       required final List<String> titles})
       : _titles = titles,
         super._();
@@ -411,7 +408,7 @@ class _$FirestoreBackendServiceUserImpl extends _FirestoreBackendServiceUser {
   @override
   final String name;
   @override
-  final Uri avatar;
+  final Uri imageUrl;
   final List<String> _titles;
   @override
   List<String> get titles {
@@ -422,7 +419,7 @@ class _$FirestoreBackendServiceUserImpl extends _FirestoreBackendServiceUser {
 
   @override
   String toString() {
-    return 'FirestoreBackendServiceUser(id: $id, name: $name, avatar: $avatar, titles: $titles)';
+    return 'FirestoreBackendServiceUser(id: $id, name: $name, imageUrl: $imageUrl, titles: $titles)';
   }
 
   @override
@@ -432,13 +429,14 @@ class _$FirestoreBackendServiceUserImpl extends _FirestoreBackendServiceUser {
             other is _$FirestoreBackendServiceUserImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
             const DeepCollectionEquality().equals(other._titles, _titles));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, avatar,
+  int get hashCode => Object.hash(runtimeType, id, name, imageUrl,
       const DeepCollectionEquality().hash(_titles));
 
   @JsonKey(ignore: true)
@@ -461,7 +459,7 @@ abstract class _FirestoreBackendServiceUser
   const factory _FirestoreBackendServiceUser(
       {required final String id,
       required final String name,
-      required final Uri avatar,
+      required final Uri imageUrl,
       required final List<String> titles}) = _$FirestoreBackendServiceUserImpl;
   const _FirestoreBackendServiceUser._() : super._();
 
@@ -473,7 +471,7 @@ abstract class _FirestoreBackendServiceUser
   @override
   String get name;
   @override
-  Uri get avatar;
+  Uri get imageUrl;
   @override
   List<String> get titles;
   @override
