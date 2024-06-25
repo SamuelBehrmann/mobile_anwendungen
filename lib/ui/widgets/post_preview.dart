@@ -27,7 +27,10 @@ class PostPreview extends StatelessWidget {
           children: <Widget>[
             _buildHeader(),
             const SizedBox(height: 16),
-            _buildContent(),
+            SizedBox(
+              width: double.infinity,
+              child: _buildContent(),
+            ),
             const SizedBox(height: 16),
             _buildActions(),
           ],
@@ -56,6 +59,9 @@ class PostPreview extends StatelessWidget {
             Text(
               title,
               style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.start,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 8),
             Text(
@@ -63,6 +69,7 @@ class PostPreview extends StatelessWidget {
               style: Theme.of(context).textTheme.bodySmall,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.start,
             ),
           ],
         ),
