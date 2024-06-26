@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_annotation_target
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
@@ -7,13 +5,19 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:medi_support/services/backend/backend_service.dart';
 import 'package:medi_support/ui/screens/chat/services/chat_backend_service.dart';
 import 'package:medi_support/ui/screens/chats/services/chats_backend_service.dart';
+import 'package:medi_support/ui/screens/home/services/home_backend_service.dart';
 import 'package:medi_support/ui/screens/post/services/post_backend_service.dart';
+import 'package:medi_support/ui/screens/search/services/search_backend_service.dart';
 import 'package:uuid/uuid.dart';
 
 part 'firestore_backend_service.freezed.dart';
 part 'firestore_backend_service.g.dart';
 
 class FirestoreBackendService extends BackendServiceAggregator {
+  static const String _postsCollection = 'posts';
+  static const String _chatsCollection = 'chats';
+  static const String _usersCollection = 'users';
+
   final FirebaseFirestore firestore;
 
   FirestoreBackendService(
@@ -22,9 +26,10 @@ class FirestoreBackendService extends BackendServiceAggregator {
 
   @override
   Future<void> send({required String title, required String body}) async {
-    await firestore.collection('posts').add(<String, String>{
+    await firestore.collection(_postsCollection).add(<String, String>{
       'title': title,
       'body': body,
+      'createdAt': DateTime.now().toUtc().toIso8601String(),
     });
   }
 
@@ -39,9 +44,59 @@ class FirestoreBackendService extends BackendServiceAggregator {
   ///
   /// Returns a list of `ChatsBackendServiceChat` objects, each representing a chat.
   @override
+  // Future<List<ChatsBackendServiceChat>> fetchData() =>
+  //     firestore.collection('chats').get().then(
+  //           (_$Snapshot snapshot) =>
+  //               Stream<_$DocumentSnapshot>.fromIterable(snapshot.docs)
+  //                   .asyncMap((_$DocumentSnapshot doc) async {
+  //             Query<Map<String, dynamic>> subCollectionQuery =
+  //                 doc.reference.collection('messages').limit(1);
+  //             _$DocumentSnapshot firstDocSnapshot =
+  //                 await subCollectionQuery.get().then(
+  //                       (_$Snapshot snapshot) => snapshot.docs.first,
+  //                     );
+  //             Map<String, dynamic> user = (doc['persons']
+  //                 as Map<String, dynamic>)['personA'] as Map<String, dynamic>;
+  //             return ChatsBackendServiceChat(
+  //               name: user['name'] as String,
+  //               message: firstDocSnapshot['data'] as String,
+  //               profilePicturePath: user['imageUrl'] as String?,
+  //             );
+  //           }).toList(),
+  //         );
+  Stream<List<HomeBackendServicePost>> getHomePostsStream({
+    required final int maxCount,
+  }) =>
+      firestore
+          .collection("posts")
+          .orderBy("createdAt", descending: true)
+          .limit(maxCount)
+          .snapshots()
+          .map(
+            (QuerySnapshot<Map<String, dynamic>> collection) => collection.docs
+                .map(
+                  (QueryDocumentSnapshot<Map<String, dynamic>> element) =>
+                      element.data()..["postId"] = element.id,
+                )
+                .where(
+                  (Map<String, dynamic> element) =>
+                      element["title"] != null && element["body"] != null,
+                )
+                .map(
+                  (Map<String, dynamic> element) => HomeBackendServicePost(
+                    userId: element["userId"] as String? ?? "test",
+                    postId: element["postId"]! as String,
+                    title: element["title"]! as String,
+                    body: element["body"]! as String,
+                  ),
+                )
+                .toList(),
+          );
+
+  @override
   Future<List<ChatsBackendServiceChat>> getAllChats(String userId) async {
     DocumentSnapshot<Map<String, dynamic>> userDocSnapshot =
-        await firestore.collection('user').doc(userId).get();
+        await firestore.collection(_usersCollection).doc(userId).get();
     List<dynamic> chatIds =
         userDocSnapshot.data()?['chat_ids'] as List<dynamic>? ?? <dynamic>[];
 
@@ -72,7 +127,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
       // Fetch the last message from the 'messages' subcollection
       String lastMessage = 'No messages yet';
       DocumentSnapshot<Map<String, dynamic>> chatDocument =
-          await firestore.collection('chats').doc(chatId).get();
+          await firestore.collection(_chatsCollection).doc(chatId).get();
 
       if (chatDocument.exists && chatDocument.data()!.containsKey('messages')) {
         List<dynamic> messages =
@@ -103,7 +158,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
   Stream<PostBackendServicePost> getPostStream({
     required final String postId,
   }) =>
-      firestore.collection('posts').doc(postId).snapshots().map(
+      firestore.collection(_postsCollection).doc(postId).snapshots().map(
         (DocumentSnapshot<Map<String, dynamic>> doc) {
           Map<String, dynamic> data = doc.data()!;
           data['id'] = doc.id;
@@ -134,7 +189,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
     required String replyToMessageId,
   }) async {
     final DocumentReference<Map<String, dynamic>> postRefference =
-        firestore.collection('posts').doc(postId);
+        firestore.collection(_postsCollection).doc(postId);
 
     final Map<String, dynamic>? post = (await postRefference.get()).data();
 
@@ -233,8 +288,33 @@ class FirestoreBackendService extends BackendServiceAggregator {
               .toList();
 
   @override
+  Future<List<SearchBackendServicePost>> search({
+    required String query,
+  }) async =>
+      firestore.collection(_postsCollection).get().then(
+            (QuerySnapshot<Map<String, dynamic>> collection) => collection.docs
+                .map(
+                  (QueryDocumentSnapshot<Map<String, dynamic>> element) =>
+                      element.data()..["postId"] = element.id,
+                )
+                .where(
+                  (Map<String, dynamic> element) =>
+                      element["title"] != null && element["body"] != null,
+                )
+                .map(
+                  (Map<String, dynamic> element) => SearchBackendServicePost(
+                    userId: element["userId"]! as String,
+                    postId: element["postId"]! as String,
+                    title: element["title"]! as String,
+                    body: element["body"]! as String,
+                  ),
+                )
+                .toList(),
+          );
+
+  @override
   Stream<ChatBackendServiceChat> fetchChatData(String chatId) =>
-      firestore.collection('chats').doc(chatId).snapshots().map(
+      firestore.collection(_chatsCollection).doc(chatId).snapshots().map(
         (DocumentSnapshot<Map<String, dynamic>> doc) {
           Map<String, dynamic> chatData = doc.data()!;
           List<ChatBackendServiceMessage> messages =
@@ -288,7 +368,7 @@ class FirestoreBackendServicePost with _$FirestoreBackendServicePost {
   const factory FirestoreBackendServicePost({
     required final String id,
     required final String title,
-    @JsonKey(name: 'body') required final String content,
+    required final String content,
     required final FirestoreBackendServiceUser author,
     required final List<FirestoreBackendServiceMessage> replies,
   }) = _FirestoreBackendServicePost;

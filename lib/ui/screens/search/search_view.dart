@@ -30,36 +30,55 @@ class SearchView extends StatelessWidget {
               currentQuery: model.query,
               onDiscard: controller.discardQuery,
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: model.filteredResults.length,
-              itemBuilder: (BuildContext context, int index) => ListTile(
-                title: Text(model.filteredResults[index]),
-              ),
-            ),
-            if (model.query.isEmpty) ...<Widget>[
-              IconRow(
-                iconSize: 24,
-                icons: const <IconWithLabel>[
-                  IconWithLabel(Icons.search, 'Search'),
-                  IconWithLabel(Icons.home, 'Home'),
-                  IconWithLabel(Icons.favorite, 'Favorites'),
-                ],
-                onIconPressed: ({required String value}) =>
-                    controller.onSearch(query: value),
-              ),
-              IconRow(
-                iconSize: 24,
-                icons: const <IconWithLabel>[
-                  IconWithLabel(Icons.search, 'Search'),
-                  IconWithLabel(Icons.home, 'Home'),
-                  IconWithLabel(Icons.favorite, 'Favorites'),
-                ],
-                onIconPressed: ({required String value}) =>
-                    controller.onSearch(query: value),
-              ),
-            ],
+            if (model.query.isEmpty) ..._categories else _resultList(),
           ],
+        ),
+      );
+
+  List<Widget> get _categories => <Widget>[
+        IconRow(
+          iconSize: 24,
+          icons: const <IconWithLabel>[
+            IconWithLabel(Icons.search, 'Search'),
+            IconWithLabel(Icons.home, 'Home'),
+            IconWithLabel(Icons.favorite, 'Favorites'),
+          ],
+          onIconPressed: ({required String value}) =>
+              controller.onSearch(query: value),
+        ),
+        IconRow(
+          iconSize: 24,
+          icons: const <IconWithLabel>[
+            IconWithLabel(Icons.search, 'Search'),
+            IconWithLabel(Icons.home, 'Home'),
+            IconWithLabel(Icons.favorite, 'Favorites'),
+          ],
+          onIconPressed: ({required String value}) =>
+              controller.onSearch(query: value),
+        ),
+      ];
+
+  Expanded _resultList() => Expanded(
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: model.filteredResults.length,
+          itemBuilder: (BuildContext context, int index) => ListTile(
+            title: Text(
+              model.filteredResults[index].title,
+              textAlign: TextAlign.left,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Text(
+              model.filteredResults[index].body,
+              textAlign: TextAlign.left,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            onTap: () => controller.openPost(
+              postId: model.filteredResults[index].id,
+            ),
+          ),
         ),
       );
 }

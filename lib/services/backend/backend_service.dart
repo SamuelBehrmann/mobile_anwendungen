@@ -4,6 +4,8 @@ import 'package:medi_support/ui/screens/chat/services/chat_backend_service.dart'
 import 'package:medi_support/ui/screens/chats/services/chats_backend_service.dart';
 import 'package:medi_support/ui/screens/create_post/services/create_post_backend_service.dart';
 import 'package:medi_support/ui/screens/post/services/post_backend_service.dart';
+import 'package:medi_support/ui/screens/search/services/search_backend_service.dart';
+import 'package:medi_support/ui/screens/home/services/home_backend_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'backend_service.g.dart';
@@ -19,4 +21,6 @@ abstract class BackendServiceAggregator
         CreatePostBackendService,
         ChatsBackendService,
         ChatBackendService,
-        PostBackendService {}
+        PostBackendService,
+        SearchBackendService,
+        HomeBackendService {}

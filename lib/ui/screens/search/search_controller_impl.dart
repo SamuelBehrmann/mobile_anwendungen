@@ -1,5 +1,6 @@
 import 'package:medi_support/ui/screens/search/search_controller.dart';
 import 'package:medi_support/ui/screens/search/search_model.dart';
+import 'package:medi_support/ui/screens/search/services/search_backend_service.dart';
 import 'package:medi_support/ui/screens/search/services/search_navigation_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,18 +10,13 @@ part 'search_controller_impl.g.dart';
 class SearchControllerImpl extends _$SearchControllerImpl
     implements SearchController {
   @override
-  SearchModel build({required SearchNavigationService navigationService}) {
+  SearchModel build({
+    required SearchNavigationService navigationService,
+    required SearchBackendService backendService,
+  }) {
     SearchModel searchModel = const SearchModel(
       query: "",
-      searchResults: <String>[
-        "test1",
-        "test2",
-        "test3",
-        "test4",
-        "test5",
-        "home",
-      ],
-      filteredResults: <String>[],
+      filteredResults: <SearchModelPost>[],
     );
 
     return searchModel;
@@ -32,16 +28,30 @@ class SearchControllerImpl extends _$SearchControllerImpl
   }
 
   @override
-  void onSearch({required String query}) {
+  void onSearch({required String query}) async {
     if (query.isEmpty) {
-      state = state.copyWith(filteredResults: <String>[], query: query);
+      state =
+          state.copyWith(filteredResults: <SearchModelPost>[], query: query);
       return;
     }
-    List<String> filteredResults = state.searchResults
-        .where(
-          (String item) => item.toLowerCase().contains(query.toLowerCase()),
-        )
+
+    final List<SearchModelPost> posts =
+        await backendService.search(query: query).then(
+              (List<SearchBackendServicePost> posts) =>
+                  posts.map(SearchModelPost.fromBackendServicePost).toList(),
+            );
+
+    List<SearchModelPost> filteredResults = posts
+        .map((SearchModelPost post) {
+          if (post.title.toLowerCase().contains(query.toLowerCase().trim()) ||
+              post.body.toLowerCase().contains(query.toLowerCase().trim())) {
+            return post;
+          }
+          return null;
+        })
+        .whereType<SearchModelPost>()
         .toList();
+
     state = state.copyWith(filteredResults: filteredResults, query: query);
   }
 
@@ -52,6 +62,6 @@ class SearchControllerImpl extends _$SearchControllerImpl
 
   @override
   void discardQuery() {
-    state = state.copyWith(filteredResults: <String>[], query: "");
+    state = state.copyWith(filteredResults: <SearchModelPost>[], query: "");
   }
 }

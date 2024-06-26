@@ -36,9 +36,12 @@ class HomeRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => Consumer(
         builder: (BuildContext context, WidgetRef watch, Widget? child) {
+          final BackendServiceAggregator backendService =
+              watch.watch(backendServiceAggregatorProvider);
           final HomeControllerImplProvider provider =
               homeControllerImplProvider(
             navigationService: watch.watch(navigationServiceAggregatorProvider),
+            backendService: backendService,
           );
           return HomeView(
             model: watch.watch(provider),

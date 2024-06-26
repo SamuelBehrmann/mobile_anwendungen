@@ -23,7 +23,6 @@ FirestoreBackendServicePost _$FirestoreBackendServicePostFromJson(
 mixin _$FirestoreBackendServicePost {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  @JsonKey(name: 'body')
   String get content => throw _privateConstructorUsedError;
   FirestoreBackendServiceUser get author => throw _privateConstructorUsedError;
   List<FirestoreBackendServiceMessage> get replies =>
@@ -46,7 +45,7 @@ abstract class $FirestoreBackendServicePostCopyWith<$Res> {
   $Res call(
       {String id,
       String title,
-      @JsonKey(name: 'body') String content,
+      String content,
       FirestoreBackendServiceUser author,
       List<FirestoreBackendServiceMessage> replies});
 
@@ -118,7 +117,7 @@ abstract class _$$FirestoreBackendServicePostImplCopyWith<$Res>
   $Res call(
       {String id,
       String title,
-      @JsonKey(name: 'body') String content,
+      String content,
       FirestoreBackendServiceUser author,
       List<FirestoreBackendServiceMessage> replies});
 
@@ -177,7 +176,7 @@ class _$FirestoreBackendServicePostImpl extends _FirestoreBackendServicePost
   const _$FirestoreBackendServicePostImpl(
       {required this.id,
       required this.title,
-      @JsonKey(name: 'body') required this.content,
+      required this.content,
       required this.author,
       required final List<FirestoreBackendServiceMessage> replies})
       : _replies = replies,
@@ -192,7 +191,6 @@ class _$FirestoreBackendServicePostImpl extends _FirestoreBackendServicePost
   @override
   final String title;
   @override
-  @JsonKey(name: 'body')
   final String content;
   @override
   final FirestoreBackendServiceUser author;
@@ -258,7 +256,7 @@ abstract class _FirestoreBackendServicePost
   const factory _FirestoreBackendServicePost(
           {required final String id,
           required final String title,
-          @JsonKey(name: 'body') required final String content,
+          required final String content,
           required final FirestoreBackendServiceUser author,
           required final List<FirestoreBackendServiceMessage> replies}) =
       _$FirestoreBackendServicePostImpl;
@@ -272,7 +270,6 @@ abstract class _FirestoreBackendServicePost
   @override
   String get title;
   @override
-  @JsonKey(name: 'body')
   String get content;
   @override
   FirestoreBackendServiceUser get author;

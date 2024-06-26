@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:collection';
 
-import 'package:collection/collection.dart';
 import 'package:medi_support/ui/screens/chat/chat_controller.dart';
 import 'package:medi_support/ui/screens/chat/chat_model.dart';
 import 'package:medi_support/ui/screens/chat/services/chat_backend_service.dart';
