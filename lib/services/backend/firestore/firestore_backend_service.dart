@@ -33,37 +33,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
     });
   }
 
-  /// Fetches all chat conversations for a given user.
-  ///
-  /// This function retrieves all chat IDs associated with the user, iterates
-  /// through each chat, and constructs a list of `ChatsBackendServiceChat`
-  /// objects containing details about the other person in the chat and the
-  /// last message sent in the chat.
-  ///
-  /// [userId] The unique identifier of the user whose chats are to be retrieved.
-  ///
-  /// Returns a list of `ChatsBackendServiceChat` objects, each representing a chat.
   @override
-  // Future<List<ChatsBackendServiceChat>> fetchData() =>
-  //     firestore.collection('chats').get().then(
-  //           (_$Snapshot snapshot) =>
-  //               Stream<_$DocumentSnapshot>.fromIterable(snapshot.docs)
-  //                   .asyncMap((_$DocumentSnapshot doc) async {
-  //             Query<Map<String, dynamic>> subCollectionQuery =
-  //                 doc.reference.collection('messages').limit(1);
-  //             _$DocumentSnapshot firstDocSnapshot =
-  //                 await subCollectionQuery.get().then(
-  //                       (_$Snapshot snapshot) => snapshot.docs.first,
-  //                     );
-  //             Map<String, dynamic> user = (doc['persons']
-  //                 as Map<String, dynamic>)['personA'] as Map<String, dynamic>;
-  //             return ChatsBackendServiceChat(
-  //               name: user['name'] as String,
-  //               message: firstDocSnapshot['data'] as String,
-  //               profilePicturePath: user['imageUrl'] as String?,
-  //             );
-  //           }).toList(),
-  //         );
   Stream<List<HomeBackendServicePost>> getHomePostsStream({
     required final int maxCount,
   }) =>

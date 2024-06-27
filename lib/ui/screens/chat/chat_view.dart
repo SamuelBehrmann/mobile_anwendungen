@@ -5,9 +5,26 @@ import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 
 // TODO: implement send message functionality
-// TODO: clean up
 
 class ChatView extends StatelessWidget {
+  // _buildMessageList
+  static const EdgeInsets _messagePadding =
+      EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0);
+  static const EdgeInsets _chatListPadding = EdgeInsets.all(0);
+  static const EdgeInsets _messageContentPadding = EdgeInsets.all(6.0);
+  static const SizedBox _sizedBox = SizedBox(height: 8.0);
+  static const double _avatarRadius = 18;
+  static const double _messageWidth = 0.75;
+  static final BorderRadius _messageBorderRadius = BorderRadius.circular(12);
+  // _buildSendMessageArea
+  static const EdgeInsets containerPadding =
+      EdgeInsets.symmetric(horizontal: 24.0);
+  static const EdgeInsets textFieldPadding =
+      EdgeInsets.only(bottom: 24.0, top: 8);
+  static const EdgeInsets contentPadding =
+      EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0);
+  static final BorderRadius _buttonBorderRadius = BorderRadius.circular(30.0);
+
   final ChatModel model;
   final ChatController controller;
 
@@ -36,8 +53,8 @@ class ChatView extends StatelessWidget {
       );
 
   Widget _buildMessageList(ChatModel model) => ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
-        separatorBuilder: (_, __) => const SizedBox(height: 8.0),
+        padding: _messagePadding,
+        separatorBuilder: (_, __) => _sizedBox,
         reverse: true,
         itemCount: model.groupedMessages.length,
         itemBuilder: (BuildContext context, int index) {
@@ -50,7 +67,7 @@ class ChatView extends StatelessWidget {
                 isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.75,
+                maxWidth: MediaQuery.of(context).size.width * _messageWidth,
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -58,27 +75,27 @@ class ChatView extends StatelessWidget {
                 children: <Widget>[
                   if (!isCurrentUser)
                     CircleAvatar(
-                      radius: 18,
+                      radius: _avatarRadius,
                       child: CustomCachedNetworkImage(
                         imageUrl: model.chatPartner.imageUrl,
                       ),
                     ),
-                  const SizedBox(width: 8.0),
+                  _sizedBox,
                   Expanded(
                     child: ListView.separated(
-                      padding: const EdgeInsets.all(0),
-                      separatorBuilder: (_, __) => const SizedBox(height: 8.0),
+                      padding: _chatListPadding,
+                      separatorBuilder: (_, __) => _sizedBox,
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: message.value.length,
                       itemBuilder: (BuildContext context, int index) =>
                           Container(
-                        padding: const EdgeInsets.all(6.0),
+                        padding: _messageContentPadding,
                         decoration: BoxDecoration(
                           color: isCurrentUser
                               ? Theme.of(context).colorScheme.primaryContainer
                               : Theme.of(context).colorScheme.outlineVariant,
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: _messageBorderRadius,
                         ),
                         child: Text(
                           message.value[index].content,
@@ -97,21 +114,18 @@ class ChatView extends StatelessWidget {
     final TextEditingController messageController = TextEditingController();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      padding: containerPadding,
       child: Container(
-        padding: const EdgeInsets.only(bottom: 24.0, top: 8),
+        padding: textFieldPadding,
         child: SizedBox(
           width: double.infinity,
           child: TextField(
             controller: messageController,
             decoration: InputDecoration(
               hintText: "Type a message",
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 8.0,
-                horizontal: 16.0,
-              ),
+              contentPadding: contentPadding,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: _buttonBorderRadius,
               ),
               suffixIcon: IconButton(
                 icon: const Icon(Icons.send),

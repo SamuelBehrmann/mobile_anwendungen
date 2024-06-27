@@ -4,7 +4,7 @@ part 'home_backend_service.freezed.dart';
 
 abstract class HomeBackendService {
   Stream<List<HomeBackendServicePost>> getHomePostsStream(
-      {required final int maxCount});
+      {required final int maxCount,});
 }
 
 @freezed
