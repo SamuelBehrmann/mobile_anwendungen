@@ -12,7 +12,6 @@ import 'package:medi_support/ui/screens/chats/chats_view.dart';
 import 'package:medi_support/ui/screens/create_post/create_post_view.dart';
 import 'package:medi_support/ui/screens/home/home_controller_impl.dart';
 import 'package:medi_support/ui/screens/home/home_view.dart';
-import 'package:medi_support/ui/screens/home/services/home_backend_service.dart';
 import 'package:medi_support/ui/screens/profile/profile_controller_impl.dart';
 import 'package:medi_support/ui/screens/profile/profile_view.dart';
 import 'package:medi_support/ui/screens/create_post/create_post_controller_impl.dart';

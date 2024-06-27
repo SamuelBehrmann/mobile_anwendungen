@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:medi_support/services/backend/backend_service.dart';
+import 'package:medi_support/ui/screens/chat/services/chat_backend_service.dart';
 import 'package:medi_support/ui/screens/chats/services/chats_backend_service.dart';
-import 'package:medi_support/ui/screens/home/home_model.dart';
 import 'package:medi_support/ui/screens/home/services/home_backend_service.dart';
 import 'package:medi_support/ui/screens/post/services/post_backend_service.dart';
 import 'package:medi_support/ui/screens/search/services/search_backend_service.dart';
@@ -11,12 +13,10 @@ import 'package:uuid/uuid.dart';
 part 'firestore_backend_service.freezed.dart';
 part 'firestore_backend_service.g.dart';
 
-typedef _$DocumentSnapshot = QueryDocumentSnapshot<Map<String, dynamic>>;
-typedef _$Snapshot = QuerySnapshot<Map<String, dynamic>>;
-
 class FirestoreBackendService extends BackendServiceAggregator {
   static const String _postsCollection = 'posts';
   static const String _chatsCollection = 'chats';
+  static const String _usersCollection = 'users';
 
   final FirebaseFirestore firestore;
 
@@ -64,26 +64,65 @@ class FirestoreBackendService extends BackendServiceAggregator {
           );
 
   @override
-  Future<List<ChatsBackendServiceChat>> fetchChats() =>
-      firestore.collection(_chatsCollection).get().then(
-            (_$Snapshot snapshot) =>
-                Stream<_$DocumentSnapshot>.fromIterable(snapshot.docs)
-                    .asyncMap((_$DocumentSnapshot doc) async {
-              Query<Map<String, dynamic>> subCollectionQuery =
-                  doc.reference.collection('messages').limit(1);
-              _$DocumentSnapshot firstDocSnapshot =
-                  await subCollectionQuery.get().then(
-                        (_$Snapshot snapshot) => snapshot.docs.first,
-                      );
-              Map<String, dynamic> user = (doc['persons']
-                  as Map<String, dynamic>)['personA'] as Map<String, dynamic>;
-              return ChatsBackendServiceChat(
-                name: user['name'] as String,
-                message: firstDocSnapshot['data'] as String,
-                profilePicturePath: user['imageUrl'] as String?,
-              );
-            }).toList(),
-          );
+  Future<List<ChatsBackendServiceChat>> getAllChats(String userId) async {
+    DocumentSnapshot<Map<String, dynamic>> userDocSnapshot =
+        await firestore.collection(_usersCollection).doc(userId).get();
+    List<dynamic> chatIds =
+        userDocSnapshot.data()?['chat_ids'] as List<dynamic>? ?? <dynamic>[];
+
+    List<ChatsBackendServiceChat> chats = <ChatsBackendServiceChat>[];
+    for (int i = 0; i < chatIds.length; i++) {
+      dynamic chatId = chatIds[i];
+      DocumentSnapshot<Map<String, dynamic>> chatDocSnapshot =
+          await firestore.collection('chats').doc(chatId as String).get();
+      if (!chatDocSnapshot.exists) continue;
+
+      Map<String, dynamic> personsMap =
+          chatDocSnapshot.data()?['persons'] as Map<String, dynamic>? ??
+              <String, dynamic>{};
+
+      Map<String, dynamic> otherPerson = <String, dynamic>{};
+      for (MapEntry<String, dynamic> entry in personsMap.entries) {
+        Map<String, dynamic> personDetails =
+            entry.value as Map<String, dynamic>? ?? <String, dynamic>{};
+        if (entry.key != userId) {
+          otherPerson = personDetails;
+          break;
+        }
+      }
+
+      String otherPersonName = otherPerson['name'] as String? ?? 'Unknown';
+      String? profilePicturePath = otherPerson['imageUrl'] as String?;
+
+      // Fetch the last message from the 'messages' subcollection
+      String lastMessage = 'No messages yet';
+      DocumentSnapshot<Map<String, dynamic>> chatDocument =
+          await firestore.collection(_chatsCollection).doc(chatId).get();
+
+      if (chatDocument.exists && chatDocument.data()!.containsKey('messages')) {
+        List<dynamic> messages =
+            chatDocument.data()!['messages'] as List<dynamic>;
+        if (messages.isNotEmpty) {
+          Map<String, dynamic> lastMessageMap =
+              messages.last as Map<String, dynamic>;
+          if (lastMessageMap.containsKey('content')) {
+            lastMessage =
+                lastMessageMap['content'] as String? ?? 'No messages yet';
+          }
+        }
+      }
+
+      // Constructing ChatsBackendServiceChat Object with the other person's details and the last message
+      ChatsBackendServiceChat chat = ChatsBackendServiceChat(
+        id: chatId,
+        name: otherPersonName,
+        message: lastMessage,
+        profilePicturePath: profilePicturePath,
+      );
+      chats.add(chat);
+    }
+    return chats;
+  }
 
   @override
   Stream<PostBackendServicePost> getPostStream({
@@ -219,8 +258,9 @@ class FirestoreBackendService extends BackendServiceAggregator {
               .toList();
 
   @override
-  Future<List<SearchBackendServicePost>> search(
-          {required String query}) async =>
+  Future<List<SearchBackendServicePost>> search({
+    required String query,
+  }) async =>
       firestore.collection(_postsCollection).get().then(
             (QuerySnapshot<Map<String, dynamic>> collection) => collection.docs
                 .map(
@@ -241,6 +281,54 @@ class FirestoreBackendService extends BackendServiceAggregator {
                 )
                 .toList(),
           );
+
+  @override
+  Stream<ChatBackendServiceChat> fetchChatData(String chatId) =>
+      firestore.collection(_chatsCollection).doc(chatId).snapshots().map(
+        (DocumentSnapshot<Map<String, dynamic>> doc) {
+          Map<String, dynamic> chatData = doc.data()!;
+          List<ChatBackendServiceMessage> messages =
+              mapFirestoreBackendServiceMessageToChatBackendServiceMessage(
+            chatData['messages'] as List<dynamic>,
+          );
+
+          String currentUserId = 'currentUserId';
+          List<ChatBackendServicePerson> persons = <ChatBackendServicePerson>[];
+          for (MapEntry<String, dynamic> entry
+              in (chatData['persons'] as Map<String, dynamic>).entries) {
+            String personId = entry.key;
+            if (personId != currentUserId) {
+              ChatBackendServicePerson person = ChatBackendServicePerson(
+                id: personId,
+                name: entry.value['name'] as String,
+                imageUrl: entry.value['imageUrl'] as String,
+              );
+              persons.add(person);
+            }
+          }
+
+          ChatBackendServiceChat chat = ChatBackendServiceChat(
+            chatId: chatId,
+            chatPartner: persons.last,
+            messages: messages,
+          );
+          return chat;
+        },
+      );
+
+  List<ChatBackendServiceMessage>
+      mapFirestoreBackendServiceMessageToChatBackendServiceMessage(
+    List<dynamic> messages,
+  ) =>
+          messages.mapIndexed((int index, message) {
+            Map<String, dynamic> messageData = message as Map<String, dynamic>;
+            messageData['id'] = index.toString();
+            return ChatBackendServiceMessage(
+              messageId: messageData['id'] as String,
+              content: messageData['content'] as String,
+              authorId: messageData['personId'] as String,
+            );
+          }).toList();
 }
 
 // convenience classes to work with Firestore data
@@ -250,7 +338,7 @@ class FirestoreBackendServicePost with _$FirestoreBackendServicePost {
   const factory FirestoreBackendServicePost({
     required final String id,
     required final String title,
-    @JsonKey(name: 'body') required final String content,
+    required final String content,
     required final FirestoreBackendServiceUser author,
     required final List<FirestoreBackendServiceMessage> replies,
   }) = _FirestoreBackendServicePost;

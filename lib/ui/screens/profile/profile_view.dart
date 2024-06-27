@@ -27,7 +27,7 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: CustomAppBar(title: 'Profile'),
+        appBar: const CustomAppBar(title: 'Profile'),
         body: Column(
           children: <Widget>[
             Expanded(

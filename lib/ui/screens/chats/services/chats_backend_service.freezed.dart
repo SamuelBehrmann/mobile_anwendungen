@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ChatsBackendServiceChat {
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   String? get profilePicturePath => throw _privateConstructorUsedError;
@@ -31,7 +32,8 @@ abstract class $ChatsBackendServiceChatCopyWith<$Res> {
           $Res Function(ChatsBackendServiceChat) then) =
       _$ChatsBackendServiceChatCopyWithImpl<$Res, ChatsBackendServiceChat>;
   @useResult
-  $Res call({String name, String message, String? profilePicturePath});
+  $Res call(
+      {String id, String name, String message, String? profilePicturePath});
 }
 
 /// @nodoc
@@ -48,11 +50,16 @@ class _$ChatsBackendServiceChatCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? message = null,
     Object? profilePicturePath = freezed,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -78,7 +85,8 @@ abstract class _$$ChatsBackendServiceChatImplCopyWith<$Res>
       __$$ChatsBackendServiceChatImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String message, String? profilePicturePath});
+  $Res call(
+      {String id, String name, String message, String? profilePicturePath});
 }
 
 /// @nodoc
@@ -94,11 +102,16 @@ class __$$ChatsBackendServiceChatImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? message = null,
     Object? profilePicturePath = freezed,
   }) {
     return _then(_$ChatsBackendServiceChatImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -119,8 +132,13 @@ class __$$ChatsBackendServiceChatImplCopyWithImpl<$Res>
 
 class _$ChatsBackendServiceChatImpl implements _ChatsBackendServiceChat {
   const _$ChatsBackendServiceChatImpl(
-      {required this.name, required this.message, this.profilePicturePath});
+      {required this.id,
+      required this.name,
+      required this.message,
+      this.profilePicturePath});
 
+  @override
+  final String id;
   @override
   final String name;
   @override
@@ -130,7 +148,7 @@ class _$ChatsBackendServiceChatImpl implements _ChatsBackendServiceChat {
 
   @override
   String toString() {
-    return 'ChatsBackendServiceChat(name: $name, message: $message, profilePicturePath: $profilePicturePath)';
+    return 'ChatsBackendServiceChat(id: $id, name: $name, message: $message, profilePicturePath: $profilePicturePath)';
   }
 
   @override
@@ -138,6 +156,7 @@ class _$ChatsBackendServiceChatImpl implements _ChatsBackendServiceChat {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChatsBackendServiceChatImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.profilePicturePath, profilePicturePath) ||
@@ -146,7 +165,7 @@ class _$ChatsBackendServiceChatImpl implements _ChatsBackendServiceChat {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, name, message, profilePicturePath);
+      Object.hash(runtimeType, id, name, message, profilePicturePath);
 
   @JsonKey(ignore: true)
   @override
@@ -158,10 +177,13 @@ class _$ChatsBackendServiceChatImpl implements _ChatsBackendServiceChat {
 
 abstract class _ChatsBackendServiceChat implements ChatsBackendServiceChat {
   const factory _ChatsBackendServiceChat(
-      {required final String name,
+      {required final String id,
+      required final String name,
       required final String message,
       final String? profilePicturePath}) = _$ChatsBackendServiceChatImpl;
 
+  @override
+  String get id;
   @override
   String get name;
   @override
