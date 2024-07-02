@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SearchBackendServicePost {
-  String get userId => throw _privateConstructorUsedError;
   String get postId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get body => throw _privateConstructorUsedError;
@@ -32,7 +31,7 @@ abstract class $SearchBackendServicePostCopyWith<$Res> {
           $Res Function(SearchBackendServicePost) then) =
       _$SearchBackendServicePostCopyWithImpl<$Res, SearchBackendServicePost>;
   @useResult
-  $Res call({String userId, String postId, String title, String body});
+  $Res call({String postId, String title, String body});
 }
 
 /// @nodoc
@@ -49,16 +48,11 @@ class _$SearchBackendServicePostCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
     Object? postId = null,
     Object? title = null,
     Object? body = null,
   }) {
     return _then(_value.copyWith(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
@@ -84,7 +78,7 @@ abstract class _$$SearchBackendServicePostImplCopyWith<$Res>
       __$$SearchBackendServicePostImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userId, String postId, String title, String body});
+  $Res call({String postId, String title, String body});
 }
 
 /// @nodoc
@@ -100,16 +94,11 @@ class __$$SearchBackendServicePostImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
     Object? postId = null,
     Object? title = null,
     Object? body = null,
   }) {
     return _then(_$SearchBackendServicePostImpl(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
@@ -130,13 +119,8 @@ class __$$SearchBackendServicePostImplCopyWithImpl<$Res>
 
 class _$SearchBackendServicePostImpl implements _SearchBackendServicePost {
   const _$SearchBackendServicePostImpl(
-      {required this.userId,
-      required this.postId,
-      required this.title,
-      required this.body});
+      {required this.postId, required this.title, required this.body});
 
-  @override
-  final String userId;
   @override
   final String postId;
   @override
@@ -146,7 +130,7 @@ class _$SearchBackendServicePostImpl implements _SearchBackendServicePost {
 
   @override
   String toString() {
-    return 'SearchBackendServicePost(userId: $userId, postId: $postId, title: $title, body: $body)';
+    return 'SearchBackendServicePost(postId: $postId, title: $title, body: $body)';
   }
 
   @override
@@ -154,14 +138,13 @@ class _$SearchBackendServicePostImpl implements _SearchBackendServicePost {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchBackendServicePostImpl &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.postId, postId) || other.postId == postId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.body, body) || other.body == body));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userId, postId, title, body);
+  int get hashCode => Object.hash(runtimeType, postId, title, body);
 
   @JsonKey(ignore: true)
   @override
@@ -173,13 +156,10 @@ class _$SearchBackendServicePostImpl implements _SearchBackendServicePost {
 
 abstract class _SearchBackendServicePost implements SearchBackendServicePost {
   const factory _SearchBackendServicePost(
-      {required final String userId,
-      required final String postId,
+      {required final String postId,
       required final String title,
       required final String body}) = _$SearchBackendServicePostImpl;
 
-  @override
-  String get userId;
   @override
   String get postId;
   @override

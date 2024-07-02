@@ -24,8 +24,8 @@ mixin _$FirestoreBackendServicePost {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
-  FirestoreBackendServiceUser get author => throw _privateConstructorUsedError;
-  List<FirestoreBackendServiceMessage> get replies =>
+  String get authorId => throw _privateConstructorUsedError;
+  Map<String, FirestoreBackendServiceMessageRaw> get replies =>
       throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,10 +46,8 @@ abstract class $FirestoreBackendServicePostCopyWith<$Res> {
       {String id,
       String title,
       String content,
-      FirestoreBackendServiceUser author,
-      List<FirestoreBackendServiceMessage> replies});
-
-  $FirestoreBackendServiceUserCopyWith<$Res> get author;
+      String authorId,
+      Map<String, FirestoreBackendServiceMessageRaw> replies});
 }
 
 /// @nodoc
@@ -69,7 +67,7 @@ class _$FirestoreBackendServicePostCopyWithImpl<$Res,
     Object? id = null,
     Object? title = null,
     Object? content = null,
-    Object? author = null,
+    Object? authorId = null,
     Object? replies = null,
   }) {
     return _then(_value.copyWith(
@@ -85,23 +83,15 @@ class _$FirestoreBackendServicePostCopyWithImpl<$Res,
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      author: null == author
-          ? _value.author
-          : author // ignore: cast_nullable_to_non_nullable
-              as FirestoreBackendServiceUser,
+      authorId: null == authorId
+          ? _value.authorId
+          : authorId // ignore: cast_nullable_to_non_nullable
+              as String,
       replies: null == replies
           ? _value.replies
           : replies // ignore: cast_nullable_to_non_nullable
-              as List<FirestoreBackendServiceMessage>,
+              as Map<String, FirestoreBackendServiceMessageRaw>,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $FirestoreBackendServiceUserCopyWith<$Res> get author {
-    return $FirestoreBackendServiceUserCopyWith<$Res>(_value.author, (value) {
-      return _then(_value.copyWith(author: value) as $Val);
-    });
   }
 }
 
@@ -118,11 +108,8 @@ abstract class _$$FirestoreBackendServicePostImplCopyWith<$Res>
       {String id,
       String title,
       String content,
-      FirestoreBackendServiceUser author,
-      List<FirestoreBackendServiceMessage> replies});
-
-  @override
-  $FirestoreBackendServiceUserCopyWith<$Res> get author;
+      String authorId,
+      Map<String, FirestoreBackendServiceMessageRaw> replies});
 }
 
 /// @nodoc
@@ -141,7 +128,7 @@ class __$$FirestoreBackendServicePostImplCopyWithImpl<$Res>
     Object? id = null,
     Object? title = null,
     Object? content = null,
-    Object? author = null,
+    Object? authorId = null,
     Object? replies = null,
   }) {
     return _then(_$FirestoreBackendServicePostImpl(
@@ -157,14 +144,14 @@ class __$$FirestoreBackendServicePostImplCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      author: null == author
-          ? _value.author
-          : author // ignore: cast_nullable_to_non_nullable
-              as FirestoreBackendServiceUser,
+      authorId: null == authorId
+          ? _value.authorId
+          : authorId // ignore: cast_nullable_to_non_nullable
+              as String,
       replies: null == replies
           ? _value._replies
           : replies // ignore: cast_nullable_to_non_nullable
-              as List<FirestoreBackendServiceMessage>,
+              as Map<String, FirestoreBackendServiceMessageRaw>,
     ));
   }
 }
@@ -176,8 +163,8 @@ class _$FirestoreBackendServicePostImpl extends _FirestoreBackendServicePost {
       {required this.id,
       required this.title,
       required this.content,
-      required this.author,
-      required final List<FirestoreBackendServiceMessage> replies})
+      required this.authorId,
+      required final Map<String, FirestoreBackendServiceMessageRaw> replies})
       : _replies = replies,
         super._();
 
@@ -192,18 +179,18 @@ class _$FirestoreBackendServicePostImpl extends _FirestoreBackendServicePost {
   @override
   final String content;
   @override
-  final FirestoreBackendServiceUser author;
-  final List<FirestoreBackendServiceMessage> _replies;
+  final String authorId;
+  final Map<String, FirestoreBackendServiceMessageRaw> _replies;
   @override
-  List<FirestoreBackendServiceMessage> get replies {
-    if (_replies is EqualUnmodifiableListView) return _replies;
+  Map<String, FirestoreBackendServiceMessageRaw> get replies {
+    if (_replies is EqualUnmodifiableMapView) return _replies;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_replies);
+    return EqualUnmodifiableMapView(_replies);
   }
 
   @override
   String toString() {
-    return 'FirestoreBackendServicePost(id: $id, title: $title, content: $content, author: $author, replies: $replies)';
+    return 'FirestoreBackendServicePost(id: $id, title: $title, content: $content, authorId: $authorId, replies: $replies)';
   }
 
   @override
@@ -214,13 +201,14 @@ class _$FirestoreBackendServicePostImpl extends _FirestoreBackendServicePost {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.author, author) || other.author == author) &&
+            (identical(other.authorId, authorId) ||
+                other.authorId == authorId) &&
             const DeepCollectionEquality().equals(other._replies, _replies));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, content, author,
+  int get hashCode => Object.hash(runtimeType, id, title, content, authorId,
       const DeepCollectionEquality().hash(_replies));
 
   @JsonKey(ignore: true)
@@ -241,12 +229,12 @@ class _$FirestoreBackendServicePostImpl extends _FirestoreBackendServicePost {
 abstract class _FirestoreBackendServicePost
     extends FirestoreBackendServicePost {
   const factory _FirestoreBackendServicePost(
-          {required final String id,
-          required final String title,
-          required final String content,
-          required final FirestoreBackendServiceUser author,
-          required final List<FirestoreBackendServiceMessage> replies}) =
-      _$FirestoreBackendServicePostImpl;
+      {required final String id,
+      required final String title,
+      required final String content,
+      required final String authorId,
+      required final Map<String, FirestoreBackendServiceMessageRaw>
+          replies}) = _$FirestoreBackendServicePostImpl;
   const _FirestoreBackendServicePost._() : super._();
 
   factory _FirestoreBackendServicePost.fromJson(Map<String, dynamic> json) =
@@ -259,9 +247,9 @@ abstract class _FirestoreBackendServicePost
   @override
   String get content;
   @override
-  FirestoreBackendServiceUser get author;
+  String get authorId;
   @override
-  List<FirestoreBackendServiceMessage> get replies;
+  Map<String, FirestoreBackendServiceMessageRaw> get replies;
   @override
   @JsonKey(ignore: true)
   _$$FirestoreBackendServicePostImplCopyWith<_$FirestoreBackendServicePostImpl>
@@ -480,47 +468,50 @@ abstract class _FirestoreBackendServiceUser
       get copyWith => throw _privateConstructorUsedError;
 }
 
-FirestoreBackendServiceMessage _$FirestoreBackendServiceMessageFromJson(
-    Map<String, dynamic> json) {
-  return _FirestoreBackendServiceMessage.fromJson(json);
+FirestoreBackendServiceMessageWithAuthor
+    _$FirestoreBackendServiceMessageWithAuthorFromJson(
+        Map<String, dynamic> json) {
+  return _FirestoreBackendServiceMessageWithAuthor.fromJson(json);
 }
 
 /// @nodoc
-mixin _$FirestoreBackendServiceMessage {
+mixin _$FirestoreBackendServiceMessageWithAuthor {
   String get id => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
+  String get content => throw _privateConstructorUsedError;
   FirestoreBackendServiceUser get author => throw _privateConstructorUsedError;
-  List<FirestoreBackendServiceMessage> get replies =>
+  Map<String, FirestoreBackendServiceMessageWithAuthor> get replies =>
       throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $FirestoreBackendServiceMessageCopyWith<FirestoreBackendServiceMessage>
+  $FirestoreBackendServiceMessageWithAuthorCopyWith<
+          FirestoreBackendServiceMessageWithAuthor>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FirestoreBackendServiceMessageCopyWith<$Res> {
-  factory $FirestoreBackendServiceMessageCopyWith(
-          FirestoreBackendServiceMessage value,
-          $Res Function(FirestoreBackendServiceMessage) then) =
-      _$FirestoreBackendServiceMessageCopyWithImpl<$Res,
-          FirestoreBackendServiceMessage>;
+abstract class $FirestoreBackendServiceMessageWithAuthorCopyWith<$Res> {
+  factory $FirestoreBackendServiceMessageWithAuthorCopyWith(
+          FirestoreBackendServiceMessageWithAuthor value,
+          $Res Function(FirestoreBackendServiceMessageWithAuthor) then) =
+      _$FirestoreBackendServiceMessageWithAuthorCopyWithImpl<$Res,
+          FirestoreBackendServiceMessageWithAuthor>;
   @useResult
   $Res call(
       {String id,
-      String message,
+      String content,
       FirestoreBackendServiceUser author,
-      List<FirestoreBackendServiceMessage> replies});
+      Map<String, FirestoreBackendServiceMessageWithAuthor> replies});
 
   $FirestoreBackendServiceUserCopyWith<$Res> get author;
 }
 
 /// @nodoc
-class _$FirestoreBackendServiceMessageCopyWithImpl<$Res,
-        $Val extends FirestoreBackendServiceMessage>
-    implements $FirestoreBackendServiceMessageCopyWith<$Res> {
-  _$FirestoreBackendServiceMessageCopyWithImpl(this._value, this._then);
+class _$FirestoreBackendServiceMessageWithAuthorCopyWithImpl<$Res,
+        $Val extends FirestoreBackendServiceMessageWithAuthor>
+    implements $FirestoreBackendServiceMessageWithAuthorCopyWith<$Res> {
+  _$FirestoreBackendServiceMessageWithAuthorCopyWithImpl(
+      this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -531,7 +522,7 @@ class _$FirestoreBackendServiceMessageCopyWithImpl<$Res,
   @override
   $Res call({
     Object? id = null,
-    Object? message = null,
+    Object? content = null,
     Object? author = null,
     Object? replies = null,
   }) {
@@ -540,9 +531,9 @@ class _$FirestoreBackendServiceMessageCopyWithImpl<$Res,
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
               as String,
       author: null == author
           ? _value.author
@@ -551,7 +542,7 @@ class _$FirestoreBackendServiceMessageCopyWithImpl<$Res,
       replies: null == replies
           ? _value.replies
           : replies // ignore: cast_nullable_to_non_nullable
-              as List<FirestoreBackendServiceMessage>,
+              as Map<String, FirestoreBackendServiceMessageWithAuthor>,
     ) as $Val);
   }
 
@@ -565,50 +556,50 @@ class _$FirestoreBackendServiceMessageCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$FirestoreBackendServiceMessageImplCopyWith<$Res>
-    implements $FirestoreBackendServiceMessageCopyWith<$Res> {
-  factory _$$FirestoreBackendServiceMessageImplCopyWith(
-          _$FirestoreBackendServiceMessageImpl value,
-          $Res Function(_$FirestoreBackendServiceMessageImpl) then) =
-      __$$FirestoreBackendServiceMessageImplCopyWithImpl<$Res>;
+abstract class _$$FirestoreBackendServiceMessageWithAuthorImplCopyWith<$Res>
+    implements $FirestoreBackendServiceMessageWithAuthorCopyWith<$Res> {
+  factory _$$FirestoreBackendServiceMessageWithAuthorImplCopyWith(
+          _$FirestoreBackendServiceMessageWithAuthorImpl value,
+          $Res Function(_$FirestoreBackendServiceMessageWithAuthorImpl) then) =
+      __$$FirestoreBackendServiceMessageWithAuthorImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String id,
-      String message,
+      String content,
       FirestoreBackendServiceUser author,
-      List<FirestoreBackendServiceMessage> replies});
+      Map<String, FirestoreBackendServiceMessageWithAuthor> replies});
 
   @override
   $FirestoreBackendServiceUserCopyWith<$Res> get author;
 }
 
 /// @nodoc
-class __$$FirestoreBackendServiceMessageImplCopyWithImpl<$Res>
-    extends _$FirestoreBackendServiceMessageCopyWithImpl<$Res,
-        _$FirestoreBackendServiceMessageImpl>
-    implements _$$FirestoreBackendServiceMessageImplCopyWith<$Res> {
-  __$$FirestoreBackendServiceMessageImplCopyWithImpl(
-      _$FirestoreBackendServiceMessageImpl _value,
-      $Res Function(_$FirestoreBackendServiceMessageImpl) _then)
+class __$$FirestoreBackendServiceMessageWithAuthorImplCopyWithImpl<$Res>
+    extends _$FirestoreBackendServiceMessageWithAuthorCopyWithImpl<$Res,
+        _$FirestoreBackendServiceMessageWithAuthorImpl>
+    implements _$$FirestoreBackendServiceMessageWithAuthorImplCopyWith<$Res> {
+  __$$FirestoreBackendServiceMessageWithAuthorImplCopyWithImpl(
+      _$FirestoreBackendServiceMessageWithAuthorImpl _value,
+      $Res Function(_$FirestoreBackendServiceMessageWithAuthorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
-    Object? message = null,
+    Object? content = null,
     Object? author = null,
     Object? replies = null,
   }) {
-    return _then(_$FirestoreBackendServiceMessageImpl(
+    return _then(_$FirestoreBackendServiceMessageWithAuthorImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
               as String,
       author: null == author
           ? _value.author
@@ -617,102 +608,331 @@ class __$$FirestoreBackendServiceMessageImplCopyWithImpl<$Res>
       replies: null == replies
           ? _value._replies
           : replies // ignore: cast_nullable_to_non_nullable
-              as List<FirestoreBackendServiceMessage>,
+              as Map<String, FirestoreBackendServiceMessageWithAuthor>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$FirestoreBackendServiceMessageImpl
-    extends _FirestoreBackendServiceMessage {
-  const _$FirestoreBackendServiceMessageImpl(
+class _$FirestoreBackendServiceMessageWithAuthorImpl
+    extends _FirestoreBackendServiceMessageWithAuthor {
+  const _$FirestoreBackendServiceMessageWithAuthorImpl(
       {required this.id,
-      required this.message,
+      required this.content,
       required this.author,
-      required final List<FirestoreBackendServiceMessage> replies})
+      required final Map<String, FirestoreBackendServiceMessageWithAuthor>
+          replies})
       : _replies = replies,
         super._();
 
-  factory _$FirestoreBackendServiceMessageImpl.fromJson(
+  factory _$FirestoreBackendServiceMessageWithAuthorImpl.fromJson(
           Map<String, dynamic> json) =>
-      _$$FirestoreBackendServiceMessageImplFromJson(json);
+      _$$FirestoreBackendServiceMessageWithAuthorImplFromJson(json);
 
   @override
   final String id;
   @override
-  final String message;
+  final String content;
   @override
   final FirestoreBackendServiceUser author;
-  final List<FirestoreBackendServiceMessage> _replies;
+  final Map<String, FirestoreBackendServiceMessageWithAuthor> _replies;
   @override
-  List<FirestoreBackendServiceMessage> get replies {
-    if (_replies is EqualUnmodifiableListView) return _replies;
+  Map<String, FirestoreBackendServiceMessageWithAuthor> get replies {
+    if (_replies is EqualUnmodifiableMapView) return _replies;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_replies);
+    return EqualUnmodifiableMapView(_replies);
   }
 
   @override
   String toString() {
-    return 'FirestoreBackendServiceMessage(id: $id, message: $message, author: $author, replies: $replies)';
+    return 'FirestoreBackendServiceMessageWithAuthor(id: $id, content: $content, author: $author, replies: $replies)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FirestoreBackendServiceMessageImpl &&
+            other is _$FirestoreBackendServiceMessageWithAuthorImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.message, message) || other.message == message) &&
+            (identical(other.content, content) || other.content == content) &&
             (identical(other.author, author) || other.author == author) &&
             const DeepCollectionEquality().equals(other._replies, _replies));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, message, author,
+  int get hashCode => Object.hash(runtimeType, id, content, author,
       const DeepCollectionEquality().hash(_replies));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$FirestoreBackendServiceMessageImplCopyWith<
-          _$FirestoreBackendServiceMessageImpl>
-      get copyWith => __$$FirestoreBackendServiceMessageImplCopyWithImpl<
-          _$FirestoreBackendServiceMessageImpl>(this, _$identity);
+  _$$FirestoreBackendServiceMessageWithAuthorImplCopyWith<
+          _$FirestoreBackendServiceMessageWithAuthorImpl>
+      get copyWith =>
+          __$$FirestoreBackendServiceMessageWithAuthorImplCopyWithImpl<
+              _$FirestoreBackendServiceMessageWithAuthorImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$FirestoreBackendServiceMessageImplToJson(
+    return _$$FirestoreBackendServiceMessageWithAuthorImplToJson(
       this,
     );
   }
 }
 
-abstract class _FirestoreBackendServiceMessage
-    extends FirestoreBackendServiceMessage {
-  const factory _FirestoreBackendServiceMessage(
-          {required final String id,
-          required final String message,
-          required final FirestoreBackendServiceUser author,
-          required final List<FirestoreBackendServiceMessage> replies}) =
-      _$FirestoreBackendServiceMessageImpl;
-  const _FirestoreBackendServiceMessage._() : super._();
+abstract class _FirestoreBackendServiceMessageWithAuthor
+    extends FirestoreBackendServiceMessageWithAuthor {
+  const factory _FirestoreBackendServiceMessageWithAuthor(
+      {required final String id,
+      required final String content,
+      required final FirestoreBackendServiceUser author,
+      required final Map<String, FirestoreBackendServiceMessageWithAuthor>
+          replies}) = _$FirestoreBackendServiceMessageWithAuthorImpl;
+  const _FirestoreBackendServiceMessageWithAuthor._() : super._();
 
-  factory _FirestoreBackendServiceMessage.fromJson(Map<String, dynamic> json) =
-      _$FirestoreBackendServiceMessageImpl.fromJson;
+  factory _FirestoreBackendServiceMessageWithAuthor.fromJson(
+          Map<String, dynamic> json) =
+      _$FirestoreBackendServiceMessageWithAuthorImpl.fromJson;
 
   @override
   String get id;
   @override
-  String get message;
+  String get content;
   @override
   FirestoreBackendServiceUser get author;
   @override
-  List<FirestoreBackendServiceMessage> get replies;
+  Map<String, FirestoreBackendServiceMessageWithAuthor> get replies;
   @override
   @JsonKey(ignore: true)
-  _$$FirestoreBackendServiceMessageImplCopyWith<
-          _$FirestoreBackendServiceMessageImpl>
+  _$$FirestoreBackendServiceMessageWithAuthorImplCopyWith<
+          _$FirestoreBackendServiceMessageWithAuthorImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+FirestoreBackendServiceMessageRaw _$FirestoreBackendServiceMessageRawFromJson(
+    Map<String, dynamic> json) {
+  return _FirestoreBackendServiceMessageRaw.fromJson(json);
+}
+
+/// @nodoc
+mixin _$FirestoreBackendServiceMessageRaw {
+  String get id => throw _privateConstructorUsedError;
+  String get content => throw _privateConstructorUsedError;
+  String get authorId => throw _privateConstructorUsedError;
+  Map<String, FirestoreBackendServiceMessageRaw> get replies =>
+      throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $FirestoreBackendServiceMessageRawCopyWith<FirestoreBackendServiceMessageRaw>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $FirestoreBackendServiceMessageRawCopyWith<$Res> {
+  factory $FirestoreBackendServiceMessageRawCopyWith(
+          FirestoreBackendServiceMessageRaw value,
+          $Res Function(FirestoreBackendServiceMessageRaw) then) =
+      _$FirestoreBackendServiceMessageRawCopyWithImpl<$Res,
+          FirestoreBackendServiceMessageRaw>;
+  @useResult
+  $Res call(
+      {String id,
+      String content,
+      String authorId,
+      Map<String, FirestoreBackendServiceMessageRaw> replies});
+}
+
+/// @nodoc
+class _$FirestoreBackendServiceMessageRawCopyWithImpl<$Res,
+        $Val extends FirestoreBackendServiceMessageRaw>
+    implements $FirestoreBackendServiceMessageRawCopyWith<$Res> {
+  _$FirestoreBackendServiceMessageRawCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? content = null,
+    Object? authorId = null,
+    Object? replies = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      authorId: null == authorId
+          ? _value.authorId
+          : authorId // ignore: cast_nullable_to_non_nullable
+              as String,
+      replies: null == replies
+          ? _value.replies
+          : replies // ignore: cast_nullable_to_non_nullable
+              as Map<String, FirestoreBackendServiceMessageRaw>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$FirestoreBackendServiceMessageRawImplCopyWith<$Res>
+    implements $FirestoreBackendServiceMessageRawCopyWith<$Res> {
+  factory _$$FirestoreBackendServiceMessageRawImplCopyWith(
+          _$FirestoreBackendServiceMessageRawImpl value,
+          $Res Function(_$FirestoreBackendServiceMessageRawImpl) then) =
+      __$$FirestoreBackendServiceMessageRawImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String content,
+      String authorId,
+      Map<String, FirestoreBackendServiceMessageRaw> replies});
+}
+
+/// @nodoc
+class __$$FirestoreBackendServiceMessageRawImplCopyWithImpl<$Res>
+    extends _$FirestoreBackendServiceMessageRawCopyWithImpl<$Res,
+        _$FirestoreBackendServiceMessageRawImpl>
+    implements _$$FirestoreBackendServiceMessageRawImplCopyWith<$Res> {
+  __$$FirestoreBackendServiceMessageRawImplCopyWithImpl(
+      _$FirestoreBackendServiceMessageRawImpl _value,
+      $Res Function(_$FirestoreBackendServiceMessageRawImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? content = null,
+    Object? authorId = null,
+    Object? replies = null,
+  }) {
+    return _then(_$FirestoreBackendServiceMessageRawImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      authorId: null == authorId
+          ? _value.authorId
+          : authorId // ignore: cast_nullable_to_non_nullable
+              as String,
+      replies: null == replies
+          ? _value._replies
+          : replies // ignore: cast_nullable_to_non_nullable
+              as Map<String, FirestoreBackendServiceMessageRaw>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$FirestoreBackendServiceMessageRawImpl
+    extends _FirestoreBackendServiceMessageRaw {
+  const _$FirestoreBackendServiceMessageRawImpl(
+      {required this.id,
+      required this.content,
+      required this.authorId,
+      required final Map<String, FirestoreBackendServiceMessageRaw> replies})
+      : _replies = replies,
+        super._();
+
+  factory _$FirestoreBackendServiceMessageRawImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$FirestoreBackendServiceMessageRawImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String content;
+  @override
+  final String authorId;
+  final Map<String, FirestoreBackendServiceMessageRaw> _replies;
+  @override
+  Map<String, FirestoreBackendServiceMessageRaw> get replies {
+    if (_replies is EqualUnmodifiableMapView) return _replies;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_replies);
+  }
+
+  @override
+  String toString() {
+    return 'FirestoreBackendServiceMessageRaw(id: $id, content: $content, authorId: $authorId, replies: $replies)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FirestoreBackendServiceMessageRawImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.authorId, authorId) ||
+                other.authorId == authorId) &&
+            const DeepCollectionEquality().equals(other._replies, _replies));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, content, authorId,
+      const DeepCollectionEquality().hash(_replies));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FirestoreBackendServiceMessageRawImplCopyWith<
+          _$FirestoreBackendServiceMessageRawImpl>
+      get copyWith => __$$FirestoreBackendServiceMessageRawImplCopyWithImpl<
+          _$FirestoreBackendServiceMessageRawImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$FirestoreBackendServiceMessageRawImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _FirestoreBackendServiceMessageRaw
+    extends FirestoreBackendServiceMessageRaw {
+  const factory _FirestoreBackendServiceMessageRaw(
+      {required final String id,
+      required final String content,
+      required final String authorId,
+      required final Map<String, FirestoreBackendServiceMessageRaw>
+          replies}) = _$FirestoreBackendServiceMessageRawImpl;
+  const _FirestoreBackendServiceMessageRaw._() : super._();
+
+  factory _FirestoreBackendServiceMessageRaw.fromJson(
+          Map<String, dynamic> json) =
+      _$FirestoreBackendServiceMessageRawImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get content;
+  @override
+  String get authorId;
+  @override
+  Map<String, FirestoreBackendServiceMessageRaw> get replies;
+  @override
+  @JsonKey(ignore: true)
+  _$$FirestoreBackendServiceMessageRawImplCopyWith<
+          _$FirestoreBackendServiceMessageRawImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

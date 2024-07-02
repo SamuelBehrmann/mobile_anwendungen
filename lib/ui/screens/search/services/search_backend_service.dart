@@ -9,7 +9,6 @@ abstract interface class SearchBackendService {
 @freezed
 class SearchBackendServicePost with _$SearchBackendServicePost {
   const factory SearchBackendServicePost({
-    required String userId,
     required String postId,
     required String title,
     required String body,

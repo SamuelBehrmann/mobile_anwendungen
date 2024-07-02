@@ -1,3 +1,3 @@
 abstract interface class CreatePostBackendService {
-  Future<void> send({required String title, required String content});
+  Future<void> createPost({required String title, required String content});
 }

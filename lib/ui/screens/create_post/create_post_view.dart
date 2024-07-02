@@ -3,12 +3,31 @@ import 'package:medi_support/ui/screens/create_post/create_post_controller.dart'
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/custom_text_form_field.dart';
 
-class CreatePostView extends StatelessWidget {
+class CreatePostView extends StatefulWidget {
   CreatePostView({super.key, required this.controller});
   final CreatePostController controller;
 
-  final TextEditingController bodyController = TextEditingController();
-  final TextEditingController titleController = TextEditingController();
+  @override
+  State<CreatePostView> createState() => _CreatePostViewState();
+}
+
+class _CreatePostViewState extends State<CreatePostView> {
+  late final TextEditingController bodyController;
+  late final TextEditingController titleController;
+
+  @override
+  void initState() {
+    super.initState();
+    bodyController = TextEditingController();
+    titleController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    bodyController.dispose();
+    titleController.dispose();
+    super.dispose();
+  }
 
   Widget _buildTitleField() => Builder(
         builder: (BuildContext context) => CustomTextFormField(
@@ -35,7 +54,7 @@ class CreatePostView extends StatelessWidget {
         appBar: CustomAppBar(
           leading: IconButton(
             onPressed: () {
-              controller.goHome();
+              widget.controller.goHome();
               bodyController.clear();
               titleController.clear();
             },
@@ -44,7 +63,7 @@ class CreatePostView extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               onPressed: () {
-                controller.send(
+                widget.controller.send(
                   body: bodyController.text,
                   title: titleController.text,
                   onSend: () {

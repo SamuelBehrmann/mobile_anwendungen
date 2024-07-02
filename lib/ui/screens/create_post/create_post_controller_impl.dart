@@ -26,7 +26,7 @@ class CreatePostControllerImpl extends _$CreatePostControllerImpl
     required VoidCallback onSend,
   }) {
     unawaited(
-      backendService.send(title: title, content: body).then(
+      backendService.createPost(title: title, content: body).then(
         (_) {
           // TODO: Show success message and spinner
           onSend();
