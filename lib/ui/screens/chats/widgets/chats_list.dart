@@ -32,7 +32,7 @@ class ChatList extends StatelessWidget {
           ),
           title: Text(chat.name),
           subtitle: Text(chat.message),
-          onTap: () => onChatSelected(index.toString()),
+          onTap: () => onChatSelected(chat.id),
         );
       },
     );
