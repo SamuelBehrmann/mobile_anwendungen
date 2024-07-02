@@ -89,66 +89,6 @@ class FirestoreBackendService extends BackendServiceAggregator {
             ).toList(),
           );
 
-  // @override
-  // Future<List<ChatsBackendServiceChat>> getAllChats(String userId) async {
-  //   DocumentSnapshot<Map<String, dynamic>> userDocSnapshot =
-  //       await firestore.collection(_usersCollection).doc(userId).get();
-  //   List<dynamic> chatIds =
-  //       userDocSnapshot.data()?['chat_ids'] as List<dynamic>? ?? <dynamic>[];
-
-  //   List<ChatsBackendServiceChat> chats = <ChatsBackendServiceChat>[];
-  //   for (int i = 0; i < chatIds.length; i++) {
-  //     dynamic chatId = chatIds[i];
-  //     DocumentSnapshot<Map<String, dynamic>> chatDocSnapshot =
-  //         await firestore.collection('chats').doc(chatId as String).get();
-  //     if (!chatDocSnapshot.exists) continue;
-
-  //     Map<String, dynamic> personsMap =
-  //         chatDocSnapshot.data()?['persons'] as Map<String, dynamic>? ??
-  //             <String, dynamic>{};
-
-  //     Map<String, dynamic> otherPerson = <String, dynamic>{};
-  //     for (MapEntry<String, dynamic> entry in personsMap.entries) {
-  //       Map<String, dynamic> personDetails =
-  //           entry.value as Map<String, dynamic>? ?? <String, dynamic>{};
-  //       if (entry.key != userId) {
-  //         otherPerson = personDetails;
-  //         break;
-  //       }
-  //     }
-
-  //     String otherPersonName = otherPerson['name'] as String? ?? 'Unknown';
-  //     String? profilePicturePath = otherPerson['imageUrl'] as String?;
-
-  //     // Fetch the last message from the 'messages' subcollection
-  //     String lastMessage = 'No messages yet';
-  //     DocumentSnapshot<Map<String, dynamic>> chatDocument =
-  //         await firestore.collection(_chatsCollection).doc(chatId).get();
-
-  //     if (chatDocument.exists && chatDocument.data()!.containsKey('messages')) {
-  //       List<dynamic> messages =
-  //           chatDocument.data()!['messages'] as List<dynamic>;
-  //       if (messages.isNotEmpty) {
-  //         Map<String, dynamic> lastMessageMap =
-  //             messages.last as Map<String, dynamic>;
-  //         if (lastMessageMap.containsKey('content')) {
-  //           lastMessage =
-  //               lastMessageMap['content'] as String? ?? 'No messages yet';
-  //         }
-  //       }
-  //     }
-
-  //     // Constructing ChatsBackendServiceChat Object with the other person's details and the last message
-  //     ChatsBackendServiceChat chat = ChatsBackendServiceChat(
-  //       id: chatId,
-  //       name: otherPersonName,
-  //       message: lastMessage,
-  //       profilePicturePath: profilePicturePath,
-  //     );
-  //     chats.add(chat);
-  //   }
-  //   return chats;
-  // }
   @override
   Future<List<ChatsBackendServiceChat>> getAllChats(String userId) => firestore
       .collection(_chatsCollection)
