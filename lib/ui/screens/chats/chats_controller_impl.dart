@@ -18,10 +18,10 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
   }) {
     scheduleMicrotask(
       () => backendService
-      //TODO: Change the parameter to the actual user id
+          //TODO: Change the parameter to the actual user id
           .getAllChats('person1')
           .then((List<ChatsBackendServiceChat> chats) {
-        state = state.copyWith(
+        state = ChatsModel.data(
           chats: chats.map(ChatsModelChat.fromBackendServiceChat).toList(),
           filteredChats:
               chats.map(ChatsModelChat.fromBackendServiceChat).toList(),
@@ -29,9 +29,7 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
       }),
     );
 
-    return const ChatsModel(
-      chats: <ChatsModelChat>[],
-    );
+    return const ChatsModel.loading();
   }
 
   @override
@@ -44,16 +42,18 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
 
   @override
   void filterChats(String query) {
-    List<ChatsModelChat> currentChats = state.chats;
-    if (query.isNotEmpty) {
-      currentChats = currentChats
-          .where(
-            (ChatsModelChat chat) =>
-                chat.name.toLowerCase().contains(query.toLowerCase()) ||
-                chat.message.toLowerCase().contains(query.toLowerCase()),
-          )
-          .toList();
-    }
-    state = state.copyWith(filteredChats: currentChats);
+    state = state.mapData((ChatsModelData data) {
+      List<ChatsModelChat> currentChats = data.chats;
+      if (query.isNotEmpty) {
+        currentChats = currentChats
+            .where(
+              (ChatsModelChat chat) =>
+                  chat.name.toLowerCase().contains(query.toLowerCase()) ||
+                  chat.message.toLowerCase().contains(query.toLowerCase()),
+            )
+            .toList();
+      }
+      return ChatsModelData(chats: data.chats, filteredChats: currentChats);
+    });
   }
 }
