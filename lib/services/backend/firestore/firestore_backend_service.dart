@@ -41,7 +41,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
       'content': content,
       'createdAt': DateTime.now().toUtc().toIso8601String(),
       'replies': <String, dynamic>{},
-      'author': user.id,
+      'authorId': user.id,
     });
   }
 
@@ -158,7 +158,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
       _fetchMessageAuthorRecursive(
     Map<String, dynamic> messages,
   ) async =>
-          Map.fromEntries(
+          Map<String, FirestoreBackendServiceMessageWithAuthor>.fromEntries(
             await Stream<MapEntry<String, dynamic>>.fromIterable(
               messages.entries,
             )
@@ -177,13 +177,9 @@ class FirestoreBackendService extends BackendServiceAggregator {
                       .get())
                   .data();
 
-              // TODO: rename to authorId in DB
-              // order by createdAt
-              // add createdAt to message
-
               userData!['id'] = message.value['authorId'];
 
-              return MapEntry(
+              return MapEntry<String, FirestoreBackendServiceMessageWithAuthor>(
                 message.key,
                 FirestoreBackendServiceMessageWithAuthor(
                   id: message.key,
@@ -201,8 +197,6 @@ class FirestoreBackendService extends BackendServiceAggregator {
               );
             }).toList(),
           );
-
-  // TODO:  Refactor all of this and adjust all firestore types
   @override
   Future<void> submitReply({
     required String postId,
@@ -238,7 +232,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
       title: postData["title"] as String,
       content: postData["content"] as String,
       replies: _mapToFirestoreBackendServiceMessageRawRecursive(
-        postData["replies"] as Map<String, dynamic>,
+        (postData["replies"] as Map<String, dynamic>).cast(),
       ),
       authorId: postData["authorId"] as String,
     );
@@ -253,8 +247,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
               )
             : typedPost.copyWith(
                 replies: _addReplyToMessage(
-                  replies: typedPost.replies
-                      as Map<String, FirestoreBackendServiceMessageRaw>,
+                  replies: typedPost.replies,
                   targetMessageId: replyToMessageId,
                   newReply: newReply,
                 ),
@@ -269,7 +262,8 @@ class FirestoreBackendService extends BackendServiceAggregator {
     required FirestoreBackendServiceMessageRaw newReply,
   }) =>
       replies.map(
-        (String id, FirestoreBackendServiceMessageRaw message) => MapEntry(
+        (String id, FirestoreBackendServiceMessageRaw message) =>
+            MapEntry<String, FirestoreBackendServiceMessageRaw>(
           id,
           message.id == targetMessageId
               ? message.copyWith(
@@ -314,17 +308,18 @@ class FirestoreBackendService extends BackendServiceAggregator {
 
   Map<String, FirestoreBackendServiceMessageRaw>
       _mapToFirestoreBackendServiceMessageRawRecursive(
-    Map<String, dynamic> messages,
+    Map<String, Map<String, dynamic>> messages,
   ) =>
           messages.map(
-            (String id, message) => MapEntry(
+            (String id, Map<String, dynamic> message) =>
+                MapEntry<String, FirestoreBackendServiceMessageRaw>(
               id,
               FirestoreBackendServiceMessageRaw(
                 id: id,
                 content: message['content'] as String,
                 authorId: message['authorId'] as String,
                 replies: _mapToFirestoreBackendServiceMessageRawRecursive(
-                  message['replies'] as Map<String, dynamic>,
+                  (message['replies'] as Map<String, dynamic>).cast(),
                 ),
               ),
             ),
@@ -361,7 +356,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
           Map<String, dynamic> chatData = doc.data()!;
           List<ChatBackendServiceMessage> messages =
               mapFirestoreBackendServiceMessageToChatBackendServiceMessage(
-            chatData['messages'] as List<dynamic>,
+            (chatData['messages'] as List<dynamic>).cast(),
           );
           final String currentUserId =
               (await firestore.collection(_usersCollection).limit(1).get())
@@ -370,10 +365,9 @@ class FirestoreBackendService extends BackendServiceAggregator {
                   .id;
 
           final List<Map<String, dynamic>> users =
-              await Stream<dynamic>.fromIterable(
-            chatData['participants'] as List<dynamic>,
+              await Stream<String>.fromIterable(
+            (chatData['participants'] as List<dynamic>).cast(),
           )
-                  .map((dynamic userId) => userId as String)
                   .asyncMap(
                     (String userId) async => (await firestore
                             .collection(_usersCollection)
@@ -409,15 +403,14 @@ class FirestoreBackendService extends BackendServiceAggregator {
 
   List<ChatBackendServiceMessage>
       mapFirestoreBackendServiceMessageToChatBackendServiceMessage(
-    List<dynamic> messages,
+    List<Map<String, dynamic>> messages,
   ) =>
-          messages.mapIndexed((int index, message) {
-            Map<String, dynamic> messageData = message as Map<String, dynamic>;
-            messageData['id'] = index.toString();
+          messages.mapIndexed((int index, Map<String, dynamic> message) {
+            message['id'] = index.toString();
             return ChatBackendServiceMessage(
-              messageId: messageData['id'] as String,
-              content: messageData['content'] as String,
-              authorId: messageData['userId'] as String,
+              messageId: message['id'] as String,
+              content: message['content'] as String,
+              authorId: message['userId'] as String,
             );
           }).toList();
 }
