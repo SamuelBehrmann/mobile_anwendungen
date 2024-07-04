@@ -12,7 +12,7 @@ class ChatView extends StatelessWidget {
       EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0);
   static const EdgeInsets _chatListPadding = EdgeInsets.all(0);
   static const EdgeInsets _messageContentPadding = EdgeInsets.all(6.0);
-  static const SizedBox _sizedBox = SizedBox(height: 8.0);
+  static const SizedBox _sizedBox = SizedBox(height: 8.0, width: 6);
   static const double _avatarRadius = 18;
   static const double _messageWidth = 0.75;
   static final BorderRadius _messageBorderRadius = BorderRadius.circular(12);
