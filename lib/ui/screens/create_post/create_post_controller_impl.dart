@@ -32,7 +32,9 @@ class CreatePostControllerImpl extends _$CreatePostControllerImpl
           onSend();
           goHome();
         },
-      ),
+      ).catchError((_) {
+        navigationService.showSnackBar('Failed to send post');
+      }),
     );
   }
 
