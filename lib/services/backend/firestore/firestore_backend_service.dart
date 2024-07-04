@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
@@ -25,11 +27,21 @@ class FirestoreBackendService extends BackendServiceAggregator {
   );
 
   @override
-  Future<void> send({required String title, required String body}) async {
-    await firestore.collection(_postsCollection).add(<String, String>{
+  Future<void> createPost({
+    required String title,
+    required String content,
+  }) async {
+    final QueryDocumentSnapshot<Map<String, dynamic>> user =
+        (await firestore.collection(_usersCollection).limit(1).get())
+            .docs
+            .first;
+
+    await firestore.collection(_postsCollection).add(<String, dynamic>{
       'title': title,
-      'body': body,
+      'content': content,
       'createdAt': DateTime.now().toUtc().toIso8601String(),
+      'replies': <String, dynamic>{},
+      'authorId': user.id,
     });
   }
 
@@ -42,160 +54,196 @@ class FirestoreBackendService extends BackendServiceAggregator {
           .orderBy("createdAt", descending: true)
           .limit(maxCount)
           .snapshots()
-          .map(
-            (QuerySnapshot<Map<String, dynamic>> collection) => collection.docs
-                .map(
-                  (QueryDocumentSnapshot<Map<String, dynamic>> element) =>
-                      element.data()..["postId"] = element.id,
-                )
-                .where(
-                  (Map<String, dynamic> element) =>
-                      element["title"] != null && element["body"] != null,
-                )
-                .map(
-                  (Map<String, dynamic> element) => HomeBackendServicePost(
-                    userId: element["userId"] as String? ?? "test",
-                    postId: element["postId"]! as String,
-                    title: element["title"]! as String,
-                    body: element["body"]! as String,
+          .asyncMap(
+            (QuerySnapshot<Map<String, dynamic>> collection) async =>
+                Stream<Map<String, dynamic>>.fromIterable(
+              collection.docs
+                  .map(
+                    (QueryDocumentSnapshot<Map<String, dynamic>> element) =>
+                        element.data()..["postId"] = element.id,
+                  )
+                  .where(
+                    (Map<String, dynamic> element) =>
+                        element["title"] != null && element["content"] != null,
                   ),
-                )
-                .toList(),
+            ).asyncMap(
+              (Map<String, dynamic> element) async {
+                final DocumentSnapshot<Map<String, dynamic>> user =
+                    await firestore
+                        .collection(_usersCollection)
+                        .doc(element["authorId"] as String)
+                        .get();
+
+                return HomeBackendServicePost(
+                  user: HomeBackendServiceUser(
+                    userId: user.id,
+                    userName: user["name"] as String,
+                    userAvatarUrl: user["imageUrl"] as String,
+                    titles: (user["titles"] as List<dynamic>).cast(),
+                  ),
+                  postId: element["postId"]! as String,
+                  title: element["title"]! as String,
+                  body: element["content"]! as String,
+                );
+              },
+            ).toList(),
           );
 
   @override
-  Future<List<ChatsBackendServiceChat>> getAllChats(String userId) async {
-    DocumentSnapshot<Map<String, dynamic>> userDocSnapshot =
-        await firestore.collection(_usersCollection).doc(userId).get();
-    List<dynamic> chatIds =
-        userDocSnapshot.data()?['chat_ids'] as List<dynamic>? ?? <dynamic>[];
+  Future<List<ChatsBackendServiceChat>> getAllChats(String userId) => firestore
+      .collection(_chatsCollection)
+      .get()
+      .then(
+        (QuerySnapshot<Map<String, dynamic>> snapshot) =>
+            Stream<QueryDocumentSnapshot<Map<String, dynamic>>>.fromIterable(
+          snapshot.docs,
+        ).asyncMap((QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
+          Map<String, dynamic> message =
+              (doc['messages'] as List<dynamic>).first as Map<String, dynamic>;
 
-    List<ChatsBackendServiceChat> chats = <ChatsBackendServiceChat>[];
-    for (int i = 0; i < chatIds.length; i++) {
-      dynamic chatId = chatIds[i];
-      DocumentSnapshot<Map<String, dynamic>> chatDocSnapshot =
-          await firestore.collection('chats').doc(chatId as String).get();
-      if (!chatDocSnapshot.exists) continue;
+          String userId =
+              (doc['participants'] as List<dynamic>).first as String;
 
-      Map<String, dynamic> personsMap =
-          chatDocSnapshot.data()?['persons'] as Map<String, dynamic>? ??
-              <String, dynamic>{};
+          final Map<String, dynamic>? user =
+              (await firestore.collection(_usersCollection).doc(userId).get())
+                  .data();
 
-      Map<String, dynamic> otherPerson = <String, dynamic>{};
-      for (MapEntry<String, dynamic> entry in personsMap.entries) {
-        Map<String, dynamic> personDetails =
-            entry.value as Map<String, dynamic>? ?? <String, dynamic>{};
-        if (entry.key != userId) {
-          otherPerson = personDetails;
-          break;
-        }
-      }
-
-      String otherPersonName = otherPerson['name'] as String? ?? 'Unknown';
-      String? profilePicturePath = otherPerson['imageUrl'] as String?;
-
-      // Fetch the last message from the 'messages' subcollection
-      String lastMessage = 'No messages yet';
-      DocumentSnapshot<Map<String, dynamic>> chatDocument =
-          await firestore.collection(_chatsCollection).doc(chatId).get();
-
-      if (chatDocument.exists && chatDocument.data()!.containsKey('messages')) {
-        List<dynamic> messages =
-            chatDocument.data()!['messages'] as List<dynamic>;
-        if (messages.isNotEmpty) {
-          Map<String, dynamic> lastMessageMap =
-              messages.last as Map<String, dynamic>;
-          if (lastMessageMap.containsKey('content')) {
-            lastMessage =
-                lastMessageMap['content'] as String? ?? 'No messages yet';
-          }
-        }
-      }
-
-      // Constructing ChatsBackendServiceChat Object with the other person's details and the last message
-      ChatsBackendServiceChat chat = ChatsBackendServiceChat(
-        id: chatId,
-        name: otherPersonName,
-        message: lastMessage,
-        profilePicturePath: profilePicturePath,
+          return ChatsBackendServiceChat(
+            id: doc.id,
+            name: user!['name'] as String,
+            message: message['content'] as String,
+            profilePicturePath: user['imageUrl'] as String?,
+          );
+        }).toList(),
       );
-      chats.add(chat);
-    }
-    return chats;
-  }
 
   @override
   Stream<PostBackendServicePost> getPostStream({
     required final String postId,
   }) =>
-      firestore.collection(_postsCollection).doc(postId).snapshots().map(
-        (DocumentSnapshot<Map<String, dynamic>> doc) {
+      firestore.collection(_postsCollection).doc(postId).snapshots().asyncMap(
+        (DocumentSnapshot<Map<String, dynamic>> doc) async {
           Map<String, dynamic> data = doc.data()!;
           data['id'] = doc.id;
-          return FirestoreBackendServicePost.fromJson(data);
+          final Map<String, dynamic>? user = (await firestore
+                  .collection(_usersCollection)
+                  .doc(data['authorId'] as String)
+                  .get())
+              .data();
+
+          final Map<String, FirestoreBackendServiceMessageWithAuthor> replies =
+              await _fetchMessageAuthorRecursive(
+            doc['replies'] as Map<String, dynamic>,
+          );
+
+          return PostBackendServicePost(
+            id: data['id'] as String,
+            title: data['title'] as String,
+            content: data['content'] as String,
+            author: PostBackendServiceUser(
+              id: data['authorId'] as String,
+              name: user?['name'] as String,
+              avatar: Uri.parse(user?['imageUrl'] as String),
+              titles: (user?['titles'] as List<dynamic>).cast(),
+            ),
+            replies:
+                _mapFirestoreBackendServiceMessageToPostBackendServiceMessage(
+              replies.values.toList(),
+            ),
+          );
         },
-      ).map(
-        (FirestoreBackendServicePost post) => PostBackendServicePost(
-          id: post.id,
-          title: post.title,
-          content: post.content,
-          author: PostBackendServiceUser(
-            id: post.author.id,
-            name: post.author.name,
-            avatar: post.author.avatar,
-            titles: post.author.titles,
-          ),
-          replies:
-              _mapFirestoreBackendServiceMessageToPostBackendServiceMessage(
-            post.replies,
-          ),
-        ),
       );
 
+  Future<Map<String, FirestoreBackendServiceMessageWithAuthor>>
+      _fetchMessageAuthorRecursive(
+    Map<String, dynamic> messages,
+  ) async =>
+          Map<String, FirestoreBackendServiceMessageWithAuthor>.fromEntries(
+            await Stream<MapEntry<String, dynamic>>.fromIterable(
+              messages.entries,
+            )
+                .map(
+              (MapEntry<String, dynamic> entry) =>
+                  MapEntry<String, Map<String, dynamic>>(
+                entry.key,
+                entry.value as Map<String, dynamic>,
+              ),
+            )
+                .asyncMap(
+                    (MapEntry<String, Map<String, dynamic>> message) async {
+              Map<String, dynamic>? userData = (await firestore
+                      .collection('users')
+                      .doc(message.value['authorId'] as String)
+                      .get())
+                  .data();
+
+              userData!['id'] = message.value['authorId'];
+
+              return MapEntry<String, FirestoreBackendServiceMessageWithAuthor>(
+                message.key,
+                FirestoreBackendServiceMessageWithAuthor(
+                  id: message.key,
+                  content: message.value['content'] as String,
+                  author: FirestoreBackendServiceUser(
+                    id: message.value['authorId'] as String,
+                    name: userData['name'] as String,
+                    imageUrl: Uri.parse(userData['imageUrl'] as String),
+                    titles: (userData['titles'] as List<dynamic>).cast(),
+                  ),
+                  replies: (await _fetchMessageAuthorRecursive(
+                    message.value['replies'] as Map<String, dynamic>,
+                  )),
+                ),
+              );
+            }).toList(),
+          );
   @override
   Future<void> submitReply({
     required String postId,
     required String message,
     required String replyToMessageId,
   }) async {
+    final QueryDocumentSnapshot<Map<String, dynamic>> user =
+        (await firestore.collection(_usersCollection).limit(1).get())
+            .docs
+            .first;
+
     final DocumentReference<Map<String, dynamic>> postRefference =
         firestore.collection(_postsCollection).doc(postId);
 
-    final Map<String, dynamic>? post = (await postRefference.get()).data();
+    final Map<String, dynamic>? postData = (await postRefference.get()).data();
 
-    if (post == null) {
+    if (postData == null) {
       return Future<void>.error('Post not found');
     }
-    post["id"] = postId;
 
-    // TODO: fetch from auth
-    final FirestoreBackendServiceUser currentUser = FirestoreBackendServiceUser(
-      id: 'currentUserId',
-      name: 'currentUserName',
-      avatar: Uri.parse(
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=3276&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      ),
-      titles: <String>['Title 1', 'Title 2'],
-    );
+    postData["id"] = postId;
 
-    final FirestoreBackendServiceMessage newReply =
-        FirestoreBackendServiceMessage(
+    final FirestoreBackendServiceMessageRaw newReply =
+        FirestoreBackendServiceMessageRaw(
       id: const Uuid().v4(),
-      message: message,
-      author: currentUser,
-      replies: <FirestoreBackendServiceMessage>[],
+      content: message,
+      authorId: user.id,
+      replies: <String, FirestoreBackendServiceMessageRaw>{},
     );
 
-    FirestoreBackendServicePost typedPost =
-        FirestoreBackendServicePost.fromJson(post);
+    FirestoreBackendServicePost typedPost = FirestoreBackendServicePost(
+      id: postId,
+      title: postData["title"] as String,
+      content: postData["content"] as String,
+      replies: _mapToFirestoreBackendServiceMessageRawRecursive(
+        (postData["replies"] as Map<String, dynamic>).cast(),
+      ),
+      authorId: postData["authorId"] as String,
+    );
 
     final FirestoreBackendServicePost updatedPost =
         typedPost.id == replyToMessageId
             ? typedPost.copyWith(
-                replies: <FirestoreBackendServiceMessage>[
+                replies: <String, FirestoreBackendServiceMessageRaw>{
                   ...typedPost.replies,
-                  newReply,
-                ],
+                  const Uuid().v4(): newReply,
+                },
               )
             : typedPost.copyWith(
                 replies: _addReplyToMessage(
@@ -208,54 +256,74 @@ class FirestoreBackendService extends BackendServiceAggregator {
     return postRefference.update(updatedPost.toJson());
   }
 
-  List<FirestoreBackendServiceMessage> _addReplyToMessage({
-    required List<FirestoreBackendServiceMessage> replies,
+  Map<String, FirestoreBackendServiceMessageRaw> _addReplyToMessage({
+    required Map<String, FirestoreBackendServiceMessageRaw> replies,
     required String targetMessageId,
-    required FirestoreBackendServiceMessage newReply,
+    required FirestoreBackendServiceMessageRaw newReply,
   }) =>
-      replies
-          .map(
-            (FirestoreBackendServiceMessage message) =>
-                message.id == targetMessageId
-                    ? message.copyWith(
-                        replies: <FirestoreBackendServiceMessage>[
-                          ...message.replies,
-                          newReply,
-                        ],
-                      )
-                    : message.copyWith(
-                        replies: _addReplyToMessage(
-                          replies: message.replies,
-                          targetMessageId: targetMessageId,
-                          newReply: newReply,
-                        ),
-                      ),
-          )
-          .toList();
+      replies.map(
+        (String id, FirestoreBackendServiceMessageRaw message) =>
+            MapEntry<String, FirestoreBackendServiceMessageRaw>(
+          id,
+          message.id == targetMessageId
+              ? message.copyWith(
+                  replies: <String, FirestoreBackendServiceMessageRaw>{
+                    ...message.replies,
+                    const Uuid().v4(): newReply,
+                  },
+                )
+              : message.copyWith(
+                  replies: _addReplyToMessage(
+                    replies: message.replies,
+                    targetMessageId: targetMessageId,
+                    newReply: newReply,
+                  ),
+                ),
+        ),
+      );
 
   List<PostBackendServiceMessage>
       _mapFirestoreBackendServiceMessageToPostBackendServiceMessage(
-    List<FirestoreBackendServiceMessage> messages,
+    List<FirestoreBackendServiceMessageWithAuthor> messages,
   ) =>
           messages
               .map(
-                (FirestoreBackendServiceMessage message) =>
+                (FirestoreBackendServiceMessageWithAuthor message) =>
                     PostBackendServiceMessage(
                   id: message.id,
-                  message: message.message,
+                  message: message.content,
                   author: PostBackendServiceUser(
                     id: message.author.id,
                     name: message.author.name,
-                    avatar: message.author.avatar,
+                    avatar: message.author.imageUrl,
                     titles: message.author.titles,
                   ),
                   replies:
                       _mapFirestoreBackendServiceMessageToPostBackendServiceMessage(
-                    message.replies,
+                    message.replies.values.toList(),
                   ),
                 ),
               )
               .toList();
+
+  Map<String, FirestoreBackendServiceMessageRaw>
+      _mapToFirestoreBackendServiceMessageRawRecursive(
+    Map<String, Map<String, dynamic>> messages,
+  ) =>
+          messages.map(
+            (String id, Map<String, dynamic> message) =>
+                MapEntry<String, FirestoreBackendServiceMessageRaw>(
+              id,
+              FirestoreBackendServiceMessageRaw(
+                id: id,
+                content: message['content'] as String,
+                authorId: message['authorId'] as String,
+                replies: _mapToFirestoreBackendServiceMessageRawRecursive(
+                  (message['replies'] as Map<String, dynamic>).cast(),
+                ),
+              ),
+            ),
+          );
 
   @override
   Future<List<SearchBackendServicePost>> search({
@@ -269,14 +337,13 @@ class FirestoreBackendService extends BackendServiceAggregator {
                 )
                 .where(
                   (Map<String, dynamic> element) =>
-                      element["title"] != null && element["body"] != null,
+                      element["title"] != null && element["content"] != null,
                 )
                 .map(
                   (Map<String, dynamic> element) => SearchBackendServicePost(
-                    userId: element["userId"]! as String,
                     postId: element["postId"]! as String,
                     title: element["title"]! as String,
-                    body: element["body"]! as String,
+                    body: element["content"]! as String,
                   ),
                 )
                 .toList(),
@@ -284,49 +351,66 @@ class FirestoreBackendService extends BackendServiceAggregator {
 
   @override
   Stream<ChatBackendServiceChat> fetchChatData(String chatId) =>
-      firestore.collection(_chatsCollection).doc(chatId).snapshots().map(
-        (DocumentSnapshot<Map<String, dynamic>> doc) {
+      firestore.collection(_chatsCollection).doc(chatId).snapshots().asyncMap(
+        (DocumentSnapshot<Map<String, dynamic>> doc) async {
           Map<String, dynamic> chatData = doc.data()!;
           List<ChatBackendServiceMessage> messages =
               mapFirestoreBackendServiceMessageToChatBackendServiceMessage(
-            chatData['messages'] as List<dynamic>,
+            (chatData['messages'] as List<dynamic>).cast(),
           );
+          final String currentUserId =
+              (await firestore.collection(_usersCollection).limit(1).get())
+                  .docs
+                  .first
+                  .id;
 
-          String currentUserId = 'currentUserId';
-          List<ChatBackendServicePerson> persons = <ChatBackendServicePerson>[];
-          for (MapEntry<String, dynamic> entry
-              in (chatData['persons'] as Map<String, dynamic>).entries) {
-            String personId = entry.key;
-            if (personId != currentUserId) {
+          final List<Map<String, dynamic>> users =
+              await Stream<String>.fromIterable(
+            (chatData['participants'] as List<dynamic>).cast(),
+          )
+                  .asyncMap(
+                    (String userId) async => (await firestore
+                            .collection(_usersCollection)
+                            .doc(userId)
+                            .get())
+                        .data()!
+                      ..putIfAbsent('id', () => userId),
+                  )
+                  .toList();
+
+          List<ChatBackendServicePerson> typedUsers =
+              <ChatBackendServicePerson>[];
+
+          for (Map<String, dynamic> user in (users)) {
+            String userId = user['id'] as String;
+            if (userId != currentUserId) {
               ChatBackendServicePerson person = ChatBackendServicePerson(
-                id: personId,
-                name: entry.value['name'] as String,
-                imageUrl: entry.value['imageUrl'] as String,
+                id: userId,
+                name: user['name'] as String,
+                imageUrl: user['imageUrl'] as String,
               );
-              persons.add(person);
+              typedUsers.add(person);
             }
           }
 
-          ChatBackendServiceChat chat = ChatBackendServiceChat(
+          return ChatBackendServiceChat(
             chatId: chatId,
-            chatPartner: persons.last,
+            chatPartner: typedUsers.last,
             messages: messages,
           );
-          return chat;
         },
       );
 
   List<ChatBackendServiceMessage>
       mapFirestoreBackendServiceMessageToChatBackendServiceMessage(
-    List<dynamic> messages,
+    List<Map<String, dynamic>> messages,
   ) =>
-          messages.mapIndexed((int index, message) {
-            Map<String, dynamic> messageData = message as Map<String, dynamic>;
-            messageData['id'] = index.toString();
+          messages.mapIndexed((int index, Map<String, dynamic> message) {
+            message['id'] = index.toString();
             return ChatBackendServiceMessage(
-              messageId: messageData['id'] as String,
-              content: messageData['content'] as String,
-              authorId: messageData['personId'] as String,
+              messageId: message['id'] as String,
+              content: message['content'] as String,
+              authorId: message['userId'] as String,
             );
           }).toList();
 }
@@ -339,8 +423,8 @@ class FirestoreBackendServicePost with _$FirestoreBackendServicePost {
     required final String id,
     required final String title,
     required final String content,
-    required final FirestoreBackendServiceUser author,
-    required final List<FirestoreBackendServiceMessage> replies,
+    required final String authorId,
+    required final Map<String, FirestoreBackendServiceMessageRaw> replies,
   }) = _FirestoreBackendServicePost;
 
   factory FirestoreBackendServicePost.fromJson(Map<String, dynamic> json) =>
@@ -353,7 +437,7 @@ class FirestoreBackendServiceUser with _$FirestoreBackendServiceUser {
   const factory FirestoreBackendServiceUser({
     required final String id,
     required final String name,
-    required final Uri avatar,
+    required final Uri imageUrl,
     required final List<String> titles,
   }) = _FirestoreBackendServiceUser;
 
@@ -362,15 +446,37 @@ class FirestoreBackendServiceUser with _$FirestoreBackendServiceUser {
 }
 
 @freezed
-class FirestoreBackendServiceMessage with _$FirestoreBackendServiceMessage {
-  const FirestoreBackendServiceMessage._();
-  const factory FirestoreBackendServiceMessage({
-    required final String id,
-    required final String message,
-    required final FirestoreBackendServiceUser author,
-    required final List<FirestoreBackendServiceMessage> replies,
-  }) = _FirestoreBackendServiceMessage;
+class FirestoreBackendServiceMessageWithAuthor
+    with _$FirestoreBackendServiceMessageWithAuthor {
+  const FirestoreBackendServiceMessageWithAuthor._();
 
-  factory FirestoreBackendServiceMessage.fromJson(Map<String, dynamic> json) =>
-      _$FirestoreBackendServiceMessageFromJson(json);
+  const factory FirestoreBackendServiceMessageWithAuthor({
+    required final String id,
+    required final String content,
+    required final FirestoreBackendServiceUser author,
+    required final Map<String, FirestoreBackendServiceMessageWithAuthor>
+        replies,
+  }) = _FirestoreBackendServiceMessageWithAuthor;
+
+  factory FirestoreBackendServiceMessageWithAuthor.fromJson(
+    Map<String, dynamic> json,
+  ) =>
+      _$FirestoreBackendServiceMessageWithAuthorFromJson(json);
+}
+
+@freezed
+class FirestoreBackendServiceMessageRaw
+    with _$FirestoreBackendServiceMessageRaw {
+  const FirestoreBackendServiceMessageRaw._();
+  const factory FirestoreBackendServiceMessageRaw({
+    required final String id,
+    required final String content,
+    required final String authorId,
+    required final Map<String, FirestoreBackendServiceMessageRaw> replies,
+  }) = _FirestoreBackendServiceMessageRaw;
+
+  factory FirestoreBackendServiceMessageRaw.fromJson(
+    Map<String, dynamic> json,
+  ) =>
+      _$FirestoreBackendServiceMessageRawFromJson(json);
 }
