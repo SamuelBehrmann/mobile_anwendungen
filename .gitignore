@@ -47,5 +47,5 @@ app/app.*.map.json
 /app/android/app/release
 
 # Bin / helper functions
-bin /helper/__pycache__/
+bin/helper/__pycache__/
 bin/helper/serviceAccountKey.json
