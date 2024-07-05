@@ -31,7 +31,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
     required String title,
     required String content,
   }) async {
-    final QueryDocumentSnapshot<Map<String, dynamic>> user =
+    final QueryDocumentSnapshot<Map<String, dynamic>> currentUser =
         (await firestore.collection(_usersCollection).limit(1).get())
             .docs
             .first;
@@ -41,7 +41,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
       'content': content,
       'createdAt': DateTime.now().toUtc().toIso8601String(),
       'replies': <String, dynamic>{},
-      'authorId': user.id,
+      'authorId': currentUser.id,
     });
   }
 
@@ -68,7 +68,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
                   ),
             ).asyncMap(
               (Map<String, dynamic> element) async {
-                final DocumentSnapshot<Map<String, dynamic>> user =
+                final DocumentSnapshot<Map<String, dynamic>> postAuthor =
                     await firestore
                         .collection(_usersCollection)
                         .doc(element["authorId"] as String)
@@ -76,10 +76,10 @@ class FirestoreBackendService extends BackendServiceAggregator {
 
                 return HomeBackendServicePost(
                   user: HomeBackendServiceUser(
-                    userId: user.id,
-                    userName: user["name"] as String,
-                    userAvatarUrl: user["imageUrl"] as String,
-                    titles: (user["titles"] as List<dynamic>).cast(),
+                    userId: postAuthor.id,
+                    userName: postAuthor["name"] as String,
+                    userAvatarUrl: postAuthor["imageUrl"] as String,
+                    titles: (postAuthor["titles"] as List<dynamic>).cast(),
                   ),
                   postId: element["postId"]! as String,
                   title: element["title"]! as String,
@@ -90,32 +90,45 @@ class FirestoreBackendService extends BackendServiceAggregator {
           );
 
   @override
-  Future<List<ChatsBackendServiceChat>> getAllChats(String userId) => firestore
-      .collection(_chatsCollection)
-      .get()
-      .then(
-        (QuerySnapshot<Map<String, dynamic>> snapshot) =>
-            Stream<QueryDocumentSnapshot<Map<String, dynamic>>>.fromIterable(
-          snapshot.docs,
-        ).asyncMap((QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
-          Map<String, dynamic> message =
-              (doc['messages'] as List<dynamic>).first as Map<String, dynamic>;
+  Future<List<ChatsBackendServiceChat>> getAllChats() async {
+    final String currentUserId =
+        (await firestore.collection(_usersCollection).limit(1).get())
+            .docs
+            .first
+            .id;
 
-          String userId =
-              (doc['participants'] as List<dynamic>).first as String;
+    return firestore
+        .collection(_chatsCollection)
+        .where(
+          'participants',
+          arrayContains: currentUserId,
+        )
+        .get()
+        .then(
+          (QuerySnapshot<Map<String, dynamic>> snapshot) =>
+              Stream<QueryDocumentSnapshot<Map<String, dynamic>>>.fromIterable(
+            snapshot.docs,
+          ).asyncMap((QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
+            Map<String, dynamic> message = (doc['messages'] as List<dynamic>)
+                .first as Map<String, dynamic>;
 
-          final Map<String, dynamic>? user =
-              (await firestore.collection(_usersCollection).doc(userId).get())
-                  .data();
+            String userId = (doc['participants'] as List<dynamic>)
+                .cast<String>()
+                .firstWhere((String id) => id != currentUserId);
 
-          return ChatsBackendServiceChat(
-            id: doc.id,
-            name: user!['name'] as String,
-            message: message['content'] as String,
-            profilePicturePath: user['imageUrl'] as String?,
-          );
-        }).toList(),
-      );
+            final Map<String, dynamic>? user =
+                (await firestore.collection(_usersCollection).doc(userId).get())
+                    .data();
+
+            return ChatsBackendServiceChat(
+              id: doc.id,
+              name: user!['name'] as String,
+              message: message['content'] as String,
+              profilePicturePath: user['imageUrl'] as String?,
+            );
+          }).toList(),
+        );
+  }
 
   @override
   Stream<PostBackendServicePost> getPostStream({
@@ -125,7 +138,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
         (DocumentSnapshot<Map<String, dynamic>> doc) async {
           Map<String, dynamic> data = doc.data()!;
           data['id'] = doc.id;
-          final Map<String, dynamic>? user = (await firestore
+          final Map<String, dynamic>? postAuthor = (await firestore
                   .collection(_usersCollection)
                   .doc(data['authorId'] as String)
                   .get())
@@ -142,9 +155,9 @@ class FirestoreBackendService extends BackendServiceAggregator {
             content: data['content'] as String,
             author: PostBackendServiceUser(
               id: data['authorId'] as String,
-              name: user?['name'] as String,
-              avatar: Uri.parse(user?['imageUrl'] as String),
-              titles: (user?['titles'] as List<dynamic>).cast(),
+              name: postAuthor?['name'] as String,
+              avatar: Uri.parse(postAuthor?['imageUrl'] as String),
+              titles: (postAuthor?['titles'] as List<dynamic>).cast(),
             ),
             replies:
                 _mapFirestoreBackendServiceMessageToPostBackendServiceMessage(
@@ -384,12 +397,12 @@ class FirestoreBackendService extends BackendServiceAggregator {
           for (Map<String, dynamic> user in (users)) {
             String userId = user['id'] as String;
             if (userId != currentUserId) {
-              ChatBackendServicePerson person = ChatBackendServicePerson(
+              ChatBackendServicePerson typedUser = ChatBackendServicePerson(
                 id: userId,
                 name: user['name'] as String,
                 imageUrl: user['imageUrl'] as String,
               );
-              typedUsers.add(person);
+              typedUsers.add(typedUser);
             }
           }
 

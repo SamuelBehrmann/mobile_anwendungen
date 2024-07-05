@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'chats_backend_service.freezed.dart';
 
 abstract interface class ChatsBackendService {
-  Future<List<ChatsBackendServiceChat>> getAllChats(String userId);
+  Future<List<ChatsBackendServiceChat>> getAllChats();
 }
 
 @freezed
