@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:medi_support/ui/screens/profile/profile_controller.dart';
 import 'package:medi_support/ui/screens/profile/profile_model.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
@@ -28,51 +29,53 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: const CustomAppBar(title: 'Profile'),
-        body: Column(
+        body: model.map(
+          loading: _buildLoading,
+          data: _buildData,
+          error: _buildError,
+        ),
+      );
+
+  Widget _buildData(ProfileModelData data) => Builder(
+        builder: (BuildContext context) => Column(
           children: <Widget>[
             Expanded(
               child: ListView(
                 padding: _screenPadding,
                 children: <Widget>[
-                  _buildAvatar(),
+                  _buildAvatar(data.user.profilePicturePath),
                   const SizedBox(height: _paddingBetweenAvatarName),
-                  _buildNameAndDescription(),
+                  _buildNameAndDescription(
+                    data.user.name,
+                    data.user.description,
+                  ),
                   const SizedBox(height: _paddingBetweenDescriptionField),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      CustomTextFormField(
-                        label: 'Email',
-                        hint: 'Edit your email',
-                        icon: Icons.email_outlined,
-                      ),
-                      SizedBox(height: _spaceBetweenGroups),
-                      CustomTextFormField(
-                        label: 'Phone Number',
-                        hint: 'Edit your phone number',
-                        icon: Icons.smartphone_outlined,
-                      ),
-                      SizedBox(height: _spaceBetweenGroups),
-                      CustomTextFormField(
-                        label: 'Password',
-                        hint: 'Edit your password',
-                        icon: Icons.lock_outline,
-                        isPasswordField: true,
-                      ),
-                      SizedBox(height: _emptySpaceAfterPassword),
+                      _buildEmailInput(data),
+                      const SizedBox(height: _spaceBetweenGroups),
+                      _buildPhoneNumberInput(data),
+                      const SizedBox(height: _spaceBetweenGroups),
+                      _buildPasswordInput(data),
+                      const SizedBox(height: _emptySpaceAfterPassword),
                     ],
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: _screenPadding,
-              child: OutlinedButton(
-                onPressed: () => controller.logout,
-                style: Theme.of(context).outlinedButtonTheme.style,
-                child: Text(
-                  'Logout',
-                  style: Theme.of(context).textTheme.titleMedium,
+            // Since we wont implement auth we are unable to logout
+            Visibility(
+              visible: false,
+              child: Padding(
+                padding: _screenPadding,
+                child: OutlinedButton(
+                  onPressed: () => controller.logout,
+                  style: Theme.of(context).outlinedButtonTheme.style,
+                  child: Text(
+                    'Logout',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
               ),
             ),
@@ -80,67 +83,72 @@ class ProfileView extends StatelessWidget {
         ),
       );
 
-  Widget _buildAvatar() => Builder(
-        builder: (BuildContext context) => FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              CircleAvatar(
-                radius: _avatarSize,
-                child: model.user.profilePicturePath != null
-                    ? CustomCachedNetworkImage(
-                        imageUrl: model.user.profilePicturePath!,
-                      )
-                    : const Icon(
-                        Icons.person_outline,
-                        size: _avatarSize,
-                      ),
-              ),
-              Positioned(
-                right: _positionAvatarIcon,
-                bottom: 0,
-                child: Container(
-                  width: _containerSize,
-                  height: _containerSize,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.outline,
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.create_outlined,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                    onPressed: () {
-                      controller.editProfil();
-                    },
-                    padding: const EdgeInsets.all(_paddingAvatarIcon),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+  Widget _buildPasswordInput(ProfileModelData data) => CustomTextFormField(
+        initialText: data.user.name,
+        label: 'Password',
+        hint: 'Edit your password',
+        icon: Icons.lock_outline,
+        isPasswordField: true,
       );
 
-  Widget _buildNameAndDescription() => Builder(
+  Widget _buildPhoneNumberInput(ProfileModelData data) => CustomTextFormField(
+        initialText: data.user.phoneNumber,
+        label: 'Phone Number',
+        hint: 'Edit your phone number',
+        icon: Icons.smartphone_outlined,
+      );
+
+  Widget _buildEmailInput(ProfileModelData data) => CustomTextFormField(
+        initialText: data.user.email,
+        label: 'Email',
+        hint: 'Edit your email',
+        icon: Icons.email_outlined,
+      );
+
+  Widget _buildAvatar(final Uri? imageUrl) => CircleAvatar(
+        radius: _avatarSize,
+        child: imageUrl != null
+            ? CustomCachedNetworkImage(imageUrl: imageUrl.toString())
+            : const Icon(
+                Icons.person_outline,
+                size: _avatarSize,
+              ),
+      );
+
+  Widget _buildNameAndDescription(String userName, String? description) =>
+      Builder(
         builder: (BuildContext context) => Column(
           children: <Widget>[
-            Text(
-              model.user.name,
-              style: Theme.of(context).textTheme.titleLarge,
+            TextFormField(
+              initialValue: userName,
               textAlign: TextAlign.center,
+              decoration: const InputDecoration(
+                hintText: 'Name Lastname',
+                border: InputBorder.none,
+                isDense: true,
+              ),
+              style: Theme.of(context).textTheme.titleLarge,
+              maxLines: 1,
             ),
             TextFormField(
+              initialValue: description,
               textAlign: TextAlign.center,
               decoration: const InputDecoration(
                 hintText: 'Description',
                 border: InputBorder.none,
+                isDense: true,
               ),
-              maxLines: 1,
+              minLines: 1,
+              maxLines: 3,
             ),
           ],
         ),
+      );
+
+  Widget _buildLoading(ProfileModelLoading _) =>
+      const Center(child: CircularProgressIndicator());
+
+  Widget _buildError(ProfileModelError model) => Center(
+        child: Text(model.message),
       );
 }

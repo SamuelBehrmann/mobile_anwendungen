@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatefulWidget {
+  final String? initialText;
   final String? label;
   final String hint;
   final IconData? icon;
@@ -12,6 +13,7 @@ class CustomTextFormField extends StatefulWidget {
 
   const CustomTextFormField({
     super.key,
+    this.initialText,
     this.label,
     required this.hint,
     this.icon,
@@ -35,7 +37,8 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller ?? TextEditingController();
+    _controller = widget.controller ??
+        TextEditingController(text: widget.initialText ?? '');
     _passwordVisible = !widget.isPasswordField;
   }
 

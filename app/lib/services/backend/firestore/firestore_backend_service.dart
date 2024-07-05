@@ -9,6 +9,7 @@ import 'package:medi_support/ui/screens/chat/services/chat_backend_service.dart'
 import 'package:medi_support/ui/screens/chats/services/chats_backend_service.dart';
 import 'package:medi_support/ui/screens/home/services/home_backend_service.dart';
 import 'package:medi_support/ui/screens/post/services/post_backend_service.dart';
+import 'package:medi_support/ui/screens/profile/services/profile_backend_service.dart';
 import 'package:medi_support/ui/screens/search/services/search_backend_service.dart';
 import 'package:uuid/uuid.dart';
 
@@ -268,6 +269,33 @@ class FirestoreBackendService extends BackendServiceAggregator {
 
     return postRefference.update(updatedPost.toJson());
   }
+
+  @override
+  Future<void> editUser(ProfileBackendServiceUser user) {
+    // TODO: implement editUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ProfileBackendServiceUser> getUser() async =>
+      firestore.collection(_usersCollection).get().then(
+        (QuerySnapshot<Map<String, dynamic>> value) async {
+          final QueryDocumentSnapshot<Map<String, dynamic>> user =
+              value.docs.first;
+
+          final String? imageUrl = user['imageUrl'] as String?;
+
+          return ProfileBackendServiceUser(
+            id: user.id,
+            name: user['name'] as String,
+            email: user['email'] as String?,
+            password: user['password'] as String,
+            imageUrl: imageUrl != null ? Uri.parse(imageUrl) : null,
+            phoneNumber: user['phone'] as String?,
+            description: user['description'] as String?,
+          );
+        },
+      );
 
   Map<String, FirestoreBackendServiceMessageRaw> _addReplyToMessage({
     required Map<String, FirestoreBackendServiceMessageRaw> replies,
