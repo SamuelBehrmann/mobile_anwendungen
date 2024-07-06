@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'icon_row.freezed.dart';
@@ -30,10 +31,7 @@ class IconRow extends StatelessWidget {
                   icon: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Icon(
-                        element.icon,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
+                      element.icon,
                       Text(
                         element.label,
                         style: Theme.of(context).textTheme.bodyMedium,
@@ -50,7 +48,7 @@ class IconRow extends StatelessWidget {
 @freezed
 class IconWithLabel with _$IconWithLabel {
   const factory IconWithLabel(
-    IconData icon,
+    SvgPicture icon,
     String label,
   ) = _IconWithLabel;
 }
