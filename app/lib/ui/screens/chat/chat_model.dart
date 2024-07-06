@@ -35,6 +35,7 @@ class ChatModelMessage with _$ChatModelMessage {
     required String content,
     required String messageId,
     required String authorId,
+    required DateTime timestamp,
   }) = _ChatModelMessage;
 
   factory ChatModelMessage.fromBackendServiceMessage(ChatBackendServiceMessage message) =>
@@ -42,5 +43,6 @@ class ChatModelMessage with _$ChatModelMessage {
         content: message.content,
         messageId: message.messageId,
         authorId: message.authorId,
+        timestamp: message.timestamp,
       );
 }

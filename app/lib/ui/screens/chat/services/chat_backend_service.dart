@@ -4,6 +4,8 @@ part 'chat_backend_service.freezed.dart';
 
 abstract class ChatBackendService {
   Stream<ChatBackendServiceChat> fetchChatData(String chatId);
+  Future<void> addChatMessage(String chatId, ChatBackendServiceMessage message);
+  Future<ChatBackendServicePerson> getCurrentUser();
 }
 
 @freezed
@@ -30,5 +32,6 @@ class ChatBackendServiceMessage with _$ChatBackendServiceMessage {
     required String content,
     required String authorId,
     required String messageId,
+    required DateTime timestamp,
   }) = _ChatBackendServiceMessage;
 }

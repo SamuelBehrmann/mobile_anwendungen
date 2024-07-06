@@ -368,6 +368,7 @@ mixin _$ChatBackendServiceMessage {
   String get content => throw _privateConstructorUsedError;
   String get authorId => throw _privateConstructorUsedError;
   String get messageId => throw _privateConstructorUsedError;
+  DateTime get timestamp => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatBackendServiceMessageCopyWith<ChatBackendServiceMessage> get copyWith =>
@@ -380,7 +381,8 @@ abstract class $ChatBackendServiceMessageCopyWith<$Res> {
           $Res Function(ChatBackendServiceMessage) then) =
       _$ChatBackendServiceMessageCopyWithImpl<$Res, ChatBackendServiceMessage>;
   @useResult
-  $Res call({String content, String authorId, String messageId});
+  $Res call(
+      {String content, String authorId, String messageId, DateTime timestamp});
 }
 
 /// @nodoc
@@ -400,6 +402,7 @@ class _$ChatBackendServiceMessageCopyWithImpl<$Res,
     Object? content = null,
     Object? authorId = null,
     Object? messageId = null,
+    Object? timestamp = null,
   }) {
     return _then(_value.copyWith(
       content: null == content
@@ -414,6 +417,10 @@ class _$ChatBackendServiceMessageCopyWithImpl<$Res,
           ? _value.messageId
           : messageId // ignore: cast_nullable_to_non_nullable
               as String,
+      timestamp: null == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -427,7 +434,8 @@ abstract class _$$ChatBackendServiceMessageImplCopyWith<$Res>
       __$$ChatBackendServiceMessageImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String content, String authorId, String messageId});
+  $Res call(
+      {String content, String authorId, String messageId, DateTime timestamp});
 }
 
 /// @nodoc
@@ -446,6 +454,7 @@ class __$$ChatBackendServiceMessageImplCopyWithImpl<$Res>
     Object? content = null,
     Object? authorId = null,
     Object? messageId = null,
+    Object? timestamp = null,
   }) {
     return _then(_$ChatBackendServiceMessageImpl(
       content: null == content
@@ -460,6 +469,10 @@ class __$$ChatBackendServiceMessageImplCopyWithImpl<$Res>
           ? _value.messageId
           : messageId // ignore: cast_nullable_to_non_nullable
               as String,
+      timestamp: null == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -468,7 +481,10 @@ class __$$ChatBackendServiceMessageImplCopyWithImpl<$Res>
 
 class _$ChatBackendServiceMessageImpl implements _ChatBackendServiceMessage {
   const _$ChatBackendServiceMessageImpl(
-      {required this.content, required this.authorId, required this.messageId});
+      {required this.content,
+      required this.authorId,
+      required this.messageId,
+      required this.timestamp});
 
   @override
   final String content;
@@ -476,10 +492,12 @@ class _$ChatBackendServiceMessageImpl implements _ChatBackendServiceMessage {
   final String authorId;
   @override
   final String messageId;
+  @override
+  final DateTime timestamp;
 
   @override
   String toString() {
-    return 'ChatBackendServiceMessage(content: $content, authorId: $authorId, messageId: $messageId)';
+    return 'ChatBackendServiceMessage(content: $content, authorId: $authorId, messageId: $messageId, timestamp: $timestamp)';
   }
 
   @override
@@ -491,11 +509,14 @@ class _$ChatBackendServiceMessageImpl implements _ChatBackendServiceMessage {
             (identical(other.authorId, authorId) ||
                 other.authorId == authorId) &&
             (identical(other.messageId, messageId) ||
-                other.messageId == messageId));
+                other.messageId == messageId) &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, content, authorId, messageId);
+  int get hashCode =>
+      Object.hash(runtimeType, content, authorId, messageId, timestamp);
 
   @JsonKey(ignore: true)
   @override
@@ -509,7 +530,8 @@ abstract class _ChatBackendServiceMessage implements ChatBackendServiceMessage {
   const factory _ChatBackendServiceMessage(
       {required final String content,
       required final String authorId,
-      required final String messageId}) = _$ChatBackendServiceMessageImpl;
+      required final String messageId,
+      required final DateTime timestamp}) = _$ChatBackendServiceMessageImpl;
 
   @override
   String get content;
@@ -517,6 +539,8 @@ abstract class _ChatBackendServiceMessage implements ChatBackendServiceMessage {
   String get authorId;
   @override
   String get messageId;
+  @override
+  DateTime get timestamp;
   @override
   @JsonKey(ignore: true)
   _$$ChatBackendServiceMessageImplCopyWith<_$ChatBackendServiceMessageImpl>

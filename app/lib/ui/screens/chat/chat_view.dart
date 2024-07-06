@@ -3,8 +3,7 @@ import 'package:medi_support/ui/screens/chat/chat_controller.dart';
 import 'package:medi_support/ui/screens/chat/chat_model.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
-
-// TODO: implement send message functionality
+import 'package:intl/intl.dart';
 
 class ChatView extends StatelessWidget {
   // _buildMessageList
@@ -43,9 +42,7 @@ class ChatView extends StatelessWidget {
         body: Column(
           children: <Widget>[
             Flexible(
-              child: _buildMessageList(
-                model,
-              ),
+              child: _buildMessageList(model),
             ),
             _buildSendMessageArea(),
           ],
@@ -55,7 +52,6 @@ class ChatView extends StatelessWidget {
   Widget _buildMessageList(ChatModel model) => ListView.separated(
         padding: _messagePadding,
         separatorBuilder: (_, __) => _sizedBox,
-        reverse: true,
         itemCount: model.groupedMessages.length,
         itemBuilder: (BuildContext context, int index) {
           final MapEntry<String, List<ChatModelMessage>> message =
@@ -85,22 +81,36 @@ class ChatView extends StatelessWidget {
                     child: ListView.separated(
                       padding: _chatListPadding,
                       separatorBuilder: (_, __) => _sizedBox,
+                      reverse: true,
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: message.value.length,
-                      itemBuilder: (BuildContext context, int index) =>
-                          Container(
-                        padding: _messageContentPadding,
-                        decoration: BoxDecoration(
-                          color: isCurrentUser
-                              ? Theme.of(context).colorScheme.primaryContainer
-                              : Theme.of(context).colorScheme.outlineVariant,
-                          borderRadius: _messageBorderRadius,
-                        ),
-                        child: Text(
-                          message.value[index].content,
-                        ),
-                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        final ChatModelMessage msg = message.value[index];
+                        return Container(
+                          padding: _messageContentPadding,
+                          decoration: BoxDecoration(
+                            color: isCurrentUser
+                                ? Theme.of(context).colorScheme.primaryContainer
+                                : Theme.of(context).colorScheme.outlineVariant,
+                            borderRadius: _messageBorderRadius,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(msg.content),
+                              const SizedBox(height: 4),
+                              Text(
+                                DateFormat('h:mm a').format(msg.timestamp),
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -133,7 +143,7 @@ class ChatView extends StatelessWidget {
                   // Implement the send functionality
                   final String messageText = messageController.text;
                   if (messageText.isNotEmpty) {
-                    // Send message logic here
+                    controller.sendMessage(messageText);
                     messageController
                         .clear(); // Clear the TextField after sending
                   }

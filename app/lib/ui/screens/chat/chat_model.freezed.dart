@@ -380,6 +380,7 @@ mixin _$ChatModelMessage {
   String get content => throw _privateConstructorUsedError;
   String get messageId => throw _privateConstructorUsedError;
   String get authorId => throw _privateConstructorUsedError;
+  DateTime get timestamp => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatModelMessageCopyWith<ChatModelMessage> get copyWith =>
@@ -392,7 +393,8 @@ abstract class $ChatModelMessageCopyWith<$Res> {
           ChatModelMessage value, $Res Function(ChatModelMessage) then) =
       _$ChatModelMessageCopyWithImpl<$Res, ChatModelMessage>;
   @useResult
-  $Res call({String content, String messageId, String authorId});
+  $Res call(
+      {String content, String messageId, String authorId, DateTime timestamp});
 }
 
 /// @nodoc
@@ -411,6 +413,7 @@ class _$ChatModelMessageCopyWithImpl<$Res, $Val extends ChatModelMessage>
     Object? content = null,
     Object? messageId = null,
     Object? authorId = null,
+    Object? timestamp = null,
   }) {
     return _then(_value.copyWith(
       content: null == content
@@ -425,6 +428,10 @@ class _$ChatModelMessageCopyWithImpl<$Res, $Val extends ChatModelMessage>
           ? _value.authorId
           : authorId // ignore: cast_nullable_to_non_nullable
               as String,
+      timestamp: null == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -437,7 +444,8 @@ abstract class _$$ChatModelMessageImplCopyWith<$Res>
       __$$ChatModelMessageImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String content, String messageId, String authorId});
+  $Res call(
+      {String content, String messageId, String authorId, DateTime timestamp});
 }
 
 /// @nodoc
@@ -454,6 +462,7 @@ class __$$ChatModelMessageImplCopyWithImpl<$Res>
     Object? content = null,
     Object? messageId = null,
     Object? authorId = null,
+    Object? timestamp = null,
   }) {
     return _then(_$ChatModelMessageImpl(
       content: null == content
@@ -468,6 +477,10 @@ class __$$ChatModelMessageImplCopyWithImpl<$Res>
           ? _value.authorId
           : authorId // ignore: cast_nullable_to_non_nullable
               as String,
+      timestamp: null == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -476,7 +489,10 @@ class __$$ChatModelMessageImplCopyWithImpl<$Res>
 
 class _$ChatModelMessageImpl implements _ChatModelMessage {
   const _$ChatModelMessageImpl(
-      {required this.content, required this.messageId, required this.authorId});
+      {required this.content,
+      required this.messageId,
+      required this.authorId,
+      required this.timestamp});
 
   @override
   final String content;
@@ -484,10 +500,12 @@ class _$ChatModelMessageImpl implements _ChatModelMessage {
   final String messageId;
   @override
   final String authorId;
+  @override
+  final DateTime timestamp;
 
   @override
   String toString() {
-    return 'ChatModelMessage(content: $content, messageId: $messageId, authorId: $authorId)';
+    return 'ChatModelMessage(content: $content, messageId: $messageId, authorId: $authorId, timestamp: $timestamp)';
   }
 
   @override
@@ -499,11 +517,14 @@ class _$ChatModelMessageImpl implements _ChatModelMessage {
             (identical(other.messageId, messageId) ||
                 other.messageId == messageId) &&
             (identical(other.authorId, authorId) ||
-                other.authorId == authorId));
+                other.authorId == authorId) &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, content, messageId, authorId);
+  int get hashCode =>
+      Object.hash(runtimeType, content, messageId, authorId, timestamp);
 
   @JsonKey(ignore: true)
   @override
@@ -517,7 +538,8 @@ abstract class _ChatModelMessage implements ChatModelMessage {
   const factory _ChatModelMessage(
       {required final String content,
       required final String messageId,
-      required final String authorId}) = _$ChatModelMessageImpl;
+      required final String authorId,
+      required final DateTime timestamp}) = _$ChatModelMessageImpl;
 
   @override
   String get content;
@@ -525,6 +547,8 @@ abstract class _ChatModelMessage implements ChatModelMessage {
   String get messageId;
   @override
   String get authorId;
+  @override
+  DateTime get timestamp;
   @override
   @JsonKey(ignore: true)
   _$$ChatModelMessageImplCopyWith<_$ChatModelMessageImpl> get copyWith =>
