@@ -15,7 +15,6 @@ class SearchControllerImpl extends _$SearchControllerImpl
     required SearchBackendService backendService,
   }) {
     SearchModel searchModel = const SearchModel(
-      query: "",
       filteredResults: <SearchModelPost>[],
     );
 
@@ -30,11 +29,11 @@ class SearchControllerImpl extends _$SearchControllerImpl
   @override
   void onSearch({required String query}) async {
     if (query.isEmpty) {
-      state =
-          state.copyWith(filteredResults: <SearchModelPost>[], query: query);
+      state = state.copyWith(filteredResults: <SearchModelPost>[], query: null);
       return;
     }
 
+    state = state.copyWith(query: query);
     final List<SearchModelPost> posts =
         await backendService.search(query: query).then(
               (List<SearchBackendServicePost> posts) =>
@@ -52,7 +51,7 @@ class SearchControllerImpl extends _$SearchControllerImpl
         .whereType<SearchModelPost>()
         .toList();
 
-    state = state.copyWith(filteredResults: filteredResults, query: query);
+    state = state.copyWith(filteredResults: filteredResults);
   }
 
   @override
@@ -62,6 +61,6 @@ class SearchControllerImpl extends _$SearchControllerImpl
 
   @override
   void discardQuery() {
-    state = state.copyWith(filteredResults: <SearchModelPost>[], query: "");
+    state = state.copyWith(filteredResults: <SearchModelPost>[], query: null);
   }
 }

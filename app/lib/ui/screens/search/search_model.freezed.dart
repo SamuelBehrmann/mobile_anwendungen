@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SearchModel {
-  String get query => throw _privateConstructorUsedError;
+  String? get query => throw _privateConstructorUsedError;
   List<SearchModelPost> get filteredResults =>
       throw _privateConstructorUsedError;
 
@@ -31,7 +31,7 @@ abstract class $SearchModelCopyWith<$Res> {
           SearchModel value, $Res Function(SearchModel) then) =
       _$SearchModelCopyWithImpl<$Res, SearchModel>;
   @useResult
-  $Res call({String query, List<SearchModelPost> filteredResults});
+  $Res call({String? query, List<SearchModelPost> filteredResults});
 }
 
 /// @nodoc
@@ -47,14 +47,14 @@ class _$SearchModelCopyWithImpl<$Res, $Val extends SearchModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? query = null,
+    Object? query = freezed,
     Object? filteredResults = null,
   }) {
     return _then(_value.copyWith(
-      query: null == query
+      query: freezed == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       filteredResults: null == filteredResults
           ? _value.filteredResults
           : filteredResults // ignore: cast_nullable_to_non_nullable
@@ -71,7 +71,7 @@ abstract class _$$SearchModelImplCopyWith<$Res>
       __$$SearchModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String query, List<SearchModelPost> filteredResults});
+  $Res call({String? query, List<SearchModelPost> filteredResults});
 }
 
 /// @nodoc
@@ -85,14 +85,14 @@ class __$$SearchModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? query = null,
+    Object? query = freezed,
     Object? filteredResults = null,
   }) {
     return _then(_$SearchModelImpl(
-      query: null == query
+      query: freezed == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       filteredResults: null == filteredResults
           ? _value._filteredResults
           : filteredResults // ignore: cast_nullable_to_non_nullable
@@ -105,12 +105,11 @@ class __$$SearchModelImplCopyWithImpl<$Res>
 
 class _$SearchModelImpl implements _SearchModel {
   const _$SearchModelImpl(
-      {required this.query,
-      required final List<SearchModelPost> filteredResults})
+      {this.query, required final List<SearchModelPost> filteredResults})
       : _filteredResults = filteredResults;
 
   @override
-  final String query;
+  final String? query;
   final List<SearchModelPost> _filteredResults;
   @override
   List<SearchModelPost> get filteredResults {
@@ -147,12 +146,12 @@ class _$SearchModelImpl implements _SearchModel {
 
 abstract class _SearchModel implements SearchModel {
   const factory _SearchModel(
-          {required final String query,
+          {final String? query,
           required final List<SearchModelPost> filteredResults}) =
       _$SearchModelImpl;
 
   @override
-  String get query;
+  String? get query;
   @override
   List<SearchModelPost> get filteredResults;
   @override

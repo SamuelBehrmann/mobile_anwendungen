@@ -27,10 +27,10 @@ class SearchView extends StatelessWidget {
           children: <Widget>[
             CustomSearchBar(
               onSearch: controller.onSearch,
-              currentQuery: model.query,
+              currentQuery: model.query ?? '',
               onDiscard: controller.discardQuery,
             ),
-            if (model.query.isEmpty) ..._categories else _resultList(),
+            if (model.query == null) ..._categories else _resultList(),
           ],
         ),
       );
