@@ -5,8 +5,9 @@ import 'package:medi_support/ui/screens/post/post_model.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/custom_text_field.dart';
 import 'package:medi_support/ui/widgets/message.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PostView extends StatelessWidget {
+class PostView extends ConsumerWidget {
   static const EdgeInsets _screenPadding = EdgeInsets.all(16);
   static const EdgeInsets _textInputFieldPadding = EdgeInsets.all(8);
   static const double _verticalDividerWidth = 32;
@@ -21,34 +22,35 @@ class PostView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: CustomAppBar(
-          title: model.post?.title,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: controller.goBack,
-          ),
+  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: CustomAppBar(
+        title: model.post?.title,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: controller.goBack,
         ),
-        body: model.post == null
-            ? _buildLoadingState()
-            : _buildDataState(model.post!),
-      );
+      ),
+      body: model.post == null
+          ? _buildLoadingState()
+          : _buildDataState(context, model.post!),
+    );
 
-  Widget _buildDataState(final PostModelPost post) => Builder(
+  Widget _buildDataState(BuildContext context, final PostModelPost post) =>
+      Builder(
         builder: (BuildContext context) => Stack(
           children: <Widget>[
             SafeArea(
               child: CustomScrollView(
                 slivers: <Widget>[
                   SliverPadding(
-                    padding: _screenPadding.copyWith(bottom: 0),
+                    padding: PostView._screenPadding.copyWith(bottom: 0),
                     sliver: SliverToBoxAdapter(
                       child: _buildPost(post),
                     ),
                   ),
                   SliverPadding(
-                    padding: EdgeInsets.only(right: _screenPadding.right),
+                    padding: EdgeInsets.only(right: PostView._screenPadding.right),
                     sliver: _buildReplies(replies: post.replies),
                   ),
                 ],
@@ -63,8 +65,7 @@ class PostView extends StatelessWidget {
         ),
       );
 
-  Widget _buildLoadingState() =>
-      const Center(child: CircularProgressIndicator());
+  Widget _buildLoadingState() => const Center(child: CircularProgressIndicator());
 
   Widget _buildReplies({required final List<PostModelMessage> replies}) =>
       SliverList(
@@ -93,12 +94,13 @@ class PostView extends StatelessWidget {
           color: Theme.of(context).colorScheme.surface,
           child: SafeArea(
             child: Padding(
-              padding: _textInputFieldPadding,
+              padding: PostView._textInputFieldPadding,
               child: CustomTextField(
                 onSubmitted: (String message) {
-                  controller.submitReply(
+                  controller..submitReply(
                     message: message,
-                  );
+                  )
+                  ..setSelectedMessageToReply(messageId: null); // Reset the selected reply after submission
                 },
                 onTapOutside: () =>
                     controller.setSelectedMessageToReply(messageId: null),
@@ -121,7 +123,7 @@ class PostView extends StatelessWidget {
                 rekursionDepth,
                 (_) => Builder(
                   builder: (BuildContext context) => VerticalDivider(
-                    width: _verticalDividerWidth,
+                    width: PostView._verticalDividerWidth,
                     color: Theme.of(context)
                         .colorScheme
                         .onPrimaryContainer

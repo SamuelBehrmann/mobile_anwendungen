@@ -58,5 +58,6 @@ class PostControllerImpl extends _$PostControllerImpl
         replyToMessageId: state.selectedReplyId!,
       ),
     );
+    setSelectedMessageToReply(messageId: null); // Reset the selected reply after submission
   }
 }
