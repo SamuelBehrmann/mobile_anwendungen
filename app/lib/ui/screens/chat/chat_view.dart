@@ -51,6 +51,7 @@ class ChatView extends StatelessWidget {
 
   Widget _buildMessageList(ChatModel model) => ListView.separated(
         padding: _messagePadding,
+        reverse: true,
         separatorBuilder: (_, __) => _sizedBox,
         itemCount: model.groupedMessages.length,
         itemBuilder: (BuildContext context, int index) {
