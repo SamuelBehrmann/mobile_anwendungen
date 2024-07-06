@@ -100,7 +100,7 @@ class PostView extends ConsumerWidget {
                   controller..submitReply(
                     message: message,
                   )
-                  ..setSelectedMessageToReply(messageId: null); // Reset the selected reply after submission
+                  ..setSelectedMessageToReply(messageId: null);
                 },
                 onTapOutside: () =>
                     controller.setSelectedMessageToReply(messageId: null),
