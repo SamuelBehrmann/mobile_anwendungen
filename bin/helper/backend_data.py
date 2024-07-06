@@ -3,7 +3,7 @@ from users_seed import users
 from posts_seed import posts
 from firebase_admin import credentials, firestore, initialize_app # type: ignore
 
-cred = credentials.Certificate("/Users/studium/Documents/development/projects/mobile_anwendungen/bin/helper/serviceAccountKey.json")
+cred = credentials.Certificate("./serviceAccountKey.json")
 app = initialize_app(cred)
 
 store = firestore.client(app)
