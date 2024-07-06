@@ -16,11 +16,55 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ChatsModel {
-  List<ChatsModelChat> get chats => throw _privateConstructorUsedError;
-  List<ChatsModelChat> get filteredChats => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $ChatsModelCopyWith<ChatsModel> get copyWith =>
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats)
+        data,
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats)?
+        data,
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats)?
+        data,
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ChatsModelData value) data,
+    required TResult Function(ChatsModelLoading value) loading,
+    required TResult Function(ChatsModelError value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ChatsModelData value)? data,
+    TResult? Function(ChatsModelLoading value)? loading,
+    TResult? Function(ChatsModelError value)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ChatsModelData value)? data,
+    TResult Function(ChatsModelLoading value)? loading,
+    TResult Function(ChatsModelError value)? error,
+    required TResult orElse(),
+  }) =>
       throw _privateConstructorUsedError;
 }
 
@@ -29,8 +73,6 @@ abstract class $ChatsModelCopyWith<$Res> {
   factory $ChatsModelCopyWith(
           ChatsModel value, $Res Function(ChatsModel) then) =
       _$ChatsModelCopyWithImpl<$Res, ChatsModel>;
-  @useResult
-  $Res call({List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats});
 }
 
 /// @nodoc
@@ -42,43 +84,23 @@ class _$ChatsModelCopyWithImpl<$Res, $Val extends ChatsModel>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? chats = null,
-    Object? filteredChats = null,
-  }) {
-    return _then(_value.copyWith(
-      chats: null == chats
-          ? _value.chats
-          : chats // ignore: cast_nullable_to_non_nullable
-              as List<ChatsModelChat>,
-      filteredChats: null == filteredChats
-          ? _value.filteredChats
-          : filteredChats // ignore: cast_nullable_to_non_nullable
-              as List<ChatsModelChat>,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$ChatsModelImplCopyWith<$Res>
-    implements $ChatsModelCopyWith<$Res> {
-  factory _$$ChatsModelImplCopyWith(
-          _$ChatsModelImpl value, $Res Function(_$ChatsModelImpl) then) =
-      __$$ChatsModelImplCopyWithImpl<$Res>;
-  @override
+abstract class _$$ChatsModelDataImplCopyWith<$Res> {
+  factory _$$ChatsModelDataImplCopyWith(_$ChatsModelDataImpl value,
+          $Res Function(_$ChatsModelDataImpl) then) =
+      __$$ChatsModelDataImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats});
 }
 
 /// @nodoc
-class __$$ChatsModelImplCopyWithImpl<$Res>
-    extends _$ChatsModelCopyWithImpl<$Res, _$ChatsModelImpl>
-    implements _$$ChatsModelImplCopyWith<$Res> {
-  __$$ChatsModelImplCopyWithImpl(
-      _$ChatsModelImpl _value, $Res Function(_$ChatsModelImpl) _then)
+class __$$ChatsModelDataImplCopyWithImpl<$Res>
+    extends _$ChatsModelCopyWithImpl<$Res, _$ChatsModelDataImpl>
+    implements _$$ChatsModelDataImplCopyWith<$Res> {
+  __$$ChatsModelDataImplCopyWithImpl(
+      _$ChatsModelDataImpl _value, $Res Function(_$ChatsModelDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +109,7 @@ class __$$ChatsModelImplCopyWithImpl<$Res>
     Object? chats = null,
     Object? filteredChats = null,
   }) {
-    return _then(_$ChatsModelImpl(
+    return _then(_$ChatsModelDataImpl(
       chats: null == chats
           ? _value._chats
           : chats // ignore: cast_nullable_to_non_nullable
@@ -102,12 +124,13 @@ class __$$ChatsModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ChatsModelImpl implements _ChatsModel {
-  const _$ChatsModelImpl(
+class _$ChatsModelDataImpl extends ChatsModelData {
+  const _$ChatsModelDataImpl(
       {required final List<ChatsModelChat> chats,
       final List<ChatsModelChat> filteredChats = const <ChatsModelChat>[]})
       : _chats = chats,
-        _filteredChats = filteredChats;
+        _filteredChats = filteredChats,
+        super._();
 
   final List<ChatsModelChat> _chats;
   @override
@@ -128,14 +151,14 @@ class _$ChatsModelImpl implements _ChatsModel {
 
   @override
   String toString() {
-    return 'ChatsModel(chats: $chats, filteredChats: $filteredChats)';
+    return 'ChatsModel.data(chats: $chats, filteredChats: $filteredChats)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ChatsModelImpl &&
+            other is _$ChatsModelDataImpl &&
             const DeepCollectionEquality().equals(other._chats, _chats) &&
             const DeepCollectionEquality()
                 .equals(other._filteredChats, _filteredChats));
@@ -150,22 +173,357 @@ class _$ChatsModelImpl implements _ChatsModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ChatsModelImplCopyWith<_$ChatsModelImpl> get copyWith =>
-      __$$ChatsModelImplCopyWithImpl<_$ChatsModelImpl>(this, _$identity);
+  _$$ChatsModelDataImplCopyWith<_$ChatsModelDataImpl> get copyWith =>
+      __$$ChatsModelDataImplCopyWithImpl<_$ChatsModelDataImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats)
+        data,
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+  }) {
+    return data(chats, filteredChats);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats)?
+        data,
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+  }) {
+    return data?.call(chats, filteredChats);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats)?
+        data,
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (data != null) {
+      return data(chats, filteredChats);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ChatsModelData value) data,
+    required TResult Function(ChatsModelLoading value) loading,
+    required TResult Function(ChatsModelError value) error,
+  }) {
+    return data(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ChatsModelData value)? data,
+    TResult? Function(ChatsModelLoading value)? loading,
+    TResult? Function(ChatsModelError value)? error,
+  }) {
+    return data?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ChatsModelData value)? data,
+    TResult Function(ChatsModelLoading value)? loading,
+    TResult Function(ChatsModelError value)? error,
+    required TResult orElse(),
+  }) {
+    if (data != null) {
+      return data(this);
+    }
+    return orElse();
+  }
 }
 
-abstract class _ChatsModel implements ChatsModel {
-  const factory _ChatsModel(
+abstract class ChatsModelData extends ChatsModel {
+  const factory ChatsModelData(
       {required final List<ChatsModelChat> chats,
-      final List<ChatsModelChat> filteredChats}) = _$ChatsModelImpl;
+      final List<ChatsModelChat> filteredChats}) = _$ChatsModelDataImpl;
+  const ChatsModelData._() : super._();
+
+  List<ChatsModelChat> get chats;
+  List<ChatsModelChat> get filteredChats;
+  @JsonKey(ignore: true)
+  _$$ChatsModelDataImplCopyWith<_$ChatsModelDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ChatsModelLoadingImplCopyWith<$Res> {
+  factory _$$ChatsModelLoadingImplCopyWith(_$ChatsModelLoadingImpl value,
+          $Res Function(_$ChatsModelLoadingImpl) then) =
+      __$$ChatsModelLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ChatsModelLoadingImplCopyWithImpl<$Res>
+    extends _$ChatsModelCopyWithImpl<$Res, _$ChatsModelLoadingImpl>
+    implements _$$ChatsModelLoadingImplCopyWith<$Res> {
+  __$$ChatsModelLoadingImplCopyWithImpl(_$ChatsModelLoadingImpl _value,
+      $Res Function(_$ChatsModelLoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ChatsModelLoadingImpl extends ChatsModelLoading {
+  const _$ChatsModelLoadingImpl() : super._();
 
   @override
-  List<ChatsModelChat> get chats;
+  String toString() {
+    return 'ChatsModel.loading()';
+  }
+
   @override
-  List<ChatsModelChat> get filteredChats;
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ChatsModelLoadingImpl);
+  }
+
   @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats)
+        data,
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats)?
+        data,
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats)?
+        data,
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ChatsModelData value) data,
+    required TResult Function(ChatsModelLoading value) loading,
+    required TResult Function(ChatsModelError value) error,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ChatsModelData value)? data,
+    TResult? Function(ChatsModelLoading value)? loading,
+    TResult? Function(ChatsModelError value)? error,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ChatsModelData value)? data,
+    TResult Function(ChatsModelLoading value)? loading,
+    TResult Function(ChatsModelError value)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ChatsModelLoading extends ChatsModel {
+  const factory ChatsModelLoading() = _$ChatsModelLoadingImpl;
+  const ChatsModelLoading._() : super._();
+}
+
+/// @nodoc
+abstract class _$$ChatsModelErrorImplCopyWith<$Res> {
+  factory _$$ChatsModelErrorImplCopyWith(_$ChatsModelErrorImpl value,
+          $Res Function(_$ChatsModelErrorImpl) then) =
+      __$$ChatsModelErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$ChatsModelErrorImplCopyWithImpl<$Res>
+    extends _$ChatsModelCopyWithImpl<$Res, _$ChatsModelErrorImpl>
+    implements _$$ChatsModelErrorImplCopyWith<$Res> {
+  __$$ChatsModelErrorImplCopyWithImpl(
+      _$ChatsModelErrorImpl _value, $Res Function(_$ChatsModelErrorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ChatsModelErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChatsModelErrorImpl extends ChatsModelError {
+  const _$ChatsModelErrorImpl(this.message) : super._();
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'ChatsModel.error(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChatsModelErrorImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
   @JsonKey(ignore: true)
-  _$$ChatsModelImplCopyWith<_$ChatsModelImpl> get copyWith =>
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChatsModelErrorImplCopyWith<_$ChatsModelErrorImpl> get copyWith =>
+      __$$ChatsModelErrorImplCopyWithImpl<_$ChatsModelErrorImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats)
+        data,
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+  }) {
+    return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats)?
+        data,
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            List<ChatsModelChat> chats, List<ChatsModelChat> filteredChats)?
+        data,
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ChatsModelData value) data,
+    required TResult Function(ChatsModelLoading value) loading,
+    required TResult Function(ChatsModelError value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ChatsModelData value)? data,
+    TResult? Function(ChatsModelLoading value)? loading,
+    TResult? Function(ChatsModelError value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ChatsModelData value)? data,
+    TResult Function(ChatsModelLoading value)? loading,
+    TResult Function(ChatsModelError value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ChatsModelError extends ChatsModel {
+  const factory ChatsModelError(final String message) = _$ChatsModelErrorImpl;
+  const ChatsModelError._() : super._();
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$ChatsModelErrorImplCopyWith<_$ChatsModelErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

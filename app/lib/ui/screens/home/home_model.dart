@@ -5,9 +5,13 @@ part 'home_model.freezed.dart';
 
 @freezed
 class HomeModel with _$HomeModel {
-  const factory HomeModel({
+  const factory HomeModel.data({
     @Default(<HomeModelPost>[]) List<HomeModelPost> posts,
-  }) = _HomeModel;
+  }) = HomeModelData;
+  const factory HomeModel.error({
+    required String message,
+  }) = HomeModelError;
+  const factory HomeModel.loading() = HomeModelLoading;
 }
 
 @freezed

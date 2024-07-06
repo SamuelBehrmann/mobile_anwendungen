@@ -28,13 +28,19 @@ class HomeView extends StatelessWidget {
         onPressed: controller.openSearch,
       );
 
-  Widget _buildContent() => CustomScrollView(
+  Widget _buildContent() => model.when(
+        data: _buildData,
+        error: (String message) => Center(child: Text(message)),
+        loading: () => const Center(child: CircularProgressIndicator()),
+      );
+
+  Widget _buildData(List<HomeModelPost> posts) => CustomScrollView(
         slivers: <Widget>[
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
             sliver: SliverList.separated(
               itemBuilder: (_, int index) {
-                final HomeModelPost post = model.posts[index];
+                final HomeModelPost post = posts[index];
                 return PostPreview(
                   onPostTap: (String postId) =>
                       controller.openPost(postId: postId),
@@ -49,7 +55,7 @@ class HomeView extends StatelessWidget {
                 );
               },
               separatorBuilder: (_, __) => const SizedBox(height: 16),
-              itemCount: model.posts.length,
+              itemCount: posts.length,
             ),
           ),
         ],
