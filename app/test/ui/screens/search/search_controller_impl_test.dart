@@ -133,6 +133,6 @@ void main() {
       )
       ..discardQuery();
     expect(searchController.state.filteredResults, <SearchModelPost>[]);
-    expect(searchController.state.query, '');
+    expect(searchController.state.query, null);
   });
 }
