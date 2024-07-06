@@ -20,7 +20,7 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
       () => backendService
           .getAllChats()
           .then((List<ChatsBackendServiceChat> chats) {
-        state = state.copyWith(
+        state = ChatsModel.data(
           chats: chats.map(ChatsModelChat.fromBackendServiceChat).toList(),
           filteredChats:
               chats.map(ChatsModelChat.fromBackendServiceChat).toList(),
@@ -28,9 +28,7 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
       }),
     );
 
-    return const ChatsModel(
-      chats: <ChatsModelChat>[],
-    );
+    return const ChatsModel.loading();
   }
 
   @override
@@ -42,17 +40,24 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
   void deleteChat() {}
 
   @override
-  void filterChats(String query) {
-    List<ChatsModelChat> currentChats = state.chats;
-    if (query.isNotEmpty) {
-      currentChats = currentChats
-          .where(
-            (ChatsModelChat chat) =>
-                chat.name.toLowerCase().contains(query.toLowerCase()) ||
-                chat.message.toLowerCase().contains(query.toLowerCase()),
-          )
-          .toList();
-    }
-    state = state.copyWith(filteredChats: currentChats);
-  }
+  void filterChats(String query) => state.map<void>(
+        data: (ChatsModelData data) {
+          List<ChatsModelChat> currentChats = data.chats;
+          if (query.isNotEmpty) {
+            currentChats = currentChats
+                .where(
+                  (ChatsModelChat chat) =>
+                      chat.name.toLowerCase().contains(query.toLowerCase()) ||
+                      chat.message.toLowerCase().contains(query.toLowerCase()),
+                )
+                .toList();
+          }
+          state = ChatsModel.data(
+            filteredChats: currentChats,
+            chats: data.chats,
+          );
+        },
+        loading: (_) {},
+        error: (_) {},
+      );
 }

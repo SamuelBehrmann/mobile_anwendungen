@@ -5,10 +5,30 @@ part 'chats_model.freezed.dart';
 
 @freezed
 class ChatsModel with _$ChatsModel {
-  const factory ChatsModel({
+  const ChatsModel._();
+  const factory ChatsModel.data({
     required List<ChatsModelChat> chats,
     @Default(<ChatsModelChat>[]) List<ChatsModelChat> filteredChats,
-  }) = _ChatsModel;
+  }) = ChatsModelData;
+  const factory ChatsModel.loading() = ChatsModelLoading;
+  const factory ChatsModel.error(
+    String message,
+  ) = ChatsModelError;
+
+  ChatsModel mapData(
+    final ChatsModelData Function(ChatsModelData data) transform,
+  ) =>
+      map(
+        data: (final ChatsModelData data) {
+          final ChatsModelData newData = transform(data);
+          return ChatsModel.data(
+            chats: newData.chats,
+            filteredChats: newData.filteredChats,
+          );
+        },
+        error: (ChatsModelError error) => ChatsModel.error(error.message),
+        loading: (_) => const ChatsModel.loading(),
+      );
 }
 
 @freezed

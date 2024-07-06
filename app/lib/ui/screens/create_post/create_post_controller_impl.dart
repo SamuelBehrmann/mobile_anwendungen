@@ -25,14 +25,20 @@ class CreatePostControllerImpl extends _$CreatePostControllerImpl
     required String body,
     required VoidCallback onSend,
   }) {
+    if (title.isEmpty || body.isEmpty) {
+      navigationService.showSnackBar('Bitte fülle alle Felder aus');
+      return;
+    }
     unawaited(
       backendService.createPost(title: title, content: body).then(
         (_) {
-          // TODO: Show success message and spinner
           onSend();
+          navigationService.showSnackBar('Post erstellt und veröffentlicht');
           goHome();
         },
-      ),
+      ).catchError((_) {
+        navigationService.showSnackBar('Post erstellen fehlgeschlagen');
+      }),
     );
   }
 

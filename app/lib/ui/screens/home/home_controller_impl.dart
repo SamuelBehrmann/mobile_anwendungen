@@ -18,8 +18,6 @@ class HomeControllerImpl extends _$HomeControllerImpl
     required HomeNavigationService navigationService,
     required HomeBackendService backendService,
   }) {
-    const HomeModel model = HomeModel(posts: <HomeModelPost>[]);
-
     _subscription = backendService
         .getHomePostsStream(maxCount: 20)
         .map(
@@ -27,11 +25,11 @@ class HomeControllerImpl extends _$HomeControllerImpl
               posts.map(HomeModelPost.fromBackendServicePost).toList(),
         )
         .listen(
-          (List<HomeModelPost> posts) => state = state.copyWith(posts: posts),
+          (List<HomeModelPost> posts) => state = HomeModel.data(posts: posts),
         );
 
     ref.onDispose(() => unawaited(_subscription?.cancel()));
-    return model;
+    return const HomeModel.loading();
   }
 
   @override

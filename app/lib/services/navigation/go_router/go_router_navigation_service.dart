@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_support/services/navigation/go_router/routes/go_router_chat_route.dart';
 import 'package:medi_support/services/navigation/go_router/routes/go_router_shell_routes.dart';
@@ -32,5 +33,23 @@ class GoRouterNavigationService extends NavigationServiceAggregator {
   @override
   void goBack() {
     goRouter.pop();
+  }
+
+  void _showSnackBar(String message) {
+    final BuildContext? ctx =
+        goRouter.routerDelegate.navigatorKey.currentContext;
+    if (ctx == null) {
+      return;
+    }
+    ScaffoldMessenger.of(ctx).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+  @override
+  void showSnackBar(String message) {
+    _showSnackBar(message);
   }
 }

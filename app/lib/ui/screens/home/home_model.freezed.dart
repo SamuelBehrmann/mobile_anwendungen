@@ -16,10 +16,49 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeModel {
-  List<HomeModelPost> get posts => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $HomeModelCopyWith<HomeModel> get copyWith =>
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<HomeModelPost> posts) data,
+    required TResult Function(String message) error,
+    required TResult Function() loading,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<HomeModelPost> posts)? data,
+    TResult? Function(String message)? error,
+    TResult? Function()? loading,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<HomeModelPost> posts)? data,
+    TResult Function(String message)? error,
+    TResult Function()? loading,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeModelData value) data,
+    required TResult Function(HomeModelError value) error,
+    required TResult Function(HomeModelLoading value) loading,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HomeModelData value)? data,
+    TResult? Function(HomeModelError value)? error,
+    TResult? Function(HomeModelLoading value)? loading,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeModelData value)? data,
+    TResult Function(HomeModelError value)? error,
+    TResult Function(HomeModelLoading value)? loading,
+    required TResult orElse(),
+  }) =>
       throw _privateConstructorUsedError;
 }
 
@@ -27,8 +66,6 @@ mixin _$HomeModel {
 abstract class $HomeModelCopyWith<$Res> {
   factory $HomeModelCopyWith(HomeModel value, $Res Function(HomeModel) then) =
       _$HomeModelCopyWithImpl<$Res, HomeModel>;
-  @useResult
-  $Res call({List<HomeModelPost> posts});
 }
 
 /// @nodoc
@@ -40,38 +77,23 @@ class _$HomeModelCopyWithImpl<$Res, $Val extends HomeModel>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? posts = null,
-  }) {
-    return _then(_value.copyWith(
-      posts: null == posts
-          ? _value.posts
-          : posts // ignore: cast_nullable_to_non_nullable
-              as List<HomeModelPost>,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$HomeModelImplCopyWith<$Res>
-    implements $HomeModelCopyWith<$Res> {
-  factory _$$HomeModelImplCopyWith(
-          _$HomeModelImpl value, $Res Function(_$HomeModelImpl) then) =
-      __$$HomeModelImplCopyWithImpl<$Res>;
-  @override
+abstract class _$$HomeModelDataImplCopyWith<$Res> {
+  factory _$$HomeModelDataImplCopyWith(
+          _$HomeModelDataImpl value, $Res Function(_$HomeModelDataImpl) then) =
+      __$$HomeModelDataImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<HomeModelPost> posts});
 }
 
 /// @nodoc
-class __$$HomeModelImplCopyWithImpl<$Res>
-    extends _$HomeModelCopyWithImpl<$Res, _$HomeModelImpl>
-    implements _$$HomeModelImplCopyWith<$Res> {
-  __$$HomeModelImplCopyWithImpl(
-      _$HomeModelImpl _value, $Res Function(_$HomeModelImpl) _then)
+class __$$HomeModelDataImplCopyWithImpl<$Res>
+    extends _$HomeModelCopyWithImpl<$Res, _$HomeModelDataImpl>
+    implements _$$HomeModelDataImplCopyWith<$Res> {
+  __$$HomeModelDataImplCopyWithImpl(
+      _$HomeModelDataImpl _value, $Res Function(_$HomeModelDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -79,7 +101,7 @@ class __$$HomeModelImplCopyWithImpl<$Res>
   $Res call({
     Object? posts = null,
   }) {
-    return _then(_$HomeModelImpl(
+    return _then(_$HomeModelDataImpl(
       posts: null == posts
           ? _value._posts
           : posts // ignore: cast_nullable_to_non_nullable
@@ -90,8 +112,8 @@ class __$$HomeModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeModelImpl implements _HomeModel {
-  const _$HomeModelImpl(
+class _$HomeModelDataImpl implements HomeModelData {
+  const _$HomeModelDataImpl(
       {final List<HomeModelPost> posts = const <HomeModelPost>[]})
       : _posts = posts;
 
@@ -106,14 +128,14 @@ class _$HomeModelImpl implements _HomeModel {
 
   @override
   String toString() {
-    return 'HomeModel(posts: $posts)';
+    return 'HomeModel.data(posts: $posts)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$HomeModelImpl &&
+            other is _$HomeModelDataImpl &&
             const DeepCollectionEquality().equals(other._posts, _posts));
   }
 
@@ -124,19 +146,335 @@ class _$HomeModelImpl implements _HomeModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$HomeModelImplCopyWith<_$HomeModelImpl> get copyWith =>
-      __$$HomeModelImplCopyWithImpl<_$HomeModelImpl>(this, _$identity);
+  _$$HomeModelDataImplCopyWith<_$HomeModelDataImpl> get copyWith =>
+      __$$HomeModelDataImplCopyWithImpl<_$HomeModelDataImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<HomeModelPost> posts) data,
+    required TResult Function(String message) error,
+    required TResult Function() loading,
+  }) {
+    return data(posts);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<HomeModelPost> posts)? data,
+    TResult? Function(String message)? error,
+    TResult? Function()? loading,
+  }) {
+    return data?.call(posts);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<HomeModelPost> posts)? data,
+    TResult Function(String message)? error,
+    TResult Function()? loading,
+    required TResult orElse(),
+  }) {
+    if (data != null) {
+      return data(posts);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeModelData value) data,
+    required TResult Function(HomeModelError value) error,
+    required TResult Function(HomeModelLoading value) loading,
+  }) {
+    return data(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HomeModelData value)? data,
+    TResult? Function(HomeModelError value)? error,
+    TResult? Function(HomeModelLoading value)? loading,
+  }) {
+    return data?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeModelData value)? data,
+    TResult Function(HomeModelError value)? error,
+    TResult Function(HomeModelLoading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (data != null) {
+      return data(this);
+    }
+    return orElse();
+  }
 }
 
-abstract class _HomeModel implements HomeModel {
-  const factory _HomeModel({final List<HomeModelPost> posts}) = _$HomeModelImpl;
+abstract class HomeModelData implements HomeModel {
+  const factory HomeModelData({final List<HomeModelPost> posts}) =
+      _$HomeModelDataImpl;
+
+  List<HomeModelPost> get posts;
+  @JsonKey(ignore: true)
+  _$$HomeModelDataImplCopyWith<_$HomeModelDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$HomeModelErrorImplCopyWith<$Res> {
+  factory _$$HomeModelErrorImplCopyWith(_$HomeModelErrorImpl value,
+          $Res Function(_$HomeModelErrorImpl) then) =
+      __$$HomeModelErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$HomeModelErrorImplCopyWithImpl<$Res>
+    extends _$HomeModelCopyWithImpl<$Res, _$HomeModelErrorImpl>
+    implements _$$HomeModelErrorImplCopyWith<$Res> {
+  __$$HomeModelErrorImplCopyWithImpl(
+      _$HomeModelErrorImpl _value, $Res Function(_$HomeModelErrorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$HomeModelErrorImpl(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$HomeModelErrorImpl implements HomeModelError {
+  const _$HomeModelErrorImpl({required this.message});
 
   @override
-  List<HomeModelPost> get posts;
+  final String message;
+
   @override
+  String toString() {
+    return 'HomeModel.error(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$HomeModelErrorImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
   @JsonKey(ignore: true)
-  _$$HomeModelImplCopyWith<_$HomeModelImpl> get copyWith =>
+  @override
+  @pragma('vm:prefer-inline')
+  _$$HomeModelErrorImplCopyWith<_$HomeModelErrorImpl> get copyWith =>
+      __$$HomeModelErrorImplCopyWithImpl<_$HomeModelErrorImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<HomeModelPost> posts) data,
+    required TResult Function(String message) error,
+    required TResult Function() loading,
+  }) {
+    return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<HomeModelPost> posts)? data,
+    TResult? Function(String message)? error,
+    TResult? Function()? loading,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<HomeModelPost> posts)? data,
+    TResult Function(String message)? error,
+    TResult Function()? loading,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeModelData value) data,
+    required TResult Function(HomeModelError value) error,
+    required TResult Function(HomeModelLoading value) loading,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HomeModelData value)? data,
+    TResult? Function(HomeModelError value)? error,
+    TResult? Function(HomeModelLoading value)? loading,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeModelData value)? data,
+    TResult Function(HomeModelError value)? error,
+    TResult Function(HomeModelLoading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class HomeModelError implements HomeModel {
+  const factory HomeModelError({required final String message}) =
+      _$HomeModelErrorImpl;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$HomeModelErrorImplCopyWith<_$HomeModelErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$HomeModelLoadingImplCopyWith<$Res> {
+  factory _$$HomeModelLoadingImplCopyWith(_$HomeModelLoadingImpl value,
+          $Res Function(_$HomeModelLoadingImpl) then) =
+      __$$HomeModelLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$HomeModelLoadingImplCopyWithImpl<$Res>
+    extends _$HomeModelCopyWithImpl<$Res, _$HomeModelLoadingImpl>
+    implements _$$HomeModelLoadingImplCopyWith<$Res> {
+  __$$HomeModelLoadingImplCopyWithImpl(_$HomeModelLoadingImpl _value,
+      $Res Function(_$HomeModelLoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$HomeModelLoadingImpl implements HomeModelLoading {
+  const _$HomeModelLoadingImpl();
+
+  @override
+  String toString() {
+    return 'HomeModel.loading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$HomeModelLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<HomeModelPost> posts) data,
+    required TResult Function(String message) error,
+    required TResult Function() loading,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<HomeModelPost> posts)? data,
+    TResult? Function(String message)? error,
+    TResult? Function()? loading,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<HomeModelPost> posts)? data,
+    TResult Function(String message)? error,
+    TResult Function()? loading,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeModelData value) data,
+    required TResult Function(HomeModelError value) error,
+    required TResult Function(HomeModelLoading value) loading,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HomeModelData value)? data,
+    TResult? Function(HomeModelError value)? error,
+    TResult? Function(HomeModelLoading value)? loading,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeModelData value)? data,
+    TResult Function(HomeModelError value)? error,
+    TResult Function(HomeModelLoading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class HomeModelLoading implements HomeModel {
+  const factory HomeModelLoading() = _$HomeModelLoadingImpl;
 }
 
 /// @nodoc
