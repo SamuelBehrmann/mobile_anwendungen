@@ -171,7 +171,7 @@ class __$$ProfileModelUserImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ProfileModelUserImpl implements _ProfileModelUser {
+class _$ProfileModelUserImpl extends _ProfileModelUser {
   const _$ProfileModelUserImpl(
       {required this.id,
       required this.name,
@@ -179,7 +179,8 @@ class _$ProfileModelUserImpl implements _ProfileModelUser {
       required this.password,
       this.profilePicturePath,
       this.phoneNumber,
-      this.description});
+      this.description})
+      : super._();
 
   @override
   final String id;
@@ -231,7 +232,7 @@ class _$ProfileModelUserImpl implements _ProfileModelUser {
           this, _$identity);
 }
 
-abstract class _ProfileModelUser implements ProfileModelUser {
+abstract class _ProfileModelUser extends ProfileModelUser {
   const factory _ProfileModelUser(
       {required final String id,
       required final String name,
@@ -240,6 +241,7 @@ abstract class _ProfileModelUser implements ProfileModelUser {
       final Uri? profilePicturePath,
       final String? phoneNumber,
       final String? description}) = _$ProfileModelUserImpl;
+  const _ProfileModelUser._() : super._();
 
   @override
   String get id;

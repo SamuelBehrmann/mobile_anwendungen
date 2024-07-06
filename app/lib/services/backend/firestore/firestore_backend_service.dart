@@ -271,10 +271,17 @@ class FirestoreBackendService extends BackendServiceAggregator {
   }
 
   @override
-  Future<void> editUser(ProfileBackendServiceUser user) {
-    // TODO: implement editUser
-    throw UnimplementedError();
-  }
+  Future<void> editUser(ProfileBackendServiceUser user) =>
+      firestore.collection(_usersCollection).doc(user.id).update(
+        <String, dynamic>{
+          'name': user.name,
+          'email': user.email,
+          'password': user.password,
+          'imageUrl': user.imageUrl?.toString(),
+          'phone': user.phoneNumber,
+          'description': user.description,
+        },
+      );
 
   @override
   Future<ProfileBackendServiceUser> getUser() async =>

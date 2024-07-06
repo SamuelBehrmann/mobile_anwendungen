@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:medi_support/ui/screens/profile/profile_controller.dart';
 import 'package:medi_support/ui/screens/profile/profile_model.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
@@ -13,9 +12,6 @@ class ProfileView extends StatelessWidget {
   static const double _paddingBetweenAvatarName = 18;
   static const double _paddingBetweenDescriptionField = 20;
   static const double _avatarSize = 70;
-  static const double _paddingAvatarIcon = 4;
-  static const double _containerSize = 35;
-  static const double _positionAvatarIcon = 10;
 
   final ProfileModel model;
   final ProfileController controller;
@@ -84,6 +80,7 @@ class ProfileView extends StatelessWidget {
       );
 
   Widget _buildPasswordInput(ProfileModelData data) => CustomTextFormField(
+        onChanged: controller.updatePassword,
         initialText: data.user.name,
         label: 'Password',
         hint: 'Edit your password',
@@ -92,6 +89,7 @@ class ProfileView extends StatelessWidget {
       );
 
   Widget _buildPhoneNumberInput(ProfileModelData data) => CustomTextFormField(
+        onChanged: controller.updatePhoneNumber,
         initialText: data.user.phoneNumber,
         label: 'Phone Number',
         hint: 'Edit your phone number',
@@ -99,6 +97,7 @@ class ProfileView extends StatelessWidget {
       );
 
   Widget _buildEmailInput(ProfileModelData data) => CustomTextFormField(
+        onChanged: controller.updateEmail,
         initialText: data.user.email,
         label: 'Email',
         hint: 'Edit your email',
@@ -129,6 +128,7 @@ class ProfileView extends StatelessWidget {
               ),
               style: Theme.of(context).textTheme.titleLarge,
               maxLines: 1,
+              onChanged: (String value) => controller.updateName(value),
             ),
             TextFormField(
               initialValue: description,
@@ -140,6 +140,7 @@ class ProfileView extends StatelessWidget {
               ),
               minLines: 1,
               maxLines: 3,
+              onChanged: (String value) => controller.updateDescription(value),
             ),
           ],
         ),
@@ -148,7 +149,7 @@ class ProfileView extends StatelessWidget {
   Widget _buildLoading(ProfileModelLoading _) =>
       const Center(child: CircularProgressIndicator());
 
-  Widget _buildError(ProfileModelError model) => Center(
-        child: Text(model.message),
+  Widget _buildError(ProfileModelError error) => Center(
+        child: Text(error.message),
       );
 }

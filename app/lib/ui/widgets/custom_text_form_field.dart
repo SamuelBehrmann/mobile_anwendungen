@@ -10,12 +10,14 @@ class CustomTextFormField extends StatefulWidget {
   final int minLines;
   final int maxLines;
   final void Function()? onTapOutside;
+  final void Function(String)? onChanged;
 
   const CustomTextFormField({
     super.key,
+    required this.hint,
+    this.onChanged,
     this.initialText,
     this.label,
-    required this.hint,
     this.icon,
     this.isPasswordField = false,
     this.controller,
@@ -85,6 +87,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
             ),
             maxLines: widget.maxLines,
             minLines: widget.minLines,
+            onChanged: widget.onChanged,
           ),
         ],
       );
