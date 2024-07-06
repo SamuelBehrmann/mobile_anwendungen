@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:medi_support/ui/screens/profile/profile_controller.dart';
 import 'package:medi_support/ui/screens/profile/profile_model.dart';
