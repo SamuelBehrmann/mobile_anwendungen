@@ -4,7 +4,7 @@ import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/custom_text_form_field.dart';
 
 class CreatePostView extends StatefulWidget {
-  CreatePostView({super.key, required this.controller});
+  const CreatePostView({super.key, required this.controller});
   final CreatePostController controller;
 
   @override
