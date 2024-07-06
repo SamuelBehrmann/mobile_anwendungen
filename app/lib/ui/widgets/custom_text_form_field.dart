@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatefulWidget {
+  final String? initialText;
   final String? label;
   final String hint;
   final IconData? icon;
@@ -9,11 +10,14 @@ class CustomTextFormField extends StatefulWidget {
   final int minLines;
   final int maxLines;
   final void Function()? onTapOutside;
+  final void Function(String)? onChanged;
 
   const CustomTextFormField({
     super.key,
-    this.label,
     required this.hint,
+    this.onChanged,
+    this.initialText,
+    this.label,
     this.icon,
     this.isPasswordField = false,
     this.controller,
@@ -35,7 +39,8 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller ?? TextEditingController();
+    _controller = widget.controller ??
+        TextEditingController(text: widget.initialText ?? '');
     _passwordVisible = !widget.isPasswordField;
   }
 
@@ -82,6 +87,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
             ),
             maxLines: widget.maxLines,
             minLines: widget.minLines,
+            onChanged: widget.onChanged,
           ),
         ],
       );

@@ -116,6 +116,7 @@ class ProfileRoute extends GoRouteData {
         builder: (BuildContext context, WidgetRef watch, Widget? child) {
           final ProfileControllerImplProvider provider =
               profileControllerImplProvider(
+            backendService: watch.watch(backendServiceAggregatorProvider),
             navigationService: watch.watch(navigationServiceAggregatorProvider),
           );
           return ProfileView(

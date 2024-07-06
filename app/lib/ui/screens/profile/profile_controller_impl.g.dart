@@ -7,7 +7,7 @@ part of 'profile_controller_impl.dart';
 // **************************************************************************
 
 String _$profileControllerImplHash() =>
-    r'8fac313d1cbfafc9a2c7b1116fe840c34ded5512';
+    r'90c42169d1af6ecec98dced5f3743d2d760bb12c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -33,9 +33,11 @@ class _SystemHash {
 abstract class _$ProfileControllerImpl
     extends BuildlessAutoDisposeNotifier<ProfileModel> {
   late final ProfileNavigationService navigationService;
+  late final ProfileBackendService backendService;
 
   ProfileModel build({
     required ProfileNavigationService navigationService,
+    required ProfileBackendService backendService,
   });
 }
 
@@ -51,9 +53,11 @@ class ProfileControllerImplFamily extends Family<ProfileModel> {
   /// See also [ProfileControllerImpl].
   ProfileControllerImplProvider call({
     required ProfileNavigationService navigationService,
+    required ProfileBackendService backendService,
   }) {
     return ProfileControllerImplProvider(
       navigationService: navigationService,
+      backendService: backendService,
     );
   }
 
@@ -63,6 +67,7 @@ class ProfileControllerImplFamily extends Family<ProfileModel> {
   ) {
     return call(
       navigationService: provider.navigationService,
+      backendService: provider.backendService,
     );
   }
 
@@ -87,8 +92,11 @@ class ProfileControllerImplProvider extends AutoDisposeNotifierProviderImpl<
   /// See also [ProfileControllerImpl].
   ProfileControllerImplProvider({
     required ProfileNavigationService navigationService,
+    required ProfileBackendService backendService,
   }) : this._internal(
-          () => ProfileControllerImpl()..navigationService = navigationService,
+          () => ProfileControllerImpl()
+            ..navigationService = navigationService
+            ..backendService = backendService,
           from: profileControllerImplProvider,
           name: r'profileControllerImplProvider',
           debugGetCreateSourceHash:
@@ -99,6 +107,7 @@ class ProfileControllerImplProvider extends AutoDisposeNotifierProviderImpl<
           allTransitiveDependencies:
               ProfileControllerImplFamily._allTransitiveDependencies,
           navigationService: navigationService,
+          backendService: backendService,
         );
 
   ProfileControllerImplProvider._internal(
@@ -109,9 +118,11 @@ class ProfileControllerImplProvider extends AutoDisposeNotifierProviderImpl<
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.navigationService,
+    required this.backendService,
   }) : super.internal();
 
   final ProfileNavigationService navigationService;
+  final ProfileBackendService backendService;
 
   @override
   ProfileModel runNotifierBuild(
@@ -119,6 +130,7 @@ class ProfileControllerImplProvider extends AutoDisposeNotifierProviderImpl<
   ) {
     return notifier.build(
       navigationService: navigationService,
+      backendService: backendService,
     );
   }
 
@@ -127,13 +139,16 @@ class ProfileControllerImplProvider extends AutoDisposeNotifierProviderImpl<
     return ProviderOverride(
       origin: this,
       override: ProfileControllerImplProvider._internal(
-        () => create()..navigationService = navigationService,
+        () => create()
+          ..navigationService = navigationService
+          ..backendService = backendService,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         navigationService: navigationService,
+        backendService: backendService,
       ),
     );
   }
@@ -147,13 +162,15 @@ class ProfileControllerImplProvider extends AutoDisposeNotifierProviderImpl<
   @override
   bool operator ==(Object other) {
     return other is ProfileControllerImplProvider &&
-        other.navigationService == navigationService;
+        other.navigationService == navigationService &&
+        other.backendService == backendService;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, navigationService.hashCode);
+    hash = _SystemHash.combine(hash, backendService.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -162,6 +179,9 @@ class ProfileControllerImplProvider extends AutoDisposeNotifierProviderImpl<
 mixin ProfileControllerImplRef on AutoDisposeNotifierProviderRef<ProfileModel> {
   /// The parameter `navigationService` of this provider.
   ProfileNavigationService get navigationService;
+
+  /// The parameter `backendService` of this provider.
+  ProfileBackendService get backendService;
 }
 
 class _ProfileControllerImplProviderElement
@@ -172,6 +192,9 @@ class _ProfileControllerImplProviderElement
   @override
   ProfileNavigationService get navigationService =>
       (origin as ProfileControllerImplProvider).navigationService;
+  @override
+  ProfileBackendService get backendService =>
+      (origin as ProfileControllerImplProvider).backendService;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

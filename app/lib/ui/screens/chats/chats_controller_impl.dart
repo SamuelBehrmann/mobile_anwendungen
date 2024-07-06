@@ -18,8 +18,7 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
   }) {
     scheduleMicrotask(
       () => backendService
-          //TODO: Change the parameter to the actual user id
-          .getAllChats('person1')
+          .getAllChats()
           .then((List<ChatsBackendServiceChat> chats) {
         state = ChatsModel.data(
           chats: chats.map(ChatsModelChat.fromBackendServiceChat).toList(),
@@ -41,19 +40,24 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
   void deleteChat() {}
 
   @override
-  void filterChats(String query) {
-    state = state.mapData((ChatsModelData data) {
-      List<ChatsModelChat> currentChats = data.chats;
-      if (query.isNotEmpty) {
-        currentChats = currentChats
-            .where(
-              (ChatsModelChat chat) =>
-                  chat.name.toLowerCase().contains(query.toLowerCase()) ||
-                  chat.message.toLowerCase().contains(query.toLowerCase()),
-            )
-            .toList();
-      }
-      return ChatsModelData(chats: data.chats, filteredChats: currentChats);
-    });
-  }
+  void filterChats(String query) => state.map<void>(
+        data: (ChatsModelData data) {
+          List<ChatsModelChat> currentChats = data.chats;
+          if (query.isNotEmpty) {
+            currentChats = currentChats
+                .where(
+                  (ChatsModelChat chat) =>
+                      chat.name.toLowerCase().contains(query.toLowerCase()) ||
+                      chat.message.toLowerCase().contains(query.toLowerCase()),
+                )
+                .toList();
+          }
+          state = ChatsModel.data(
+            filteredChats: currentChats,
+            chats: data.chats,
+          );
+        },
+        loading: (_) {},
+        error: (_) {},
+      );
 }

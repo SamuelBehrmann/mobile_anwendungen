@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:medi_support/ui/screens/profile/profile_controller.dart';
 import 'package:medi_support/ui/screens/profile/profile_model.dart';
+import 'package:medi_support/ui/screens/profile/services/profile_backend_service.dart';
 import 'package:medi_support/ui/screens/profile/services/profile_navigation_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -11,20 +14,83 @@ class ProfileControllerImpl extends _$ProfileControllerImpl
   @override
   ProfileModel build({
     required ProfileNavigationService navigationService,
-  }) =>
-      const ProfileModel(
-        user: User(
-          name: 'John Dow',
-          email: 'johnDow@gmail.com',
-          phoneNumber: '1234567890',
-          profilePicturePath:
-              'https://images.unsplash.com/photo-1638643391904-9b551ba91eaa?q=80&w=2592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        ),
-      );
+    required ProfileBackendService backendService,
+  }) {
+    unawaited(
+      backendService.getUser().then((ProfileBackendServiceUser user) {
+        state = ProfileModel.data(
+          user: ProfileModelUser(
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            profilePicturePath: user.imageUrl,
+            phoneNumber: user.phoneNumber,
+            description: user.description,
+            password: user.password,
+          ),
+        );
+      }),
+    );
+    return const ProfileModel.loading();
+  }
 
   @override
   void editProfil() {}
 
   @override
   void logout() {}
+
+  @override
+  void updateDescription(String description) => state.map(
+        loading: (_) => null,
+        data: (ProfileModelData data) => _updateProfile(
+          user: data.user.copyWith(description: description),
+        ),
+        error: (_) => null,
+      );
+
+  void _updateProfile({
+    required ProfileModelUser user,
+  }) =>
+      backendService.editUser(user.toBackendServiceUser()).then(
+        (_) => state = ProfileModel.data(user: user),
+        onError: (Object error, StackTrace stackTrace) {
+          // TODO: show snackbar
+        },
+      );
+
+  @override
+  void updateEmail(String email) => state.map(
+        loading: (_) => null,
+        data: (ProfileModelData data) => _updateProfile(
+          user: data.user.copyWith(email: email),
+        ),
+        error: (_) => null,
+      );
+  @override
+  void updateName(String name) => state.map(
+        loading: (_) => null,
+        data: (ProfileModelData data) => _updateProfile(
+          user: data.user.copyWith(name: name),
+        ),
+        error: (_) => null,
+      );
+
+  @override
+  void updatePassword(String password) => state.map(
+        loading: (_) => null,
+        data: (ProfileModelData data) => _updateProfile(
+          user: data.user.copyWith(password: password),
+        ),
+        error: (_) => null,
+      );
+
+  @override
+  void updatePhoneNumber(String phoneNumber) => state.map(
+        loading: (_) => null,
+        data: (ProfileModelData data) => _updateProfile(
+          user: data.user.copyWith(phoneNumber: phoneNumber),
+        ),
+        error: (_) => null,
+      );
 }
