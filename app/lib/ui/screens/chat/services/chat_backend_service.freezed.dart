@@ -229,7 +229,7 @@ abstract class _ChatBackendServiceChat implements ChatBackendServiceChat {
 mixin _$ChatBackendServicePerson {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get imageUrl => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatBackendServicePersonCopyWith<ChatBackendServicePerson> get copyWith =>
@@ -242,7 +242,7 @@ abstract class $ChatBackendServicePersonCopyWith<$Res> {
           $Res Function(ChatBackendServicePerson) then) =
       _$ChatBackendServicePersonCopyWithImpl<$Res, ChatBackendServicePerson>;
   @useResult
-  $Res call({String id, String name, String imageUrl});
+  $Res call({String id, String name, String? imageUrl});
 }
 
 /// @nodoc
@@ -261,7 +261,7 @@ class _$ChatBackendServicePersonCopyWithImpl<$Res,
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? imageUrl = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -272,10 +272,10 @@ class _$ChatBackendServicePersonCopyWithImpl<$Res,
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: null == imageUrl
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -289,7 +289,7 @@ abstract class _$$ChatBackendServicePersonImplCopyWith<$Res>
       __$$ChatBackendServicePersonImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String imageUrl});
+  $Res call({String id, String name, String? imageUrl});
 }
 
 /// @nodoc
@@ -307,7 +307,7 @@ class __$$ChatBackendServicePersonImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? imageUrl = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$ChatBackendServicePersonImpl(
       id: null == id
@@ -318,10 +318,10 @@ class __$$ChatBackendServicePersonImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: null == imageUrl
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -337,7 +337,7 @@ class _$ChatBackendServicePersonImpl implements _ChatBackendServicePerson {
   @override
   final String name;
   @override
-  final String imageUrl;
+  final String? imageUrl;
 
   @override
   String toString() {
@@ -370,14 +370,14 @@ abstract class _ChatBackendServicePerson implements ChatBackendServicePerson {
   const factory _ChatBackendServicePerson(
       {required final String id,
       required final String name,
-      required final String imageUrl}) = _$ChatBackendServicePersonImpl;
+      required final String? imageUrl}) = _$ChatBackendServicePersonImpl;
 
   @override
   String get id;
   @override
   String get name;
   @override
-  String get imageUrl;
+  String? get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$$ChatBackendServicePersonImplCopyWith<_$ChatBackendServicePersonImpl>

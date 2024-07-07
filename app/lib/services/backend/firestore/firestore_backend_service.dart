@@ -551,7 +551,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
     return ChatBackendServicePerson(
       id: user.id,
       name: user['name'] as String,
-      imageUrl: imageUrl ?? '',
+      imageUrl: imageUrl,
     );
   }
 }

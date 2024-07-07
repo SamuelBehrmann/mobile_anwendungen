@@ -15,7 +15,6 @@ class ChatView extends StatelessWidget {
   static const double _avatarRadius = 18;
   static const double _messageWidth = 0.75;
   static final BorderRadius _messageBorderRadius = BorderRadius.circular(12);
-  static const double _timestampFontSize = 10;
   // _buildSendMessageArea
   static const EdgeInsets containerPadding =
       EdgeInsets.symmetric(horizontal: 24.0);
@@ -71,13 +70,7 @@ class ChatView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                  if (!isCurrentUser)
-                    CircleAvatar(
-                      radius: _avatarRadius,
-                      child: CustomCachedNetworkImage(
-                        imageUrl: model.chatPartner.imageUrl,
-                      ),
-                    ),
+                  if (!isCurrentUser) _buildAvatar(model.chatPartner.imageUrl),
                   _sizedBox,
                   Expanded(
                     child: ListView.separated(
@@ -110,10 +103,7 @@ class ChatView extends StatelessWidget {
                                 const SizedBox(height: 4),
                                 Text(
                                   DateFormat('h:mm a').format(msg.timestamp),
-                                  style: TextStyle(
-                                    fontSize: _timestampFontSize,
-                                    color: Theme.of(context).colorScheme.onSecondaryContainer,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelSmall,
                                 ),
                               ],
                             ),
@@ -129,27 +119,39 @@ class ChatView extends StatelessWidget {
         },
       );
 
+  Widget _buildAvatar(final String? imageUrl) => CircleAvatar(
+        radius: _avatarRadius,
+        child: imageUrl != null
+            ? CustomCachedNetworkImage(imageUrl: imageUrl.toString())
+            : const Icon(
+                Icons.person_outline,
+                size: _avatarRadius,
+              ),
+      );
+
   void _showDeleteDialog(BuildContext context, ChatModelMessage message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Delete Message'),
-        content: const Text('Are you sure you want to delete this message?'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              controller.deleteMessage(message.messageId);
-              Navigator.of(context).pop();
-            },
-            child: const Text('Delete'),
-          ),
-        ],
-      ),
-    );
+    if (message.authorId == model.activeUserId) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Delete Message'),
+          content: const Text('Are you sure you want to delete this message?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                controller.deleteMessage(message.messageId);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   Widget _buildSendMessageArea() {

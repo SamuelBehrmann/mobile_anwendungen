@@ -224,7 +224,7 @@ abstract class _ChatsModel implements ChatModel {
 mixin _$ChatModelPerson {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get imageUrl => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatModelPersonCopyWith<ChatModelPerson> get copyWith =>
@@ -237,7 +237,7 @@ abstract class $ChatModelPersonCopyWith<$Res> {
           ChatModelPerson value, $Res Function(ChatModelPerson) then) =
       _$ChatModelPersonCopyWithImpl<$Res, ChatModelPerson>;
   @useResult
-  $Res call({String id, String name, String imageUrl});
+  $Res call({String id, String name, String? imageUrl});
 }
 
 /// @nodoc
@@ -255,7 +255,7 @@ class _$ChatModelPersonCopyWithImpl<$Res, $Val extends ChatModelPerson>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? imageUrl = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -266,10 +266,10 @@ class _$ChatModelPersonCopyWithImpl<$Res, $Val extends ChatModelPerson>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: null == imageUrl
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -282,7 +282,7 @@ abstract class _$$ChatModelPersonImplCopyWith<$Res>
       __$$ChatModelPersonImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String imageUrl});
+  $Res call({String id, String name, String? imageUrl});
 }
 
 /// @nodoc
@@ -298,7 +298,7 @@ class __$$ChatModelPersonImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? imageUrl = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$ChatModelPersonImpl(
       id: null == id
@@ -309,10 +309,10 @@ class __$$ChatModelPersonImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: null == imageUrl
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -328,7 +328,7 @@ class _$ChatModelPersonImpl implements _ChatModelPerson {
   @override
   final String name;
   @override
-  final String imageUrl;
+  final String? imageUrl;
 
   @override
   String toString() {
@@ -361,14 +361,14 @@ abstract class _ChatModelPerson implements ChatModelPerson {
   const factory _ChatModelPerson(
       {required final String id,
       required final String name,
-      required final String imageUrl}) = _$ChatModelPersonImpl;
+      required final String? imageUrl}) = _$ChatModelPersonImpl;
 
   @override
   String get id;
   @override
   String get name;
   @override
-  String get imageUrl;
+  String? get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$$ChatModelPersonImplCopyWith<_$ChatModelPersonImpl> get copyWith =>

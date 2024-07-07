@@ -18,7 +18,7 @@ class ChatModelPerson with _$ChatModelPerson {
   const factory ChatModelPerson({
     required String id,
     required String name,
-    required String imageUrl,
+    required String? imageUrl,
   }) = _ChatModelPerson;
 
   factory ChatModelPerson.fromBackendServicePerson(ChatBackendServicePerson person) =>
