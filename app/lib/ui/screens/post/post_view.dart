@@ -84,8 +84,9 @@ class PostView extends StatelessWidget {
         username: post.author.name,
         userAvatar: post.author.avatar,
         message: post.content,
-        replyCallback: () =>
-            controller.setSelectedMessageToReply(messageId: post.id),
+        replyCallback: () {
+          controller.setSelectedMessageToReply(messageId: post.id);
+        },
       );
 
   Widget _buildTextInputField() => Builder(
@@ -96,12 +97,11 @@ class PostView extends StatelessWidget {
               padding: _textInputFieldPadding,
               child: CustomTextField(
                 onSubmitted: (String message) {
-                  controller.submitReply(
-                    message: message,
-                  );
+                  controller.submitReply(message: message);
                 },
-                onTapOutside: () =>
-                    controller.setSelectedMessageToReply(messageId: null),
+                onTapOutside: () {
+                  controller.setSelectedMessageToReply(messageId: null);
+                },
               ),
             ),
           ),
@@ -135,9 +135,11 @@ class PostView extends StatelessWidget {
                     username: message.author.name,
                     userAvatar: message.author.avatar,
                     message: message.message,
-                    replyCallback: () => controller.setSelectedMessageToReply(
-                      messageId: message.id,
-                    ),
+                    replyCallback: () {
+                      controller.setSelectedMessageToReply(
+                        messageId: message.id,
+                      );
+                    },
                   ),
                 ),
               ),

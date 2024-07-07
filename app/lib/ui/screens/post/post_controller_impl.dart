@@ -52,11 +52,13 @@ class PostControllerImpl extends _$PostControllerImpl
       return;
     }
     unawaited(
-      backendService.submitReply(
-        postId: state.post!.id,
-        message: message,
-        replyToMessageId: state.selectedReplyId!,
-      ),
+      backendService
+          .submitReply(
+            postId: state.post!.id,
+            message: message,
+            replyToMessageId: state.selectedReplyId!,
+          )
+          .then((_) => state = state.copyWith(selectedReplyId: null)),
     );
   }
 }
