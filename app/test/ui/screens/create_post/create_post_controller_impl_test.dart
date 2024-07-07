@@ -56,20 +56,24 @@ void main() {
   );
 
   test(
-    'CreatePostControllerImpl should show a snackbar if title or body is empty',
+    'CreatePostControllerImpl should show a snackbar if title is empty',
     () {
-      final CreatePostControllerImpl createPostController =
-          createCreatePostController()
-            ..send(
-              title: '',
-              body: 'Body',
-              onSend: () {},
-            );
+      createCreatePostController().send(
+        title: '',
+        body: 'Body',
+        onSend: () {},
+      );
       verify(
         mockCreatePostNavigationService
             .showSnackBar('Bitte fülle alle Felder aus'),
       ).called(1);
-      createPostController.send(
+    },
+  );
+
+  test(
+    'CreatePostControllerImpl should show a snackbar if body is empty',
+    () {
+      createCreatePostController().send(
         title: 'Title',
         body: '',
         onSend: () {},
@@ -80,7 +84,6 @@ void main() {
       ).called(1);
     },
   );
-
   test(
     'CreatePostControllerImpl should show a snackbar if creating a post fails',
     () async {
