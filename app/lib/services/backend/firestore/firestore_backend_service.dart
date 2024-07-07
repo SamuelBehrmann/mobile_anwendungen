@@ -111,7 +111,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
             snapshot.docs,
           ).asyncMap((QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
             Map<String, dynamic> message = (doc['messages'] as List<dynamic>)
-                .first as Map<String, dynamic>;
+                .last as Map<String, dynamic>;
 
             String userId = (doc['participants'] as List<dynamic>)
                 .cast<String>()
