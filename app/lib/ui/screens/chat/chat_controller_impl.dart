@@ -4,6 +4,7 @@ import 'package:medi_support/ui/screens/chat/chat_controller.dart';
 import 'package:medi_support/ui/screens/chat/chat_model.dart';
 import 'package:medi_support/ui/screens/chat/services/chat_backend_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 part 'chat_controller_impl.g.dart';
 
@@ -11,6 +12,7 @@ part 'chat_controller_impl.g.dart';
 class ChatControllerImpl extends _$ChatControllerImpl
     implements ChatController {
   StreamSubscription<ChatBackendServiceChat>? _chatStreamSubscription;
+
   @override
   ChatModel build({
     required String chatId,
@@ -22,6 +24,7 @@ class ChatControllerImpl extends _$ChatControllerImpl
     _chatStreamSubscription = chatStream.listen(
       (ChatBackendServiceChat chat) => state = state.copyWith(
         chatId: chat.chatId,
+        activeUserId: chat.currentUserId,
         chatPartner: ChatModelPerson.fromBackendServicePerson(chat.chatPartner),
         groupedMessages: _groupMessages(
           chat.messages
@@ -54,22 +57,28 @@ class ChatControllerImpl extends _$ChatControllerImpl
   }
 
   @override
-  void sendMessage(String message) {
-    // state = state.copyWith(
-    //   groupedMessages: <ChatModelMessage>[
-    //     ...state.messages,
-    //     ChatModelMessage(
-    //       content: message,
-    //       messageId: '1',
-    //       authorId: '1',
-    //     ),
-    //   ],
-    // );
+  Future<void> sendMessage(String content) async {
+    final String chatId = state.chatId;
+    final String authorId = state.activeUserId;
+
+    if (chatId.isNotEmpty && authorId.isNotEmpty && content.isNotEmpty) {
+      final ChatBackendServiceMessage newMessage = ChatBackendServiceMessage(
+        content: content,
+        authorId: authorId,
+        messageId: const Uuid().v4(),
+        timestamp: DateTime.now(),
+      );
+
+      await backendService.addChatMessage(chatId, newMessage);
+    }
   }
 
   @override
   void deleteMessage(String messageId) {
-    // TODO: implement deleteMessage
+    final String chatId = state.chatId;
+    if (chatId.isNotEmpty) {
+      backendService.deleteChatMessage(chatId, messageId);
+    }
   }
 
   List<MapEntry<String, List<ChatModelMessage>>> _groupMessages(
@@ -93,17 +102,15 @@ class ChatControllerImpl extends _$ChatControllerImpl
       if (currentUserId == message.authorId) {
         currentGroup.value.add(message);
       } else {
+        groupedMessages.add(currentGroup);
         currentUserId = message.authorId;
         currentGroup = MapEntry<String, List<ChatModelMessage>>(
           currentUserId,
           <ChatModelMessage>[message],
         );
       }
-      if (index == messages.length - 1 ||
-          message.authorId != messages[index + 1].authorId) {
-        groupedMessages.add(currentGroup);
-      }
     }
+    groupedMessages.add(currentGroup);
     return groupedMessages;
   }
 }

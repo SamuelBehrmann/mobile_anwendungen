@@ -1,8 +1,9 @@
 import uuid
 from users_seed import users
-from datetime import datetime, timedelta, UTC
+from datetime import datetime, timedelta, timezone
 import random
 
+UTC = timezone.utc
 users = list(users.items())
 user1Id = users[0][0]
 user2Id = users[1][0]
@@ -56,8 +57,8 @@ def generate_medical_posts():
         str(uuid.uuid4()): create_post(title, content, random.choice(users)[0], datetime.now(UTC))
         for title, content in medical_topics
     }
-    
+
 
 posts = generate_medical_posts()
-   
+
 

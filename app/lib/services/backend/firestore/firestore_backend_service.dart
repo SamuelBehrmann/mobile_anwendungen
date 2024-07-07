@@ -110,8 +110,8 @@ class FirestoreBackendService extends BackendServiceAggregator {
               Stream<QueryDocumentSnapshot<Map<String, dynamic>>>.fromIterable(
             snapshot.docs,
           ).asyncMap((QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
-            Map<String, dynamic> message = (doc['messages'] as List<dynamic>)
-                .first as Map<String, dynamic>;
+            Map<String, dynamic> message =
+                (doc['messages'] as List<dynamic>).last as Map<String, dynamic>;
 
             String userId = (doc['participants'] as List<dynamic>)
                 .cast<String>()
@@ -401,11 +401,17 @@ class FirestoreBackendService extends BackendServiceAggregator {
   Stream<ChatBackendServiceChat> fetchChatData(String chatId) =>
       firestore.collection(_chatsCollection).doc(chatId).snapshots().asyncMap(
         (DocumentSnapshot<Map<String, dynamic>> doc) async {
-          Map<String, dynamic> chatData = doc.data()!;
-          List<ChatBackendServiceMessage> messages =
+          final Map<String, dynamic>? chatData = doc.data();
+          if (chatData == null) {
+            throw Exception("Chat data not found");
+          }
+
+          final List<ChatBackendServiceMessage> messages =
               mapFirestoreBackendServiceMessageToChatBackendServiceMessage(
-            (chatData['messages'] as List<dynamic>).cast(),
+            (chatData['messages'] as List<dynamic>)
+                .cast<Map<String, dynamic>>(),
           );
+
           final String currentUserId =
               (await firestore.collection(_usersCollection).limit(1).get())
                   .docs
@@ -414,36 +420,38 @@ class FirestoreBackendService extends BackendServiceAggregator {
 
           final List<Map<String, dynamic>> users =
               await Stream<String>.fromIterable(
-            (chatData['participants'] as List<dynamic>).cast(),
-          )
-                  .asyncMap(
-                    (String userId) async => (await firestore
-                            .collection(_usersCollection)
-                            .doc(userId)
-                            .get())
-                        .data()!
-                      ..putIfAbsent('id', () => userId),
-                  )
-                  .toList();
+            (chatData['participants'] as List<dynamic>).cast<String>(),
+          ).asyncMap(
+            (String userId) async {
+              final DocumentSnapshot<Map<String, dynamic>> docSnapshot =
+                  await firestore
+                      .collection(_usersCollection)
+                      .doc(userId)
+                      .get();
+              final Map<String, dynamic> data = docSnapshot.data()!;
+              return data..putIfAbsent('id', () => userId);
+            },
+          ).toList();
 
-          List<ChatBackendServicePerson> typedUsers =
+          final List<ChatBackendServicePerson> typedUsers =
               <ChatBackendServicePerson>[];
 
-          for (Map<String, dynamic> user in (users)) {
-            String userId = user['id'] as String;
-            if (userId != currentUserId) {
-              ChatBackendServicePerson typedUser = ChatBackendServicePerson(
-                id: userId,
-                name: user['name'] as String,
-                imageUrl: user['imageUrl'] as String,
-              );
-              typedUsers.add(typedUser);
-            }
+          for (final Map<String, dynamic> user in users) {
+            final String userId = user['id'] as String;
+            final ChatBackendServicePerson typedUser = ChatBackendServicePerson(
+              id: userId,
+              name: user['name'] as String,
+              imageUrl: user['imageUrl'] as String,
+            );
+            typedUsers.add(typedUser);
           }
 
           return ChatBackendServiceChat(
             chatId: chatId,
-            chatPartner: typedUsers.last,
+            currentUserId: currentUserId,
+            chatPartner: typedUsers.firstWhere(
+              (ChatBackendServicePerson user) => user.id != currentUserId,
+            ),
             messages: messages,
           );
         },
@@ -453,14 +461,99 @@ class FirestoreBackendService extends BackendServiceAggregator {
       mapFirestoreBackendServiceMessageToChatBackendServiceMessage(
     List<Map<String, dynamic>> messages,
   ) =>
-          messages.mapIndexed((int index, Map<String, dynamic> message) {
-            message['id'] = index.toString();
-            return ChatBackendServiceMessage(
-              messageId: message['id'] as String,
-              content: message['content'] as String,
-              authorId: message['userId'] as String,
-            );
-          }).toList();
+          messages
+              .mapIndexed(
+                (int index, Map<String, dynamic> message) =>
+                    ChatBackendServiceMessage(
+                  content: message['content'] as String? ?? '',
+                  authorId: message['authorId'] as String? ?? '',
+                  messageId: index.toString(),
+                  timestamp: message['timestamp'] != null
+                      ? DateTime.parse(message['timestamp'] as String)
+                      : DateTime.now(),
+                ),
+              )
+              .toList();
+
+  @override
+  Future<void> addChatMessage(
+    String chatId,
+    ChatBackendServiceMessage message,
+  ) async {
+    final DocumentReference<Map<String, dynamic>> chatReference =
+        firestore.collection(_chatsCollection).doc(chatId);
+
+    final DocumentSnapshot<Map<String, dynamic>> chatSnapshot =
+        await chatReference.get();
+
+    if (!chatSnapshot.exists) {
+      throw Exception("Chat data not found");
+    }
+
+    final Map<String, dynamic>? chatData = chatSnapshot.data();
+
+    if (chatData == null) {
+      throw Exception("Chat data not found");
+    }
+
+    final List<dynamic> messages =
+        (chatData['messages'] as List<dynamic>?) ?? <List<dynamic>>[];
+
+    final Map<String, dynamic> newMessage = <String, dynamic>{
+      'content': message.content,
+      'authorId': message.authorId,
+      'timestamp': message.timestamp.toIso8601String(),
+    };
+
+    messages.add(newMessage);
+
+    return chatReference.update(<String, dynamic>{
+      'messages': messages,
+    });
+  }
+
+  @override
+  Future<void> deleteChatMessage(String chatId, String messageId) async {
+    final DocumentReference<Map<String, dynamic>> chatReference =
+        firestore.collection(_chatsCollection).doc(chatId);
+
+    final DocumentSnapshot<Map<String, dynamic>> chatSnapshot =
+        await chatReference.get();
+
+    if (!chatSnapshot.exists) {
+      throw Exception("Chat data not found");
+    }
+
+    final Map<String, dynamic>? chatData = chatSnapshot.data();
+
+    if (chatData == null) {
+      throw Exception("Chat data not found");
+    }
+
+    final List<dynamic> messages =
+        (chatData['messages'] as List<dynamic>?) ?? <List<dynamic>>[];
+
+    messages.removeAt(int.parse(messageId));
+
+    return chatReference.update(<String, dynamic>{
+      'messages': messages,
+    });
+  }
+
+  @override
+  Future<ChatBackendServicePerson> getCurrentUser() async {
+    final QuerySnapshot<Map<String, dynamic>> value =
+        await firestore.collection(_usersCollection).get();
+    final QueryDocumentSnapshot<Map<String, dynamic>> user = value.docs.first;
+
+    final String? imageUrl = user['imageUrl'] as String?;
+
+    return ChatBackendServicePerson(
+      id: user.id,
+      name: user['name'] as String,
+      imageUrl: imageUrl,
+    );
+  }
 }
 
 // convenience classes to work with Firestore data

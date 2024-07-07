@@ -3,8 +3,7 @@ import 'package:medi_support/ui/screens/chat/chat_controller.dart';
 import 'package:medi_support/ui/screens/chat/chat_model.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
-
-// TODO: implement send message functionality
+import 'package:intl/intl.dart';
 
 class ChatView extends StatelessWidget {
   // _buildMessageList
@@ -43,9 +42,7 @@ class ChatView extends StatelessWidget {
         body: Column(
           children: <Widget>[
             Flexible(
-              child: _buildMessageList(
-                model,
-              ),
+              child: _buildMessageList(model),
             ),
             _buildSendMessageArea(),
           ],
@@ -54,13 +51,13 @@ class ChatView extends StatelessWidget {
 
   Widget _buildMessageList(ChatModel model) => ListView.separated(
         padding: _messagePadding,
-        separatorBuilder: (_, __) => _sizedBox,
         reverse: true,
+        separatorBuilder: (_, __) => _sizedBox,
         itemCount: model.groupedMessages.length,
         itemBuilder: (BuildContext context, int index) {
           final MapEntry<String, List<ChatModelMessage>> message =
               model.groupedMessages.elementAt(index);
-          final bool isCurrentUser = message.key == model.chatPartner.id;
+          final bool isCurrentUser = message.key == model.activeUserId;
 
           return Align(
             alignment:
@@ -73,34 +70,46 @@ class ChatView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                  if (!isCurrentUser)
-                    CircleAvatar(
-                      radius: _avatarRadius,
-                      child: CustomCachedNetworkImage(
-                        imageUrl: model.chatPartner.imageUrl,
-                      ),
-                    ),
+                  if (!isCurrentUser) _buildAvatar(model.chatPartner.imageUrl),
                   _sizedBox,
                   Expanded(
                     child: ListView.separated(
                       padding: _chatListPadding,
                       separatorBuilder: (_, __) => _sizedBox,
+                      reverse: true,
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: message.value.length,
-                      itemBuilder: (BuildContext context, int index) =>
-                          Container(
-                        padding: _messageContentPadding,
-                        decoration: BoxDecoration(
-                          color: isCurrentUser
-                              ? Theme.of(context).colorScheme.primaryContainer
-                              : Theme.of(context).colorScheme.outlineVariant,
-                          borderRadius: _messageBorderRadius,
-                        ),
-                        child: Text(
-                          message.value[index].content,
-                        ),
-                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        final ChatModelMessage msg = message.value[index];
+                        return GestureDetector(
+                          onLongPress: () => _showDeleteDialog(context, msg),
+                          child: Container(
+                            padding: _messageContentPadding,
+                            decoration: BoxDecoration(
+                              color: isCurrentUser
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .outlineVariant,
+                              borderRadius: _messageBorderRadius,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(msg.content),
+                                const SizedBox(height: 4),
+                                Text(
+                                  DateFormat('h:mm a').format(msg.timestamp),
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -109,6 +118,41 @@ class ChatView extends StatelessWidget {
           );
         },
       );
+
+  Widget _buildAvatar(final String? imageUrl) => CircleAvatar(
+        radius: _avatarRadius,
+        child: imageUrl != null
+            ? CustomCachedNetworkImage(imageUrl: imageUrl.toString())
+            : const Icon(
+                Icons.person_outline,
+                size: _avatarRadius,
+              ),
+      );
+
+  void _showDeleteDialog(BuildContext context, ChatModelMessage message) {
+    if (message.authorId == model.activeUserId) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Delete Message'),
+          content: const Text('Are you sure you want to delete this message?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                controller.deleteMessage(message.messageId);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   Widget _buildSendMessageArea() {
     final TextEditingController messageController = TextEditingController();
@@ -130,12 +174,10 @@ class ChatView extends StatelessWidget {
               suffixIcon: IconButton(
                 icon: const Icon(Icons.send),
                 onPressed: () {
-                  // Implement the send functionality
                   final String messageText = messageController.text;
                   if (messageText.isNotEmpty) {
-                    // Send message logic here
-                    messageController
-                        .clear(); // Clear the TextField after sending
+                    controller.sendMessage(messageText);
+                    messageController.clear();
                   }
                 },
               ),

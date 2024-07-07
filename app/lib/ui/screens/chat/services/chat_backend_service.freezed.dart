@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ChatBackendServiceChat {
   String get chatId => throw _privateConstructorUsedError;
+  String get currentUserId => throw _privateConstructorUsedError;
   ChatBackendServicePerson get chatPartner =>
       throw _privateConstructorUsedError;
   List<ChatBackendServiceMessage> get messages =>
@@ -35,6 +36,7 @@ abstract class $ChatBackendServiceChatCopyWith<$Res> {
   @useResult
   $Res call(
       {String chatId,
+      String currentUserId,
       ChatBackendServicePerson chatPartner,
       List<ChatBackendServiceMessage> messages});
 
@@ -56,6 +58,7 @@ class _$ChatBackendServiceChatCopyWithImpl<$Res,
   @override
   $Res call({
     Object? chatId = null,
+    Object? currentUserId = null,
     Object? chatPartner = null,
     Object? messages = null,
   }) {
@@ -63,6 +66,10 @@ class _$ChatBackendServiceChatCopyWithImpl<$Res,
       chatId: null == chatId
           ? _value.chatId
           : chatId // ignore: cast_nullable_to_non_nullable
+              as String,
+      currentUserId: null == currentUserId
+          ? _value.currentUserId
+          : currentUserId // ignore: cast_nullable_to_non_nullable
               as String,
       chatPartner: null == chatPartner
           ? _value.chatPartner
@@ -95,6 +102,7 @@ abstract class _$$ChatBackendServiceChatImplCopyWith<$Res>
   @useResult
   $Res call(
       {String chatId,
+      String currentUserId,
       ChatBackendServicePerson chatPartner,
       List<ChatBackendServiceMessage> messages});
 
@@ -116,6 +124,7 @@ class __$$ChatBackendServiceChatImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? chatId = null,
+    Object? currentUserId = null,
     Object? chatPartner = null,
     Object? messages = null,
   }) {
@@ -123,6 +132,10 @@ class __$$ChatBackendServiceChatImplCopyWithImpl<$Res>
       chatId: null == chatId
           ? _value.chatId
           : chatId // ignore: cast_nullable_to_non_nullable
+              as String,
+      currentUserId: null == currentUserId
+          ? _value.currentUserId
+          : currentUserId // ignore: cast_nullable_to_non_nullable
               as String,
       chatPartner: null == chatPartner
           ? _value.chatPartner
@@ -141,12 +154,15 @@ class __$$ChatBackendServiceChatImplCopyWithImpl<$Res>
 class _$ChatBackendServiceChatImpl implements _ChatBackendServiceChat {
   const _$ChatBackendServiceChatImpl(
       {required this.chatId,
+      required this.currentUserId,
       required this.chatPartner,
       required final List<ChatBackendServiceMessage> messages})
       : _messages = messages;
 
   @override
   final String chatId;
+  @override
+  final String currentUserId;
   @override
   final ChatBackendServicePerson chatPartner;
   final List<ChatBackendServiceMessage> _messages;
@@ -159,7 +175,7 @@ class _$ChatBackendServiceChatImpl implements _ChatBackendServiceChat {
 
   @override
   String toString() {
-    return 'ChatBackendServiceChat(chatId: $chatId, chatPartner: $chatPartner, messages: $messages)';
+    return 'ChatBackendServiceChat(chatId: $chatId, currentUserId: $currentUserId, chatPartner: $chatPartner, messages: $messages)';
   }
 
   @override
@@ -168,14 +184,16 @@ class _$ChatBackendServiceChatImpl implements _ChatBackendServiceChat {
         (other.runtimeType == runtimeType &&
             other is _$ChatBackendServiceChatImpl &&
             (identical(other.chatId, chatId) || other.chatId == chatId) &&
+            (identical(other.currentUserId, currentUserId) ||
+                other.currentUserId == currentUserId) &&
             (identical(other.chatPartner, chatPartner) ||
                 other.chatPartner == chatPartner) &&
             const DeepCollectionEquality().equals(other._messages, _messages));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, chatId, chatPartner,
-      const DeepCollectionEquality().hash(_messages));
+  int get hashCode => Object.hash(runtimeType, chatId, currentUserId,
+      chatPartner, const DeepCollectionEquality().hash(_messages));
 
   @JsonKey(ignore: true)
   @override
@@ -188,12 +206,15 @@ class _$ChatBackendServiceChatImpl implements _ChatBackendServiceChat {
 abstract class _ChatBackendServiceChat implements ChatBackendServiceChat {
   const factory _ChatBackendServiceChat(
           {required final String chatId,
+          required final String currentUserId,
           required final ChatBackendServicePerson chatPartner,
           required final List<ChatBackendServiceMessage> messages}) =
       _$ChatBackendServiceChatImpl;
 
   @override
   String get chatId;
+  @override
+  String get currentUserId;
   @override
   ChatBackendServicePerson get chatPartner;
   @override
@@ -208,7 +229,7 @@ abstract class _ChatBackendServiceChat implements ChatBackendServiceChat {
 mixin _$ChatBackendServicePerson {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get imageUrl => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatBackendServicePersonCopyWith<ChatBackendServicePerson> get copyWith =>
@@ -221,7 +242,7 @@ abstract class $ChatBackendServicePersonCopyWith<$Res> {
           $Res Function(ChatBackendServicePerson) then) =
       _$ChatBackendServicePersonCopyWithImpl<$Res, ChatBackendServicePerson>;
   @useResult
-  $Res call({String id, String name, String imageUrl});
+  $Res call({String id, String name, String? imageUrl});
 }
 
 /// @nodoc
@@ -240,7 +261,7 @@ class _$ChatBackendServicePersonCopyWithImpl<$Res,
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? imageUrl = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -251,10 +272,10 @@ class _$ChatBackendServicePersonCopyWithImpl<$Res,
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: null == imageUrl
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -268,7 +289,7 @@ abstract class _$$ChatBackendServicePersonImplCopyWith<$Res>
       __$$ChatBackendServicePersonImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String imageUrl});
+  $Res call({String id, String name, String? imageUrl});
 }
 
 /// @nodoc
@@ -286,7 +307,7 @@ class __$$ChatBackendServicePersonImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? imageUrl = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$ChatBackendServicePersonImpl(
       id: null == id
@@ -297,10 +318,10 @@ class __$$ChatBackendServicePersonImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: null == imageUrl
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -316,7 +337,7 @@ class _$ChatBackendServicePersonImpl implements _ChatBackendServicePerson {
   @override
   final String name;
   @override
-  final String imageUrl;
+  final String? imageUrl;
 
   @override
   String toString() {
@@ -349,14 +370,14 @@ abstract class _ChatBackendServicePerson implements ChatBackendServicePerson {
   const factory _ChatBackendServicePerson(
       {required final String id,
       required final String name,
-      required final String imageUrl}) = _$ChatBackendServicePersonImpl;
+      required final String? imageUrl}) = _$ChatBackendServicePersonImpl;
 
   @override
   String get id;
   @override
   String get name;
   @override
-  String get imageUrl;
+  String? get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$$ChatBackendServicePersonImplCopyWith<_$ChatBackendServicePersonImpl>
@@ -368,6 +389,7 @@ mixin _$ChatBackendServiceMessage {
   String get content => throw _privateConstructorUsedError;
   String get authorId => throw _privateConstructorUsedError;
   String get messageId => throw _privateConstructorUsedError;
+  DateTime get timestamp => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatBackendServiceMessageCopyWith<ChatBackendServiceMessage> get copyWith =>
@@ -380,7 +402,8 @@ abstract class $ChatBackendServiceMessageCopyWith<$Res> {
           $Res Function(ChatBackendServiceMessage) then) =
       _$ChatBackendServiceMessageCopyWithImpl<$Res, ChatBackendServiceMessage>;
   @useResult
-  $Res call({String content, String authorId, String messageId});
+  $Res call(
+      {String content, String authorId, String messageId, DateTime timestamp});
 }
 
 /// @nodoc
@@ -400,6 +423,7 @@ class _$ChatBackendServiceMessageCopyWithImpl<$Res,
     Object? content = null,
     Object? authorId = null,
     Object? messageId = null,
+    Object? timestamp = null,
   }) {
     return _then(_value.copyWith(
       content: null == content
@@ -414,6 +438,10 @@ class _$ChatBackendServiceMessageCopyWithImpl<$Res,
           ? _value.messageId
           : messageId // ignore: cast_nullable_to_non_nullable
               as String,
+      timestamp: null == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -427,7 +455,8 @@ abstract class _$$ChatBackendServiceMessageImplCopyWith<$Res>
       __$$ChatBackendServiceMessageImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String content, String authorId, String messageId});
+  $Res call(
+      {String content, String authorId, String messageId, DateTime timestamp});
 }
 
 /// @nodoc
@@ -446,6 +475,7 @@ class __$$ChatBackendServiceMessageImplCopyWithImpl<$Res>
     Object? content = null,
     Object? authorId = null,
     Object? messageId = null,
+    Object? timestamp = null,
   }) {
     return _then(_$ChatBackendServiceMessageImpl(
       content: null == content
@@ -460,6 +490,10 @@ class __$$ChatBackendServiceMessageImplCopyWithImpl<$Res>
           ? _value.messageId
           : messageId // ignore: cast_nullable_to_non_nullable
               as String,
+      timestamp: null == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -468,7 +502,10 @@ class __$$ChatBackendServiceMessageImplCopyWithImpl<$Res>
 
 class _$ChatBackendServiceMessageImpl implements _ChatBackendServiceMessage {
   const _$ChatBackendServiceMessageImpl(
-      {required this.content, required this.authorId, required this.messageId});
+      {required this.content,
+      required this.authorId,
+      required this.messageId,
+      required this.timestamp});
 
   @override
   final String content;
@@ -476,10 +513,12 @@ class _$ChatBackendServiceMessageImpl implements _ChatBackendServiceMessage {
   final String authorId;
   @override
   final String messageId;
+  @override
+  final DateTime timestamp;
 
   @override
   String toString() {
-    return 'ChatBackendServiceMessage(content: $content, authorId: $authorId, messageId: $messageId)';
+    return 'ChatBackendServiceMessage(content: $content, authorId: $authorId, messageId: $messageId, timestamp: $timestamp)';
   }
 
   @override
@@ -491,11 +530,14 @@ class _$ChatBackendServiceMessageImpl implements _ChatBackendServiceMessage {
             (identical(other.authorId, authorId) ||
                 other.authorId == authorId) &&
             (identical(other.messageId, messageId) ||
-                other.messageId == messageId));
+                other.messageId == messageId) &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, content, authorId, messageId);
+  int get hashCode =>
+      Object.hash(runtimeType, content, authorId, messageId, timestamp);
 
   @JsonKey(ignore: true)
   @override
@@ -509,7 +551,8 @@ abstract class _ChatBackendServiceMessage implements ChatBackendServiceMessage {
   const factory _ChatBackendServiceMessage(
       {required final String content,
       required final String authorId,
-      required final String messageId}) = _$ChatBackendServiceMessageImpl;
+      required final String messageId,
+      required final DateTime timestamp}) = _$ChatBackendServiceMessageImpl;
 
   @override
   String get content;
@@ -517,6 +560,8 @@ abstract class _ChatBackendServiceMessage implements ChatBackendServiceMessage {
   String get authorId;
   @override
   String get messageId;
+  @override
+  DateTime get timestamp;
   @override
   @JsonKey(ignore: true)
   _$$ChatBackendServiceMessageImplCopyWith<_$ChatBackendServiceMessageImpl>
