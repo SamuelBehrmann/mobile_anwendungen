@@ -6,6 +6,7 @@ import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 import 'package:intl/intl.dart';
 
 class ChatView extends StatelessWidget {
+  // _buildMessageList
   static const EdgeInsets _messagePadding =
       EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0);
   static const EdgeInsets _chatListPadding = EdgeInsets.all(0);
@@ -14,6 +15,8 @@ class ChatView extends StatelessWidget {
   static const double _avatarRadius = 18;
   static const double _messageWidth = 0.75;
   static final BorderRadius _messageBorderRadius = BorderRadius.circular(12);
+  static const double _timestampFontSize = 10;
+  // _buildSendMessageArea
   static const EdgeInsets containerPadding =
       EdgeInsets.symmetric(horizontal: 24.0);
   static const EdgeInsets textFieldPadding =
@@ -107,9 +110,9 @@ class ChatView extends StatelessWidget {
                                 const SizedBox(height: 4),
                                 Text(
                                   DateFormat('h:mm a').format(msg.timestamp),
-                                  style: const TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.black,
+                                  style: TextStyle(
+                                    fontSize: _timestampFontSize,
+                                    color: Theme.of(context).colorScheme.onSecondaryContainer,
                                   ),
                                 ),
                               ],

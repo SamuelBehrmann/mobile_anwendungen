@@ -497,7 +497,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
     }
 
     final List<dynamic> messages =
-        (chatData['messages'] as List<dynamic>?) ?? [];
+        (chatData['messages'] as List<dynamic>?) ?? <List<dynamic>>[];
 
     final Map<String, dynamic> newMessage = <String, dynamic>{
       'content': message.content,
@@ -531,7 +531,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
     }
 
     final List<dynamic> messages =
-        (chatData['messages'] as List<dynamic>?) ?? [];
+        (chatData['messages'] as List<dynamic>?) ?? <List<dynamic>>[];
 
     messages.removeAt(int.parse(messageId));
 
