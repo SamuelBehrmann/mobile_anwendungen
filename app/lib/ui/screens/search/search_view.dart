@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide SearchController;
+import 'package:flutter_svg/svg.dart';
 import 'package:medi_support/ui/screens/search/search_controller.dart';
 import 'package:medi_support/ui/screens/search/search_model.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
@@ -38,20 +39,35 @@ class SearchView extends StatelessWidget {
   List<Widget> get _categories => <Widget>[
         IconRow(
           iconSize: 24,
-          icons: const <IconWithLabel>[
-            IconWithLabel(Icons.search, 'Search'),
-            IconWithLabel(Icons.home, 'Home'),
-            IconWithLabel(Icons.favorite, 'Favorites'),
+          icons: <IconWithLabel>[
+            IconWithLabel(
+              SvgPicture.asset(
+                'assets/svg/ear.svg',
+              ),
+              'Ohren',
+            ),
+            IconWithLabel(
+              SvgPicture.asset(
+                'assets/svg/lungs.svg',
+              ),
+              'Lunge',
+            ),
+            IconWithLabel(
+              SvgPicture.asset(
+                'assets/svg/physician.svg',
+              ),
+              'Arzt',
+            ),
           ],
           onIconPressed: ({required String value}) =>
               controller.onSearch(query: value),
         ),
         IconRow(
           iconSize: 24,
-          icons: const <IconWithLabel>[
-            IconWithLabel(Icons.search, 'Search'),
-            IconWithLabel(Icons.home, 'Home'),
-            IconWithLabel(Icons.favorite, 'Favorites'),
+          icons: <IconWithLabel>[
+            IconWithLabel(SvgPicture.asset('assets/svg/stomack.svg'), 'Magen'),
+            IconWithLabel(SvgPicture.asset('assets/svg/tooth.svg'), 'Zahn'),
+            IconWithLabel(SvgPicture.asset('assets/svg/heart.svg'), 'Herz'),
           ],
           onIconPressed: ({required String value}) =>
               controller.onSearch(query: value),

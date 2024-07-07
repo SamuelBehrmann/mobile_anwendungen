@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$IconWithLabel {
-  IconData get icon => throw _privateConstructorUsedError;
+  Widget get icon => throw _privateConstructorUsedError;
   String get label => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +30,7 @@ abstract class $IconWithLabelCopyWith<$Res> {
           IconWithLabel value, $Res Function(IconWithLabel) then) =
       _$IconWithLabelCopyWithImpl<$Res, IconWithLabel>;
   @useResult
-  $Res call({IconData icon, String label});
+  $Res call({Widget icon, String label});
 }
 
 /// @nodoc
@@ -53,7 +53,7 @@ class _$IconWithLabelCopyWithImpl<$Res, $Val extends IconWithLabel>
       icon: null == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as IconData,
+              as Widget,
       label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -70,7 +70,7 @@ abstract class _$$IconWithLabelImplCopyWith<$Res>
       __$$IconWithLabelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({IconData icon, String label});
+  $Res call({Widget icon, String label});
 }
 
 /// @nodoc
@@ -91,7 +91,7 @@ class __$$IconWithLabelImplCopyWithImpl<$Res>
       null == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as IconData,
+              as Widget,
       null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -106,7 +106,7 @@ class _$IconWithLabelImpl implements _IconWithLabel {
   const _$IconWithLabelImpl(this.icon, this.label);
 
   @override
-  final IconData icon;
+  final Widget icon;
   @override
   final String label;
 
@@ -135,11 +135,11 @@ class _$IconWithLabelImpl implements _IconWithLabel {
 }
 
 abstract class _IconWithLabel implements IconWithLabel {
-  const factory _IconWithLabel(final IconData icon, final String label) =
+  const factory _IconWithLabel(final Widget icon, final String label) =
       _$IconWithLabelImpl;
 
   @override
-  IconData get icon;
+  Widget get icon;
   @override
   String get label;
   @override
