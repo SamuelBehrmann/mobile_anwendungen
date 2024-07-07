@@ -48,7 +48,7 @@ class IconRow extends StatelessWidget {
 @freezed
 class IconWithLabel with _$IconWithLabel {
   const factory IconWithLabel(
-    SvgPicture icon,
+    Widget icon,
     String label,
   ) = _IconWithLabel;
 }
