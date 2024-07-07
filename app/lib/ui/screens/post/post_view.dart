@@ -42,14 +42,13 @@ class PostView extends StatelessWidget {
               child: CustomScrollView(
                 slivers: <Widget>[
                   SliverPadding(
-                    padding: PostView._screenPadding.copyWith(bottom: 0),
+                    padding: _screenPadding.copyWith(bottom: 0),
                     sliver: SliverToBoxAdapter(
                       child: _buildPost(post),
                     ),
                   ),
                   SliverPadding(
-                    padding:
-                        EdgeInsets.only(right: PostView._screenPadding.right),
+                    padding: EdgeInsets.only(right: _screenPadding.right),
                     sliver: _buildReplies(replies: post.replies),
                   ),
                 ],
@@ -95,7 +94,7 @@ class PostView extends StatelessWidget {
           color: Theme.of(context).colorScheme.surface,
           child: SafeArea(
             child: Padding(
-              padding: PostView._textInputFieldPadding,
+              padding: _textInputFieldPadding,
               child: CustomTextField(
                 onSubmitted: (String message) {
                   controller.submitReply(message: message);
@@ -122,7 +121,7 @@ class PostView extends StatelessWidget {
                 rekursionDepth,
                 (_) => Builder(
                   builder: (BuildContext context) => VerticalDivider(
-                    width: PostView._verticalDividerWidth,
+                    width: _verticalDividerWidth,
                     color: Theme.of(context)
                         .colorScheme
                         .onPrimaryContainer
