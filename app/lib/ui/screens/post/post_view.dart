@@ -6,28 +6,7 @@ import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/custom_text_field.dart';
 import 'package:medi_support/ui/widgets/message.dart';
 
-class PostState extends ChangeNotifier {
-  final PostController controller;
-  final PostModel model;
-
-  PostState({required this.controller, required this.model});
-
-  void goBack() {
-    controller.goBack();
-  }
-
-  void setSelectedMessageToReply({String? messageId}) {
-    controller.setSelectedMessageToReply(messageId: messageId);
-    notifyListeners();
-  }
-
-  void submitReply(String message) {
-    controller.submitReply(message: message);
-    setSelectedMessageToReply(messageId: null);
-  }
-}
-
-class PostView extends StatefulWidget {
+class PostView extends StatelessWidget {
   static const EdgeInsets _screenPadding = EdgeInsets.all(16);
   static const EdgeInsets _textInputFieldPadding = EdgeInsets.all(8);
   static const double _verticalDividerWidth = 32;
@@ -42,43 +21,21 @@ class PostView extends StatefulWidget {
   });
 
   @override
-  PostViewState createState() => PostViewState();
-}
-
-class PostViewState extends State<PostView> {
-  late PostState _postState;
-  bool _isTextFieldVisible = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _postState = PostState(controller: widget.controller, model: widget.model);
-  }
-
-  void _hideTextField() {
-    setState(() {
-      _isTextFieldVisible = false;
-    });
-    FocusScope.of(context).unfocus();
-  }
-
-  @override
   Widget build(BuildContext context) => Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: CustomAppBar(
-          title: widget.model.post?.title,
+          title: model.post?.title,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: _postState.goBack,
+            onPressed: controller.goBack,
           ),
         ),
-        body: widget.model.post == null
+        body: model.post == null
             ? _buildLoadingState()
-            : _buildDataState(context, widget.model.post!),
+            : _buildDataState(model.post!),
       );
 
-  Widget _buildDataState(BuildContext context, final PostModelPost post) =>
-      Builder(
+  Widget _buildDataState(final PostModelPost post) => Builder(
         builder: (BuildContext context) => Stack(
           children: <Widget>[
             SafeArea(
@@ -98,7 +55,7 @@ class PostViewState extends State<PostView> {
                 ],
               ),
             ),
-            if (_isTextFieldVisible)
+            if (model.selectedReplyId != null)
               Align(
                 alignment: Alignment.bottomCenter,
                 child: _buildTextInputField(),
@@ -129,10 +86,7 @@ class PostViewState extends State<PostView> {
         userAvatar: post.author.avatar,
         message: post.content,
         replyCallback: () {
-          _postState.setSelectedMessageToReply(messageId: post.id);
-          setState(() {
-            _isTextFieldVisible = true;
-          });
+          controller.setSelectedMessageToReply(messageId: post.id);
         },
       );
 
@@ -144,10 +98,11 @@ class PostViewState extends State<PostView> {
               padding: PostView._textInputFieldPadding,
               child: CustomTextField(
                 onSubmitted: (String message) {
-                  _postState.submitReply(message);
-                  _hideTextField();
+                  controller.submitReply(message: message);
                 },
-                onTapOutside: _hideTextField,
+                onTapOutside: () {
+                  controller.setSelectedMessageToReply(messageId: null);
+                },
               ),
             ),
           ),
@@ -182,12 +137,9 @@ class PostViewState extends State<PostView> {
                     userAvatar: message.author.avatar,
                     message: message.message,
                     replyCallback: () {
-                      _postState.setSelectedMessageToReply(
+                      controller.setSelectedMessageToReply(
                         messageId: message.id,
                       );
-                      setState(() {
-                        _isTextFieldVisible = true;
-                      });
                     },
                   ),
                 ),

@@ -31,29 +31,31 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) => TextField(
-      controller: _controller,
-      onTapOutside: (_) {
-        FocusScope.of(context).unfocus();
-        widget.onTapOutside?.call();
-      },
-      autofocus: true,
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(),
-        labelText: 'Enter a reply',
-        suffixIcon: GestureDetector(
-          onTap: () {
-            widget.onSubmitted(_controller.text);
-            _clearController();
-          },
-          child: const Icon(Icons.send),
+        controller: _controller,
+        onTapOutside: (_) {
+          FocusScope.of(context).unfocus();
+          widget.onTapOutside?.call();
+        },
+        autofocus: true,
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: 'Enter a reply',
+          suffixIcon: GestureDetector(
+            onTap: () {
+              widget.onSubmitted(_controller.text);
+              FocusScope.of(context).unfocus();
+              _clearController();
+            },
+            child: const Icon(Icons.send),
+          ),
         ),
-      ),
-      onSubmitted: (String text) {
-        widget.onSubmitted(text);
-        _clearController();
-      },
-    );
+        onSubmitted: (String text) {
+          widget.onSubmitted(text);
+          FocusScope.of(context).unfocus();
+          _clearController();
+        },
+      );
 
   void _clearController() => setState(_controller.clear);
 }
