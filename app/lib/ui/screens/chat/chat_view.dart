@@ -6,7 +6,6 @@ import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 import 'package:intl/intl.dart';
 
 class ChatView extends StatelessWidget {
-  // _buildMessageList
   static const EdgeInsets _messagePadding =
       EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0);
   static const EdgeInsets _chatListPadding = EdgeInsets.all(0);
@@ -15,7 +14,6 @@ class ChatView extends StatelessWidget {
   static const double _avatarRadius = 18;
   static const double _messageWidth = 0.75;
   static final BorderRadius _messageBorderRadius = BorderRadius.circular(12);
-  // _buildSendMessageArea
   static const EdgeInsets containerPadding =
       EdgeInsets.symmetric(horizontal: 24.0);
   static const EdgeInsets textFieldPadding =
@@ -88,27 +86,34 @@ class ChatView extends StatelessWidget {
                       itemCount: message.value.length,
                       itemBuilder: (BuildContext context, int index) {
                         final ChatModelMessage msg = message.value[index];
-                        return Container(
-                          padding: _messageContentPadding,
-                          decoration: BoxDecoration(
-                            color: isCurrentUser
-                                ? Theme.of(context).colorScheme.primaryContainer
-                                : Theme.of(context).colorScheme.outlineVariant,
-                            borderRadius: _messageBorderRadius,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(msg.content),
-                              const SizedBox(height: 4),
-                              Text(
-                                DateFormat('h:mm a').format(msg.timestamp),
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.black,
+                        return GestureDetector(
+                          onLongPress: () => _showDeleteDialog(context, msg),
+                          child: Container(
+                            padding: _messageContentPadding,
+                            decoration: BoxDecoration(
+                              color: isCurrentUser
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .outlineVariant,
+                              borderRadius: _messageBorderRadius,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(msg.content),
+                                const SizedBox(height: 4),
+                                Text(
+                                  DateFormat('h:mm a').format(msg.timestamp),
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.black,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -120,6 +125,29 @@ class ChatView extends StatelessWidget {
           );
         },
       );
+
+  void _showDeleteDialog(BuildContext context, ChatModelMessage message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Delete Message'),
+        content: const Text('Are you sure you want to delete this message?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              controller.deleteMessage(message.messageId);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildSendMessageArea() {
     final TextEditingController messageController = TextEditingController();

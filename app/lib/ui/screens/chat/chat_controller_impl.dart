@@ -4,6 +4,7 @@ import 'package:medi_support/ui/screens/chat/chat_controller.dart';
 import 'package:medi_support/ui/screens/chat/chat_model.dart';
 import 'package:medi_support/ui/screens/chat/services/chat_backend_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 part 'chat_controller_impl.g.dart';
 
@@ -56,13 +57,28 @@ class ChatControllerImpl extends _$ChatControllerImpl
   }
 
   @override
-  void sendMessage(String message) {
-    // Implement the send functionality
+  Future<void> sendMessage(String content) async {
+    final String chatId = state.chatId;
+    final String authorId = state.activeUserId;
+
+    if (chatId.isNotEmpty && authorId.isNotEmpty && content.isNotEmpty) {
+      final ChatBackendServiceMessage newMessage = ChatBackendServiceMessage(
+        content: content,
+        authorId: authorId,
+        messageId: const Uuid().v4(),
+        timestamp: DateTime.now(),
+      );
+
+      await backendService.addChatMessage(chatId, newMessage);
+    }
   }
 
   @override
   void deleteMessage(String messageId) {
-    // TODO: implement deleteMessage
+    final String chatId = state.chatId;
+    if (chatId.isNotEmpty) {
+      backendService.deleteChatMessage(chatId, messageId);
+    }
   }
 
   List<MapEntry<String, List<ChatModelMessage>>> _groupMessages(

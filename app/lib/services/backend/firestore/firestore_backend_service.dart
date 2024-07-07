@@ -110,8 +110,8 @@ class FirestoreBackendService extends BackendServiceAggregator {
               Stream<QueryDocumentSnapshot<Map<String, dynamic>>>.fromIterable(
             snapshot.docs,
           ).asyncMap((QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
-            Map<String, dynamic> message = (doc['messages'] as List<dynamic>)
-                .last as Map<String, dynamic>;
+            Map<String, dynamic> message =
+                (doc['messages'] as List<dynamic>).last as Map<String, dynamic>;
 
             String userId = (doc['participants'] as List<dynamic>)
                 .cast<String>()
@@ -449,8 +449,9 @@ class FirestoreBackendService extends BackendServiceAggregator {
           return ChatBackendServiceChat(
             chatId: chatId,
             currentUserId: currentUserId,
-            chatPartner:
-                typedUsers.firstWhere((ChatBackendServicePerson user) => user.id != currentUserId),
+            chatPartner: typedUsers.firstWhere(
+              (ChatBackendServicePerson user) => user.id != currentUserId,
+            ),
             messages: messages,
           );
         },
@@ -479,17 +480,63 @@ class FirestoreBackendService extends BackendServiceAggregator {
     String chatId,
     ChatBackendServiceMessage message,
   ) async {
-    final Map<String, dynamic> messageData = <String, dynamic>{
+    final DocumentReference<Map<String, dynamic>> chatReference =
+        firestore.collection(_chatsCollection).doc(chatId);
+
+    final DocumentSnapshot<Map<String, dynamic>> chatSnapshot =
+        await chatReference.get();
+
+    if (!chatSnapshot.exists) {
+      throw Exception("Chat data not found");
+    }
+
+    final Map<String, dynamic>? chatData = chatSnapshot.data();
+
+    if (chatData == null) {
+      throw Exception("Chat data not found");
+    }
+
+    final List<dynamic> messages =
+        (chatData['messages'] as List<dynamic>?) ?? [];
+
+    final Map<String, dynamic> newMessage = <String, dynamic>{
       'content': message.content,
       'authorId': message.authorId,
       'timestamp': message.timestamp.toIso8601String(),
     };
 
-    await firestore
-        .collection(_chatsCollection)
-        .doc(chatId)
-        .update(<String, dynamic>{
-      'messages': FieldValue.arrayUnion(<Map<String, dynamic>>[messageData]),
+    messages.add(newMessage);
+
+    return chatReference.update(<String, dynamic>{
+      'messages': messages,
+    });
+  }
+
+  @override
+  Future<void> deleteChatMessage(String chatId, String messageId) async {
+    final DocumentReference<Map<String, dynamic>> chatReference =
+        firestore.collection(_chatsCollection).doc(chatId);
+
+    final DocumentSnapshot<Map<String, dynamic>> chatSnapshot =
+        await chatReference.get();
+
+    if (!chatSnapshot.exists) {
+      throw Exception("Chat data not found");
+    }
+
+    final Map<String, dynamic>? chatData = chatSnapshot.data();
+
+    if (chatData == null) {
+      throw Exception("Chat data not found");
+    }
+
+    final List<dynamic> messages =
+        (chatData['messages'] as List<dynamic>?) ?? [];
+
+    messages.removeAt(int.parse(messageId));
+
+    return chatReference.update(<String, dynamic>{
+      'messages': messages,
     });
   }
 

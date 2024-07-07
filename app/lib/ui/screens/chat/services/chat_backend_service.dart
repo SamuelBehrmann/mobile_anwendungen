@@ -5,6 +5,7 @@ part 'chat_backend_service.freezed.dart';
 abstract class ChatBackendService {
   Stream<ChatBackendServiceChat> fetchChatData(String chatId);
   Future<void> addChatMessage(String chatId, ChatBackendServiceMessage message);
+  Future<void> deleteChatMessage(String chatId, String messageId);
   Future<ChatBackendServicePerson> getCurrentUser();
 }
 
