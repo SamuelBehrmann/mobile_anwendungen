@@ -57,7 +57,7 @@ class ChatView extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           final MapEntry<String, List<ChatModelMessage>> message =
               model.groupedMessages.elementAt(index);
-          final bool isCurrentUser = message.key == model.chatPartner.id;
+          final bool isCurrentUser = message.key == model.activeUserId;
 
           return Align(
             alignment:
@@ -141,12 +141,10 @@ class ChatView extends StatelessWidget {
               suffixIcon: IconButton(
                 icon: const Icon(Icons.send),
                 onPressed: () {
-                  // Implement the send functionality
                   final String messageText = messageController.text;
                   if (messageText.isNotEmpty) {
                     controller.sendMessage(messageText);
-                    messageController
-                        .clear(); // Clear the TextField after sending
+                    messageController.clear();
                   }
                 },
               ),

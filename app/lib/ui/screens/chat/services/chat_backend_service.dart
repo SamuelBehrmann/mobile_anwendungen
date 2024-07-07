@@ -12,6 +12,7 @@ abstract class ChatBackendService {
 class ChatBackendServiceChat with _$ChatBackendServiceChat {
   const factory ChatBackendServiceChat({
     required String chatId,
+    required String currentUserId,
     required ChatBackendServicePerson chatPartner,
     required List<ChatBackendServiceMessage> messages,
   }) = _ChatBackendServiceChat;

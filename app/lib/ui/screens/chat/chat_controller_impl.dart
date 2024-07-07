@@ -11,6 +11,7 @@ part 'chat_controller_impl.g.dart';
 class ChatControllerImpl extends _$ChatControllerImpl
     implements ChatController {
   StreamSubscription<ChatBackendServiceChat>? _chatStreamSubscription;
+
   @override
   ChatModel build({
     required String chatId,
@@ -22,6 +23,7 @@ class ChatControllerImpl extends _$ChatControllerImpl
     _chatStreamSubscription = chatStream.listen(
       (ChatBackendServiceChat chat) => state = state.copyWith(
         chatId: chat.chatId,
+        activeUserId: chat.currentUserId,
         chatPartner: ChatModelPerson.fromBackendServicePerson(chat.chatPartner),
         groupedMessages: _groupMessages(
           chat.messages
@@ -55,16 +57,7 @@ class ChatControllerImpl extends _$ChatControllerImpl
 
   @override
   void sendMessage(String message) {
-    // state = state.copyWith(
-    //   groupedMessages: <ChatModelMessage>[
-    //     ...state.messages,
-    //     ChatModelMessage(
-    //       content: message,
-    //       messageId: '1',
-    //       authorId: '1',
-    //     ),
-    //   ],
-    // );
+    // Implement the send functionality
   }
 
   @override
@@ -93,17 +86,15 @@ class ChatControllerImpl extends _$ChatControllerImpl
       if (currentUserId == message.authorId) {
         currentGroup.value.add(message);
       } else {
+        groupedMessages.add(currentGroup);
         currentUserId = message.authorId;
         currentGroup = MapEntry<String, List<ChatModelMessage>>(
           currentUserId,
           <ChatModelMessage>[message],
         );
       }
-      if (index == messages.length - 1 ||
-          message.authorId != messages[index + 1].authorId) {
-        groupedMessages.add(currentGroup);
-      }
     }
+    groupedMessages.add(currentGroup);
     return groupedMessages;
   }
 }

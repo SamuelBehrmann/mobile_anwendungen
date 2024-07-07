@@ -438,20 +438,19 @@ class FirestoreBackendService extends BackendServiceAggregator {
 
           for (final Map<String, dynamic> user in users) {
             final String userId = user['id'] as String;
-            if (userId != currentUserId) {
-              final ChatBackendServicePerson typedUser =
-                  ChatBackendServicePerson(
-                id: userId,
-                name: user['name'] as String,
-                imageUrl: user['imageUrl'] as String,
-              );
-              typedUsers.add(typedUser);
-            }
+            final ChatBackendServicePerson typedUser = ChatBackendServicePerson(
+              id: userId,
+              name: user['name'] as String,
+              imageUrl: user['imageUrl'] as String,
+            );
+            typedUsers.add(typedUser);
           }
 
           return ChatBackendServiceChat(
             chatId: chatId,
-            chatPartner: typedUsers.last,
+            currentUserId: currentUserId,
+            chatPartner:
+                typedUsers.firstWhere((ChatBackendServicePerson user) => user.id != currentUserId),
             messages: messages,
           );
         },
