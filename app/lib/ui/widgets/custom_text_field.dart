@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatefulWidget {
   final void Function(String message) onSubmitted;
   final VoidCallback? onTapOutside;
+
   const CustomTextField({
     super.key,
     required this.onSubmitted,
@@ -43,6 +44,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           suffixIcon: GestureDetector(
             onTap: () {
               widget.onSubmitted(_controller.text);
+              FocusScope.of(context).unfocus();
               _clearController();
             },
             child: const Icon(Icons.send),
@@ -50,6 +52,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         onSubmitted: (String text) {
           widget.onSubmitted(text);
+          FocusScope.of(context).unfocus();
           _clearController();
         },
       );
