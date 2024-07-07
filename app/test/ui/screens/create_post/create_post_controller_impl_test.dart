@@ -81,28 +81,32 @@ void main() {
     },
   );
 
-  /* TODO: Implement this test currently failing mockito fails on Exception
   test(
     'CreatePostControllerImpl should show a snackbar if creating a post fails',
-    () {
+    () async {
       final CreatePostControllerImpl createPostController =
           createCreatePostController();
-      when(mockCreatePostBackendService.createPost(
-        title: 'Title',
-        content: 'Body',
-      )).thenThrow(ArgumentError());
+      when(
+        mockCreatePostBackendService.createPost(
+          title: anyNamed('title'),
+          content: anyNamed('content'),
+        ),
+      ).thenAnswer((_) => Future<void>.error(ArgumentError()));
+
       createPostController.send(
         title: 'Title',
         body: 'Body',
         onSend: () {},
       );
+
+      await Future<void>.delayed(Duration.zero);
+
       verify(
         mockCreatePostNavigationService
             .showSnackBar('Post erstellen fehlgeschlagen'),
       ).called(1);
     },
   );
-  */
 
   test(
     'CreatePostControllerImpl should be able to go home',
