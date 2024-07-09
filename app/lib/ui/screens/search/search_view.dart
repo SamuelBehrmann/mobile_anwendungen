@@ -7,6 +7,9 @@ import 'package:medi_support/ui/widgets/custom_search_bar.dart';
 import 'package:medi_support/ui/widgets/icon_row.dart';
 
 class SearchView extends StatelessWidget {
+  static const EdgeInsets _searchPadding =
+      EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+
   const SearchView({
     super.key,
     required this.controller,
@@ -26,10 +29,13 @@ class SearchView extends StatelessWidget {
         ),
         body: Column(
           children: <Widget>[
-            CustomSearchBar(
-              onSearch: controller.onSearch,
-              currentQuery: model.query ?? '',
-              onDiscard: controller.discardQuery,
+            Padding(
+              padding: _searchPadding,
+              child: CustomSearchBar(
+                onSearch: (String query) => controller.onSearch(query: query),
+                currentQuery: model.query,
+                onDiscard: controller.discardQuery,
+              ),
             ),
             if (model.query == null) ..._categories else _resultList(),
           ],

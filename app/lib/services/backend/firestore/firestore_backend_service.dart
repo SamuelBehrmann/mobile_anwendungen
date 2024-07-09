@@ -530,10 +530,9 @@ class FirestoreBackendService extends BackendServiceAggregator {
       throw Exception("Chat data not found");
     }
 
-    final List<dynamic> messages =
-        (chatData['messages'] as List<dynamic>?) ?? <List<dynamic>>[];
-
-    messages.removeAt(int.parse(messageId));
+    final List<dynamic> messages = ((chatData['messages'] as List<dynamic>?) ??
+        <List<dynamic>>[])
+      ..removeAt(int.parse(messageId));
 
     return chatReference.update(<String, dynamic>{
       'messages': messages,

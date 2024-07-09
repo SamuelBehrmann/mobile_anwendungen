@@ -26,14 +26,10 @@ class GoRouterNavigationService extends NavigationServiceAggregator {
       unawaited(goRouter.push(ChatRoute(chatId: chatId).location));
 
   @override
-  void goHome() {
-    goRouter.go(HomeRoute().location);
-  }
+  void goHome() => goRouter.go(HomeRoute().location);
 
   @override
-  void goBack() {
-    goRouter.pop();
-  }
+  void goBack() => goRouter.pop();
 
   void _showSnackBar(String message) {
     final BuildContext? ctx =
@@ -49,7 +45,5 @@ class GoRouterNavigationService extends NavigationServiceAggregator {
   }
 
   @override
-  void showSnackBar(String message) {
-    _showSnackBar(message);
-  }
+  void showSnackBar(String message) => _showSnackBar(message);
 }
