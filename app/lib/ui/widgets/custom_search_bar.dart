@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 
 class CustomSearchBar extends StatefulWidget {
+  final void Function(String query) onSearch;
+  final void Function()? onDiscard;
+  final String? currentQuery;
+
   const CustomSearchBar({
     super.key,
     required this.onSearch,
-    required this.currentQuery,
+    this.currentQuery,
     this.onDiscard,
   });
-  final void Function({required String query}) onSearch;
-  final void Function()? onDiscard;
-  final String currentQuery;
 
   @override
   State<CustomSearchBar> createState() => _CustomSearchBarState();
 }
 
 class _CustomSearchBarState extends State<CustomSearchBar> {
+  static const EdgeInsets _contentPadding = EdgeInsets.all(8);
+  static const double _iconSize = 22;
+  static const BorderRadius _borderRadius =
+      BorderRadius.all(Radius.circular(20));
+  static const double searchBarHeight = 40;
+
   late final TextEditingController _controller;
 
   @override
@@ -28,7 +35,11 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   void didUpdateWidget(CustomSearchBar oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.currentQuery != oldWidget.currentQuery) {
-      _controller.text = widget.currentQuery;
+      if (widget.currentQuery == null) {
+        _controller.clear();
+      } else {
+        _controller.text = widget.currentQuery!;
+      }
     }
   }
 
@@ -39,27 +50,34 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   }
 
   @override
-  Widget build(BuildContext context) => Column(
-        children: <Widget>[
-          TextFormField(
-            controller: _controller,
-            textAlign: TextAlign.center,
-            onChanged: (String value) => setState(() {
-              widget.onSearch(query: value);
-            }),
-            decoration: InputDecoration(
-              hintText: 'Search',
-              suffixIcon: _controller.text.isNotEmpty
-                  ? IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        widget.onDiscard?.call();
-                        setState(_controller.clear);
-                      },
-                    )
-                  : const SizedBox(width: 48),
+  Widget build(BuildContext context) => SizedBox(
+        height: searchBarHeight,
+        child: TextField(
+          controller: _controller,
+          decoration: InputDecoration(
+            contentPadding: _contentPadding,
+            prefixIcon: const Icon(
+              Icons.search_outlined,
+              size: _iconSize,
             ),
+            hintText: 'Search',
+            border: const OutlineInputBorder(
+              borderRadius: _borderRadius,
+            ),
+            suffixIcon: widget.onDiscard != null && _controller.text.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(
+                      Icons.close,
+                      size: _iconSize,
+                    ),
+                    onPressed: () {
+                      widget.onDiscard?.call();
+                      setState(_controller.clear);
+                    },
+                  )
+                : const SizedBox.shrink(),
           ),
-        ],
+          onChanged: (String value) => widget.onSearch(value),
+        ),
       );
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:medi_support/ui/screens/chats/widgets/chats_list.dart';
-import 'package:medi_support/ui/widgets/chats_search_bar.dart';
 import 'package:medi_support/ui/screens/chats/chats_model.dart';
 import 'package:medi_support/ui/screens/chats/chats_controller.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
+import 'package:medi_support/ui/widgets/custom_search_bar.dart';
 
 class ChatsView extends StatelessWidget {
   static const EdgeInsets _searchPadding =
@@ -31,9 +31,7 @@ class ChatsView extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: _searchPadding,
-            child: ChatsSearchBar(
-              onSearchChanged: controller.filterChats,
-            ),
+            child: CustomSearchBar(onSearch: controller.filterChats),
           ),
           Expanded(
             child: ChatList(
