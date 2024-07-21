@@ -3,10 +3,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'chat_backend_service.freezed.dart';
 
 abstract class ChatBackendService {
-  Stream<ChatBackendServiceChat> fetchChatData(String chatId);
+  Stream<ChatBackendServiceChat> getChatDataStream(String chatId);
   Future<void> addChatMessage(String chatId, ChatBackendServiceMessage message);
   Future<void> deleteChatMessage(String chatId, String messageId);
-  Future<ChatBackendServicePerson> getCurrentUser();
+  Future<ChatBackendServiceUser> getCurrentUser();
 }
 
 @freezed
@@ -14,18 +14,18 @@ class ChatBackendServiceChat with _$ChatBackendServiceChat {
   const factory ChatBackendServiceChat({
     required String chatId,
     required String currentUserId,
-    required ChatBackendServicePerson chatPartner,
+    required ChatBackendServiceUser chatPartner,
     required List<ChatBackendServiceMessage> messages,
   }) = _ChatBackendServiceChat;
 }
 
 @freezed
-class ChatBackendServicePerson with _$ChatBackendServicePerson {
-  const factory ChatBackendServicePerson({
+class ChatBackendServiceUser with _$ChatBackendServiceUser {
+  const factory ChatBackendServiceUser({
     required String id,
     required String name,
     required String? imageUrl,
-  }) = _ChatBackendServicePerson;
+  }) = _ChatBackendServiceUser;
 }
 
 @freezed

@@ -36,20 +36,34 @@ class ChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: CustomAppBar(
-          title: model.chatPartner.name,
-          profilePicureUrl: model.chatPartner.imageUrl,
+          title: model.map(
+            data: (ChatModelData chat) => chat.chatPartner.name,
+            loading: (_) => null,
+            error: (_) => null,
+          ),
+          profilePicureUrl: model.map(
+            data: (ChatModelData chat) => chat.chatPartner.name,
+            loading: (_) => null,
+            error: (_) => null,
+          ),
         ),
-        body: Column(
-          children: <Widget>[
-            Flexible(
-              child: _buildMessageList(model),
-            ),
-            _buildSendMessageArea(),
-          ],
+        body: model.map(
+          data: _buildDataState,
+          loading: _buildLoadingState,
+          error: _buildErrorState,
         ),
       );
 
-  Widget _buildMessageList(ChatModel model) => ListView.separated(
+  Column _buildDataState(ChatModelData data) => Column(
+        children: <Widget>[
+          Flexible(
+            child: _buildMessageList(data),
+          ),
+          _buildSendMessageArea(),
+        ],
+      );
+
+  Widget _buildMessageList(ChatModelData model) => ListView.separated(
         padding: _messagePadding,
         reverse: true,
         separatorBuilder: (_, __) => _sizedBox,
@@ -83,7 +97,8 @@ class ChatView extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         final ChatModelMessage msg = message.value[index];
                         return GestureDetector(
-                          onLongPress: () => _showDeleteDialog(context, msg),
+                          onLongPress: () =>
+                              _showDeleteDialog(context, msg, model),
                           child: Container(
                             padding: _messageContentPadding,
                             decoration: BoxDecoration(
@@ -129,8 +144,12 @@ class ChatView extends StatelessWidget {
               ),
       );
 
-  void _showDeleteDialog(BuildContext context, ChatModelMessage message) {
-    if (message.authorId == model.activeUserId) {
+  void _showDeleteDialog(
+    BuildContext context,
+    ChatModelMessage message,
+    ChatModelData chat,
+  ) {
+    if (message.authorId == chat.activeUserId) {
       showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -187,4 +206,14 @@ class ChatView extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildLoadingState(ChatsModelLoading value) => const Center(
+        child: CircularProgressIndicator(),
+      );
+
+  Widget _buildErrorState(ChatsModelError error) => error.message != null
+      ? Center(
+          child: Text(error.message!),
+        )
+      : const SizedBox();
 }
