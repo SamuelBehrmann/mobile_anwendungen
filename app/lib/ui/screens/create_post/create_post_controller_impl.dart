@@ -30,7 +30,7 @@ class CreatePostControllerImpl extends _$CreatePostControllerImpl
       return;
     }
     unawaited(
-      backendService.createPost(title: title, content: body).then(
+      backendService.createPost(title: title, content: body).then<void>(
         (_) {
           onSend();
           navigationService.showSnackBar(
@@ -38,7 +38,8 @@ class CreatePostControllerImpl extends _$CreatePostControllerImpl
           );
           goHome();
         },
-        onError: (_, __) => navigationService.showSnackBar(
+      ).catchError(
+        (_, __) => navigationService.showSnackBar(
           message: 'Post erstellen fehlgeschlagen',
         ),
       ),

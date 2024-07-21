@@ -63,12 +63,14 @@ class PostControllerImpl extends _$PostControllerImpl
                           message: message,
                           replyToMessageId: selectedReplyId,
                         )
-                        .then(
+                        .then<void>(
                           (_) => state = state.mapData(
                             (PostModelData data) =>
                                 data.copyWith(selectedReplyId: null),
                           ),
-                          onError: (_, __) => navigationService.showSnackBar(
+                        )
+                        .catchError(
+                          (_, __) => navigationService.showSnackBar(
                             message: 'Failed to submit reply',
                           ),
                         ),

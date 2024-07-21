@@ -17,7 +17,7 @@ class ProfileControllerImpl extends _$ProfileControllerImpl
     required ProfileBackendService backendService,
   }) {
     unawaited(
-      backendService.getUser().then(
+      backendService.getUser().then<void>(
         (ProfileBackendServiceUser user) {
           state = ProfileModel.data(
             user: ProfileModelUser(
@@ -31,7 +31,8 @@ class ProfileControllerImpl extends _$ProfileControllerImpl
             ),
           );
         },
-        onError: (_, __) => state =
+      ).catchError(
+        (_, __) => state =
             const ProfileModel.error(message: 'Fehler beim Laden des Profils'),
       ),
     );
@@ -47,14 +48,15 @@ class ProfileControllerImpl extends _$ProfileControllerImpl
         error: (_) => null,
       );
 
-  void _updateProfile({required ProfileModelUser user}) =>
-      backendService.editUser(user.toBackendServiceUser()).then(
+  void _updateProfile({required ProfileModelUser user}) => backendService
+      .editUser(user.toBackendServiceUser())
+      .then<void>(
         (_) => state = ProfileModel.data(user: user),
-        onError: (Object error, StackTrace stackTrace) {
-          navigationService.showSnackBar(
-            message: 'Fehler beim Speichern der Änderungen',
-          );
-        },
+      )
+      .catchError(
+        (_, __) => navigationService.showSnackBar(
+          message: 'Fehler beim Speichern der Änderungen',
+        ),
       );
 
   @override
