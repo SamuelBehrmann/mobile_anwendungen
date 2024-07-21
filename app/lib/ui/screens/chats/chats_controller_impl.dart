@@ -19,13 +19,18 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
     scheduleMicrotask(
       () => backendService
           .getAllChats()
-          .then((List<ChatsBackendServiceChat> chats) {
-        state = ChatsModel.data(
-          chats: chats.map(ChatsModelChat.fromBackendServiceChat).toList(),
-          filteredChats:
-              chats.map(ChatsModelChat.fromBackendServiceChat).toList(),
-        );
-      }),
+          .then(
+            (List<ChatsBackendServiceChat> chats) => state = ChatsModel.data(
+              chats: chats.map(ChatsModelChat.fromBackendServiceChat).toList(),
+              filteredChats:
+                  chats.map(ChatsModelChat.fromBackendServiceChat).toList(),
+            ),
+          )
+          .catchError(
+            (Object error) => state = const ChatsModel.error(
+              "Beim Laden der Chats ist ein Fehler aufgetreten.",
+            ),
+          ),
     );
 
     return const ChatsModel.loading();
@@ -35,9 +40,6 @@ class ChatsControllerImpl extends _$ChatsControllerImpl
   void openChat(String id) {
     navigationService.openChat(chatId: id);
   }
-
-  @override
-  void deleteChat() {}
 
   @override
   void filterChats(String query) => state.map<void>(
