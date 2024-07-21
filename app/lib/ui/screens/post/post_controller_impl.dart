@@ -24,9 +24,7 @@ class PostControllerImpl extends _$PostControllerImpl
 
     _postStreamSubscription =
         postStream.map(PostModelPost.fromBackendServicePost).listen(
-              (PostModelPost post) => state = state.mapData(
-                (PostModelData data) => data.copyWith(post: post),
-              ),
+              (PostModelPost post) => state = PostModel.data(post: post),
             );
 
     ref.onDispose(() {
