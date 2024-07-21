@@ -21,50 +21,75 @@ class PostView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        resizeToAvoidBottomInset: true,
+  Widget build(BuildContext context) => model.map(
+        data: _buildDataState,
+        loading: (_) => _buildLoadingState(),
+        error: _buildErrorState,
+      );
+
+  Widget _buildErrorState(PostModelError error) => Scaffold(
         appBar: CustomAppBar(
-          title: model.post?.title,
+          title: 'Error',
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: controller.goBack,
           ),
         ),
-        body: model.post == null
-            ? _buildLoadingState()
-            : _buildDataState(model.post!),
+        body: error.errorMessage != null
+            ? Center(
+                child: Text(error.errorMessage!),
+              )
+            : const SizedBox.shrink(),
       );
 
-  Widget _buildDataState(final PostModelPost post) => Builder(
-        builder: (BuildContext context) => Stack(
-          children: <Widget>[
-            SafeArea(
-              child: CustomScrollView(
-                slivers: <Widget>[
-                  SliverPadding(
-                    padding: _screenPadding.copyWith(bottom: 0),
-                    sliver: SliverToBoxAdapter(
-                      child: _buildPost(post),
+  Widget _buildDataState(final PostModelData data) => Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: CustomAppBar(
+          title: data.post.title,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: controller.goBack,
+          ),
+        ),
+        body: Builder(
+          builder: (BuildContext context) => Stack(
+            children: <Widget>[
+              SafeArea(
+                child: CustomScrollView(
+                  slivers: <Widget>[
+                    SliverPadding(
+                      padding: _screenPadding.copyWith(bottom: 0),
+                      sliver: SliverToBoxAdapter(
+                        child: _buildPost(data.post),
+                      ),
                     ),
-                  ),
-                  SliverPadding(
-                    padding: EdgeInsets.only(right: _screenPadding.right),
-                    sliver: _buildReplies(replies: post.replies),
-                  ),
-                ],
+                    SliverPadding(
+                      padding: EdgeInsets.only(right: _screenPadding.right),
+                      sliver: _buildReplies(replies: data.post.replies),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            if (model.selectedReplyId != null)
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: _buildTextInputField(),
-              ),
-          ],
+              if (data.selectedReplyId != null)
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: _buildTextInputField(),
+                ),
+            ],
+          ),
         ),
       );
 
-  Widget _buildLoadingState() =>
-      const Center(child: CircularProgressIndicator());
+  Widget _buildLoadingState() => Scaffold(
+        appBar: CustomAppBar(
+          title: 'Loading',
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: controller.goBack,
+          ),
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
 
   Widget _buildReplies({required final List<PostModelMessage> replies}) =>
       SliverList(
