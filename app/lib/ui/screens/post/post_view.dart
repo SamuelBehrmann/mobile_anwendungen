@@ -21,75 +21,59 @@ class PostView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => model.map(
-        data: _buildDataState,
-        loading: (_) => _buildLoadingState(),
-        error: _buildErrorState,
-      );
-
-  Widget _buildErrorState(PostModelError error) => Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         appBar: CustomAppBar(
-          title: 'Error',
+          title: model.when(
+            data: (PostModelPost post, _) => post.title,
+            loading: () => null,
+            error: (_) => null,
+          ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: controller.goBack,
           ),
         ),
-        body: error.errorMessage != null
-            ? Center(
-                child: Text(error.errorMessage!),
-              )
-            : const SizedBox.shrink(),
+        body: model.when(
+          data: _buildDataState,
+          loading: _buildLoadingState,
+          error: _buildErrorState,
+        ),
       );
 
-  Widget _buildDataState(final PostModelData data) => Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: CustomAppBar(
-          title: data.post.title,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: controller.goBack,
-          ),
-        ),
-        body: Builder(
-          builder: (BuildContext context) => Stack(
-            children: <Widget>[
-              SafeArea(
-                child: CustomScrollView(
-                  slivers: <Widget>[
-                    SliverPadding(
-                      padding: _screenPadding.copyWith(bottom: 0),
-                      sliver: SliverToBoxAdapter(
-                        child: _buildPost(data.post),
-                      ),
+  Widget _buildErrorState(String? error) =>
+      error != null ? Center(child: Text(error)) : const SizedBox.shrink();
+
+  Widget _buildDataState(final PostModelPost post, String? selectedReplyId) =>
+      Builder(
+        builder: (BuildContext context) => Stack(
+          children: <Widget>[
+            SafeArea(
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  SliverPadding(
+                    padding: _screenPadding.copyWith(bottom: 0),
+                    sliver: SliverToBoxAdapter(
+                      child: _buildPost(post),
                     ),
-                    SliverPadding(
-                      padding: EdgeInsets.only(right: _screenPadding.right),
-                      sliver: _buildReplies(replies: data.post.replies),
-                    ),
-                  ],
-                ),
+                  ),
+                  SliverPadding(
+                    padding: EdgeInsets.only(right: _screenPadding.right),
+                    sliver: _buildReplies(replies: post.replies),
+                  ),
+                ],
               ),
-              if (data.selectedReplyId != null)
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: _buildTextInputField(),
-                ),
-            ],
-          ),
+            ),
+            if (selectedReplyId != null)
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: _buildTextInputField(),
+              ),
+          ],
         ),
       );
 
-  Widget _buildLoadingState() => Scaffold(
-        appBar: CustomAppBar(
-          title: 'Loading',
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: controller.goBack,
-          ),
-        ),
-        body: const Center(child: CircularProgressIndicator()),
-      );
+  Widget _buildLoadingState() =>
+      const Center(child: CircularProgressIndicator());
 
   Widget _buildReplies({required final List<PostModelMessage> replies}) =>
       SliverList(
