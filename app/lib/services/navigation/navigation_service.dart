@@ -14,9 +14,7 @@ part 'navigation_service.g.dart';
 NavigationServiceAggregator navigationServiceAggregator(
   NavigationServiceAggregatorRef ref,
 ) =>
-    GoRouterNavigationService(
-      ref.read(goRouterProvider),
-    );
+    GoRouterNavigationService(ref.read(goRouterProvider));
 
 abstract class NavigationServiceAggregator
     implements

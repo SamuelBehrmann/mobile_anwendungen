@@ -7,7 +7,7 @@ part of 'profile_controller_impl.dart';
 // **************************************************************************
 
 String _$profileControllerImplHash() =>
-    r'90c42169d1af6ecec98dced5f3743d2d760bb12c';
+    r'bf47bece08283ae6457a145a27fbfc44a88da4d1';
 
 /// Copied from Dart SDK
 class _SystemHash {
