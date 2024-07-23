@@ -42,7 +42,7 @@ class ChatView extends StatelessWidget {
             error: (_) => null,
           ),
           profilePicureUrl: model.map(
-            data: (ChatModelData chat) => chat.chatPartner.name,
+            data: (ChatModelData chat) => chat.chatPartner.imageUrl,
             loading: (_) => null,
             error: (_) => null,
           ),
