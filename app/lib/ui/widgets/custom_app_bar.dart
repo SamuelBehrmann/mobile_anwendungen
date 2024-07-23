@@ -27,6 +27,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             if (profilePicureUrl != null)
               Padding(
                 padding: const EdgeInsets.only(right: 16.0, bottom: 4.0),
+                // refactor
                 child: CustomCachedNetworkImage(
                   imageUrl: profilePicureUrl ?? '',
                   width: 50,
