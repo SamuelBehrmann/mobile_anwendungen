@@ -44,36 +44,45 @@ class PostControllerImpl extends _$PostControllerImpl
       );
 
   @override
-  void submitReply({
-    required String message,
-  }) =>
-      state.when(
-        data: (PostModelPost? post, String? selectedReplyId) =>
-            post == null || selectedReplyId == null
-                ? navigationService.showSnackBar(
-                    message:
-                        'Stell sicher das du einen Post und eine Nachricht ausgewählt hast',
-                  )
-                : unawaited(
-                    backendService
-                        .submitReply(
-                          postId: post.id,
-                          message: message,
-                          replyToMessageId: selectedReplyId,
-                        )
-                        .then<void>(
-                          (_) => state = state.mapData(
-                            (PostModelData data) =>
-                                data.copyWith(selectedReplyId: null),
-                          ),
-                        )
-                        .catchError(
-                          (_, __) => navigationService.showSnackBar(
-                            message: 'Failed to submit reply',
-                          ),
-                        ),
-                  ),
-        error: (_) => null,
-        loading: () => null,
+  void submitReply({required String message}) {
+    if (message.isEmpty) {
+      state = state.mapData(
+        (PostModelData data) => data.copyWith(selectedReplyId: null),
       );
+      navigationService.showSnackBar(
+        message: 'Stell sicher das du eine Nachricht eingegeben hast',
+      );
+      return;
+    }
+
+    state.when(
+      data: (PostModelPost? post, String? selectedReplyId) =>
+          post == null || selectedReplyId == null
+              ? navigationService.showSnackBar(
+                  message:
+                      'Stell sicher das du einen Post und eine Nachricht ausgewählt hast',
+                )
+              : unawaited(
+                  backendService
+                      .submitReply(
+                        postId: post.id,
+                        message: message,
+                        replyToMessageId: selectedReplyId,
+                      )
+                      .then<void>(
+                        (_) => state = state.mapData(
+                          (PostModelData data) =>
+                              data.copyWith(selectedReplyId: null),
+                        ),
+                      )
+                      .catchError(
+                        (_, __) => navigationService.showSnackBar(
+                          message: 'Failed to submit reply',
+                        ),
+                      ),
+                ),
+      error: (_) {},
+      loading: () {},
+    );
+  }
 }
