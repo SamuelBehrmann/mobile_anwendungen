@@ -5,11 +5,21 @@ part 'post_model.freezed.dart';
 
 @freezed
 class PostModel with _$PostModel {
-  const factory PostModel({
-    PostModelPost? post,
+  const PostModel._();
+  const factory PostModel.data({
+    required PostModelPost post,
     String? selectedReplyId,
-    required String currentUserId,
-  }) = _PostModel;
+  }) = PostModelData;
+  const factory PostModel.loading() = PostModelLoading;
+  const factory PostModel.error({
+    String? errorMessage,
+  }) = PostModelError;
+
+  PostModel mapData(PostModelData Function(PostModelData) callback) => map(
+        data: callback,
+        loading: (PostModelLoading value) => value,
+        error: (PostModelError value) => value,
+      );
 }
 
 @freezed

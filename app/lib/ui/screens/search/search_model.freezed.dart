@@ -105,13 +105,15 @@ class __$$SearchModelImplCopyWithImpl<$Res>
 
 class _$SearchModelImpl implements _SearchModel {
   const _$SearchModelImpl(
-      {this.query, required final List<SearchModelPost> filteredResults})
+      {this.query,
+      final List<SearchModelPost> filteredResults = const <SearchModelPost>[]})
       : _filteredResults = filteredResults;
 
   @override
   final String? query;
   final List<SearchModelPost> _filteredResults;
   @override
+  @JsonKey()
   List<SearchModelPost> get filteredResults {
     if (_filteredResults is EqualUnmodifiableListView) return _filteredResults;
     // ignore: implicit_dynamic_type
@@ -146,9 +148,8 @@ class _$SearchModelImpl implements _SearchModel {
 
 abstract class _SearchModel implements SearchModel {
   const factory _SearchModel(
-          {final String? query,
-          required final List<SearchModelPost> filteredResults}) =
-      _$SearchModelImpl;
+      {final String? query,
+      final List<SearchModelPost> filteredResults}) = _$SearchModelImpl;
 
   @override
   String? get query;

@@ -17,28 +17,27 @@ class ProfileControllerImpl extends _$ProfileControllerImpl
     required ProfileBackendService backendService,
   }) {
     unawaited(
-      backendService.getUser().then((ProfileBackendServiceUser user) {
-        state = ProfileModel.data(
-          user: ProfileModelUser(
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            profilePicturePath: user.imageUrl,
-            phoneNumber: user.phoneNumber,
-            description: user.description,
-            password: user.password,
-          ),
-        );
-      }),
+      backendService.getUser().then<void>(
+        (ProfileBackendServiceUser user) {
+          state = ProfileModel.data(
+            user: ProfileModelUser(
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              profilePicturePath: user.imageUrl,
+              phoneNumber: user.phoneNumber,
+              description: user.description,
+              password: user.password,
+            ),
+          );
+        },
+      ).catchError(
+        (_, __) => state =
+            const ProfileModel.error(message: 'Fehler beim Laden des Profils'),
+      ),
     );
     return const ProfileModel.loading();
   }
-
-  @override
-  void editProfil() {}
-
-  @override
-  void logout() {}
 
   @override
   void updateDescription(String description) => state.map(
@@ -49,14 +48,15 @@ class ProfileControllerImpl extends _$ProfileControllerImpl
         error: (_) => null,
       );
 
-  void _updateProfile({
-    required ProfileModelUser user,
-  }) =>
-      backendService.editUser(user.toBackendServiceUser()).then(
+  void _updateProfile({required ProfileModelUser user}) => backendService
+      .editUser(user.toBackendServiceUser())
+      .then<void>(
         (_) => state = ProfileModel.data(user: user),
-        onError: (Object error, StackTrace stackTrace) {
-          // TODO: show snackbar
-        },
+      )
+      .catchError(
+        (_, __) => navigationService.showSnackBar(
+          message: 'Fehler beim Speichern der Änderungen',
+        ),
       );
 
   @override
@@ -67,6 +67,7 @@ class ProfileControllerImpl extends _$ProfileControllerImpl
         ),
         error: (_) => null,
       );
+
   @override
   void updateName(String name) => state.map(
         loading: (_) => null,

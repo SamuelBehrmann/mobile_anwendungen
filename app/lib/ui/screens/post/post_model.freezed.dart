@@ -16,12 +16,49 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PostModel {
-  PostModelPost? get post => throw _privateConstructorUsedError;
-  String? get selectedReplyId => throw _privateConstructorUsedError;
-  String get currentUserId => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $PostModelCopyWith<PostModel> get copyWith =>
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(PostModelPost post, String? selectedReplyId) data,
+    required TResult Function() loading,
+    required TResult Function(String? errorMessage) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(PostModelPost post, String? selectedReplyId)? data,
+    TResult? Function()? loading,
+    TResult? Function(String? errorMessage)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(PostModelPost post, String? selectedReplyId)? data,
+    TResult Function()? loading,
+    TResult Function(String? errorMessage)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PostModelData value) data,
+    required TResult Function(PostModelLoading value) loading,
+    required TResult Function(PostModelError value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PostModelData value)? data,
+    TResult? Function(PostModelLoading value)? loading,
+    TResult? Function(PostModelError value)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PostModelData value)? data,
+    TResult Function(PostModelLoading value)? loading,
+    TResult Function(PostModelError value)? error,
+    required TResult orElse(),
+  }) =>
       throw _privateConstructorUsedError;
 }
 
@@ -29,11 +66,6 @@ mixin _$PostModel {
 abstract class $PostModelCopyWith<$Res> {
   factory $PostModelCopyWith(PostModel value, $Res Function(PostModel) then) =
       _$PostModelCopyWithImpl<$Res, PostModel>;
-  @useResult
-  $Res call(
-      {PostModelPost? post, String? selectedReplyId, String currentUserId});
-
-  $PostModelPostCopyWith<$Res>? get post;
 }
 
 /// @nodoc
@@ -45,146 +77,420 @@ class _$PostModelCopyWithImpl<$Res, $Val extends PostModel>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? post = freezed,
-    Object? selectedReplyId = freezed,
-    Object? currentUserId = null,
-  }) {
-    return _then(_value.copyWith(
-      post: freezed == post
-          ? _value.post
-          : post // ignore: cast_nullable_to_non_nullable
-              as PostModelPost?,
-      selectedReplyId: freezed == selectedReplyId
-          ? _value.selectedReplyId
-          : selectedReplyId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      currentUserId: null == currentUserId
-          ? _value.currentUserId
-          : currentUserId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $PostModelPostCopyWith<$Res>? get post {
-    if (_value.post == null) {
-      return null;
-    }
-
-    return $PostModelPostCopyWith<$Res>(_value.post!, (value) {
-      return _then(_value.copyWith(post: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$PostModelImplCopyWith<$Res>
-    implements $PostModelCopyWith<$Res> {
-  factory _$$PostModelImplCopyWith(
-          _$PostModelImpl value, $Res Function(_$PostModelImpl) then) =
-      __$$PostModelImplCopyWithImpl<$Res>;
-  @override
+abstract class _$$PostModelDataImplCopyWith<$Res> {
+  factory _$$PostModelDataImplCopyWith(
+          _$PostModelDataImpl value, $Res Function(_$PostModelDataImpl) then) =
+      __$$PostModelDataImplCopyWithImpl<$Res>;
   @useResult
-  $Res call(
-      {PostModelPost? post, String? selectedReplyId, String currentUserId});
+  $Res call({PostModelPost post, String? selectedReplyId});
 
-  @override
-  $PostModelPostCopyWith<$Res>? get post;
+  $PostModelPostCopyWith<$Res> get post;
 }
 
 /// @nodoc
-class __$$PostModelImplCopyWithImpl<$Res>
-    extends _$PostModelCopyWithImpl<$Res, _$PostModelImpl>
-    implements _$$PostModelImplCopyWith<$Res> {
-  __$$PostModelImplCopyWithImpl(
-      _$PostModelImpl _value, $Res Function(_$PostModelImpl) _then)
+class __$$PostModelDataImplCopyWithImpl<$Res>
+    extends _$PostModelCopyWithImpl<$Res, _$PostModelDataImpl>
+    implements _$$PostModelDataImplCopyWith<$Res> {
+  __$$PostModelDataImplCopyWithImpl(
+      _$PostModelDataImpl _value, $Res Function(_$PostModelDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? post = freezed,
+    Object? post = null,
     Object? selectedReplyId = freezed,
-    Object? currentUserId = null,
   }) {
-    return _then(_$PostModelImpl(
-      post: freezed == post
+    return _then(_$PostModelDataImpl(
+      post: null == post
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
-              as PostModelPost?,
+              as PostModelPost,
       selectedReplyId: freezed == selectedReplyId
           ? _value.selectedReplyId
           : selectedReplyId // ignore: cast_nullable_to_non_nullable
               as String?,
-      currentUserId: null == currentUserId
-          ? _value.currentUserId
-          : currentUserId // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PostModelPostCopyWith<$Res> get post {
+    return $PostModelPostCopyWith<$Res>(_value.post, (value) {
+      return _then(_value.copyWith(post: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$PostModelImpl implements _PostModel {
-  const _$PostModelImpl(
-      {this.post, this.selectedReplyId, required this.currentUserId});
+class _$PostModelDataImpl extends PostModelData {
+  const _$PostModelDataImpl({required this.post, this.selectedReplyId})
+      : super._();
 
   @override
-  final PostModelPost? post;
+  final PostModelPost post;
   @override
   final String? selectedReplyId;
-  @override
-  final String currentUserId;
 
   @override
   String toString() {
-    return 'PostModel(post: $post, selectedReplyId: $selectedReplyId, currentUserId: $currentUserId)';
+    return 'PostModel.data(post: $post, selectedReplyId: $selectedReplyId)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PostModelImpl &&
+            other is _$PostModelDataImpl &&
             (identical(other.post, post) || other.post == post) &&
             (identical(other.selectedReplyId, selectedReplyId) ||
-                other.selectedReplyId == selectedReplyId) &&
-            (identical(other.currentUserId, currentUserId) ||
-                other.currentUserId == currentUserId));
+                other.selectedReplyId == selectedReplyId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, post, selectedReplyId, currentUserId);
+  int get hashCode => Object.hash(runtimeType, post, selectedReplyId);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PostModelImplCopyWith<_$PostModelImpl> get copyWith =>
-      __$$PostModelImplCopyWithImpl<_$PostModelImpl>(this, _$identity);
+  _$$PostModelDataImplCopyWith<_$PostModelDataImpl> get copyWith =>
+      __$$PostModelDataImplCopyWithImpl<_$PostModelDataImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(PostModelPost post, String? selectedReplyId) data,
+    required TResult Function() loading,
+    required TResult Function(String? errorMessage) error,
+  }) {
+    return data(post, selectedReplyId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(PostModelPost post, String? selectedReplyId)? data,
+    TResult? Function()? loading,
+    TResult? Function(String? errorMessage)? error,
+  }) {
+    return data?.call(post, selectedReplyId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(PostModelPost post, String? selectedReplyId)? data,
+    TResult Function()? loading,
+    TResult Function(String? errorMessage)? error,
+    required TResult orElse(),
+  }) {
+    if (data != null) {
+      return data(post, selectedReplyId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PostModelData value) data,
+    required TResult Function(PostModelLoading value) loading,
+    required TResult Function(PostModelError value) error,
+  }) {
+    return data(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PostModelData value)? data,
+    TResult? Function(PostModelLoading value)? loading,
+    TResult? Function(PostModelError value)? error,
+  }) {
+    return data?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PostModelData value)? data,
+    TResult Function(PostModelLoading value)? loading,
+    TResult Function(PostModelError value)? error,
+    required TResult orElse(),
+  }) {
+    if (data != null) {
+      return data(this);
+    }
+    return orElse();
+  }
 }
 
-abstract class _PostModel implements PostModel {
-  const factory _PostModel(
-      {final PostModelPost? post,
-      final String? selectedReplyId,
-      required final String currentUserId}) = _$PostModelImpl;
+abstract class PostModelData extends PostModel {
+  const factory PostModelData(
+      {required final PostModelPost post,
+      final String? selectedReplyId}) = _$PostModelDataImpl;
+  const PostModelData._() : super._();
+
+  PostModelPost get post;
+  String? get selectedReplyId;
+  @JsonKey(ignore: true)
+  _$$PostModelDataImplCopyWith<_$PostModelDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PostModelLoadingImplCopyWith<$Res> {
+  factory _$$PostModelLoadingImplCopyWith(_$PostModelLoadingImpl value,
+          $Res Function(_$PostModelLoadingImpl) then) =
+      __$$PostModelLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$PostModelLoadingImplCopyWithImpl<$Res>
+    extends _$PostModelCopyWithImpl<$Res, _$PostModelLoadingImpl>
+    implements _$$PostModelLoadingImplCopyWith<$Res> {
+  __$$PostModelLoadingImplCopyWithImpl(_$PostModelLoadingImpl _value,
+      $Res Function(_$PostModelLoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$PostModelLoadingImpl extends PostModelLoading {
+  const _$PostModelLoadingImpl() : super._();
 
   @override
-  PostModelPost? get post;
+  String toString() {
+    return 'PostModel.loading()';
+  }
+
   @override
-  String? get selectedReplyId;
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$PostModelLoadingImpl);
+  }
+
   @override
-  String get currentUserId;
+  int get hashCode => runtimeType.hashCode;
+
   @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(PostModelPost post, String? selectedReplyId) data,
+    required TResult Function() loading,
+    required TResult Function(String? errorMessage) error,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(PostModelPost post, String? selectedReplyId)? data,
+    TResult? Function()? loading,
+    TResult? Function(String? errorMessage)? error,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(PostModelPost post, String? selectedReplyId)? data,
+    TResult Function()? loading,
+    TResult Function(String? errorMessage)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PostModelData value) data,
+    required TResult Function(PostModelLoading value) loading,
+    required TResult Function(PostModelError value) error,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PostModelData value)? data,
+    TResult? Function(PostModelLoading value)? loading,
+    TResult? Function(PostModelError value)? error,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PostModelData value)? data,
+    TResult Function(PostModelLoading value)? loading,
+    TResult Function(PostModelError value)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PostModelLoading extends PostModel {
+  const factory PostModelLoading() = _$PostModelLoadingImpl;
+  const PostModelLoading._() : super._();
+}
+
+/// @nodoc
+abstract class _$$PostModelErrorImplCopyWith<$Res> {
+  factory _$$PostModelErrorImplCopyWith(_$PostModelErrorImpl value,
+          $Res Function(_$PostModelErrorImpl) then) =
+      __$$PostModelErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? errorMessage});
+}
+
+/// @nodoc
+class __$$PostModelErrorImplCopyWithImpl<$Res>
+    extends _$PostModelCopyWithImpl<$Res, _$PostModelErrorImpl>
+    implements _$$PostModelErrorImplCopyWith<$Res> {
+  __$$PostModelErrorImplCopyWithImpl(
+      _$PostModelErrorImpl _value, $Res Function(_$PostModelErrorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? errorMessage = freezed,
+  }) {
+    return _then(_$PostModelErrorImpl(
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$PostModelErrorImpl extends PostModelError {
+  const _$PostModelErrorImpl({this.errorMessage}) : super._();
+
+  @override
+  final String? errorMessage;
+
+  @override
+  String toString() {
+    return 'PostModel.error(errorMessage: $errorMessage)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PostModelErrorImpl &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, errorMessage);
+
   @JsonKey(ignore: true)
-  _$$PostModelImplCopyWith<_$PostModelImpl> get copyWith =>
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PostModelErrorImplCopyWith<_$PostModelErrorImpl> get copyWith =>
+      __$$PostModelErrorImplCopyWithImpl<_$PostModelErrorImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(PostModelPost post, String? selectedReplyId) data,
+    required TResult Function() loading,
+    required TResult Function(String? errorMessage) error,
+  }) {
+    return error(errorMessage);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(PostModelPost post, String? selectedReplyId)? data,
+    TResult? Function()? loading,
+    TResult? Function(String? errorMessage)? error,
+  }) {
+    return error?.call(errorMessage);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(PostModelPost post, String? selectedReplyId)? data,
+    TResult Function()? loading,
+    TResult Function(String? errorMessage)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(errorMessage);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PostModelData value) data,
+    required TResult Function(PostModelLoading value) loading,
+    required TResult Function(PostModelError value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PostModelData value)? data,
+    TResult? Function(PostModelLoading value)? loading,
+    TResult? Function(PostModelError value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PostModelData value)? data,
+    TResult Function(PostModelLoading value)? loading,
+    TResult Function(PostModelError value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PostModelError extends PostModel {
+  const factory PostModelError({final String? errorMessage}) =
+      _$PostModelErrorImpl;
+  const PostModelError._() : super._();
+
+  String? get errorMessage;
+  @JsonKey(ignore: true)
+  _$$PostModelErrorImplCopyWith<_$PostModelErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

@@ -398,7 +398,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
           );
 
   @override
-  Stream<ChatBackendServiceChat> fetchChatData(String chatId) =>
+  Stream<ChatBackendServiceChat> getChatDataStream(String chatId) =>
       firestore.collection(_chatsCollection).doc(chatId).snapshots().asyncMap(
         (DocumentSnapshot<Map<String, dynamic>> doc) async {
           final Map<String, dynamic>? chatData = doc.data();
@@ -433,12 +433,12 @@ class FirestoreBackendService extends BackendServiceAggregator {
             },
           ).toList();
 
-          final List<ChatBackendServicePerson> typedUsers =
-              <ChatBackendServicePerson>[];
+          final List<ChatBackendServiceUser> typedUsers =
+              <ChatBackendServiceUser>[];
 
           for (final Map<String, dynamic> user in users) {
             final String userId = user['id'] as String;
-            final ChatBackendServicePerson typedUser = ChatBackendServicePerson(
+            final ChatBackendServiceUser typedUser = ChatBackendServiceUser(
               id: userId,
               name: user['name'] as String,
               imageUrl: user['imageUrl'] as String,
@@ -450,7 +450,7 @@ class FirestoreBackendService extends BackendServiceAggregator {
             chatId: chatId,
             currentUserId: currentUserId,
             chatPartner: typedUsers.firstWhere(
-              (ChatBackendServicePerson user) => user.id != currentUserId,
+              (ChatBackendServiceUser user) => user.id != currentUserId,
             ),
             messages: messages,
           );
@@ -540,14 +540,14 @@ class FirestoreBackendService extends BackendServiceAggregator {
   }
 
   @override
-  Future<ChatBackendServicePerson> getCurrentUser() async {
+  Future<ChatBackendServiceUser> getCurrentUser() async {
     final QuerySnapshot<Map<String, dynamic>> value =
         await firestore.collection(_usersCollection).get();
     final QueryDocumentSnapshot<Map<String, dynamic>> user = value.docs.first;
 
     final String? imageUrl = user['imageUrl'] as String?;
 
-    return ChatBackendServicePerson(
+    return ChatBackendServiceUser(
       id: user.id,
       name: user['name'] as String,
       imageUrl: imageUrl,

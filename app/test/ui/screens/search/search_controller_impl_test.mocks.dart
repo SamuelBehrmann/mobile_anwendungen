@@ -51,6 +51,16 @@ class MockSearchNavigationService extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+
+  @override
+  void showSnackBar({required String? message}) => super.noSuchMethod(
+        Invocation.method(
+          #showSnackBar,
+          [],
+          {#message: message},
+        ),
+        returnValueForMissingStub: null,
+      );
 }
 
 /// A class which mocks [SearchBackendService].
