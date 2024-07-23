@@ -1,5 +1,6 @@
 import 'package:medi_support/services/navigation/go_router/go_router.dart';
 import 'package:medi_support/services/navigation/go_router/go_router_navigation_service.dart';
+import 'package:medi_support/ui/screens/chat/services/chat_navigation_service.dart';
 import 'package:medi_support/ui/screens/chats/services/chats_navigation_service.dart';
 import 'package:medi_support/ui/screens/create_post/services/create_post_navigation_service.dart';
 import 'package:medi_support/ui/screens/home/services/home_navigation_service.dart';
@@ -14,9 +15,7 @@ part 'navigation_service.g.dart';
 NavigationServiceAggregator navigationServiceAggregator(
   NavigationServiceAggregatorRef ref,
 ) =>
-    GoRouterNavigationService(
-      ref.read(goRouterProvider),
-    );
+    GoRouterNavigationService(ref.read(goRouterProvider));
 
 abstract class NavigationServiceAggregator
     implements
@@ -25,4 +24,5 @@ abstract class NavigationServiceAggregator
         PostNavigationService,
         CreatePostNavigationService,
         ChatsNavigationService,
+        ChatNavigationService,
         SearchNavigationService {}

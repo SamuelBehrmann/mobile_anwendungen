@@ -12,6 +12,9 @@ class ProfileView extends StatelessWidget {
   static const double _paddingBetweenAvatarName = 18;
   static const double _paddingBetweenDescriptionField = 20;
   static const double _avatarSize = 70;
+  static const int _nameMaxLines = 1;
+  static const int _descriptionMaxLines = 3;
+  static const int _descriptionMinLines = 1;
 
   final ProfileModel model;
   final ProfileController controller;
@@ -58,21 +61,6 @@ class ProfileView extends StatelessWidget {
                     ],
                   ),
                 ],
-              ),
-            ),
-            // Since we wont implement auth we are unable to logout
-            Visibility(
-              visible: false,
-              child: Padding(
-                padding: _screenPadding,
-                child: OutlinedButton(
-                  onPressed: () => controller.logout,
-                  style: Theme.of(context).outlinedButtonTheme.style,
-                  child: Text(
-                    'Logout',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
               ),
             ),
           ],
@@ -136,7 +124,7 @@ class ProfileView extends StatelessWidget {
                 isDense: true,
               ),
               style: Theme.of(context).textTheme.titleLarge,
-              maxLines: 1,
+              maxLines: _nameMaxLines,
               onChanged: (String value) => controller.updateName(value),
               onTapOutside: (_) => FocusScope.of(context).unfocus(),
             ),
@@ -148,8 +136,8 @@ class ProfileView extends StatelessWidget {
                 border: InputBorder.none,
                 isDense: true,
               ),
-              minLines: 1,
-              maxLines: 3,
+              minLines: _descriptionMinLines,
+              maxLines: _descriptionMaxLines,
               onChanged: (String value) => controller.updateDescription(value),
               onTapOutside: (_) => FocusScope.of(context).unfocus(),
             ),

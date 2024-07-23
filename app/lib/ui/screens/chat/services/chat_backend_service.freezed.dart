@@ -18,8 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ChatBackendServiceChat {
   String get chatId => throw _privateConstructorUsedError;
   String get currentUserId => throw _privateConstructorUsedError;
-  ChatBackendServicePerson get chatPartner =>
-      throw _privateConstructorUsedError;
+  ChatBackendServiceUser get chatPartner => throw _privateConstructorUsedError;
   List<ChatBackendServiceMessage> get messages =>
       throw _privateConstructorUsedError;
 
@@ -37,10 +36,10 @@ abstract class $ChatBackendServiceChatCopyWith<$Res> {
   $Res call(
       {String chatId,
       String currentUserId,
-      ChatBackendServicePerson chatPartner,
+      ChatBackendServiceUser chatPartner,
       List<ChatBackendServiceMessage> messages});
 
-  $ChatBackendServicePersonCopyWith<$Res> get chatPartner;
+  $ChatBackendServiceUserCopyWith<$Res> get chatPartner;
 }
 
 /// @nodoc
@@ -74,7 +73,7 @@ class _$ChatBackendServiceChatCopyWithImpl<$Res,
       chatPartner: null == chatPartner
           ? _value.chatPartner
           : chatPartner // ignore: cast_nullable_to_non_nullable
-              as ChatBackendServicePerson,
+              as ChatBackendServiceUser,
       messages: null == messages
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
@@ -84,8 +83,8 @@ class _$ChatBackendServiceChatCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ChatBackendServicePersonCopyWith<$Res> get chatPartner {
-    return $ChatBackendServicePersonCopyWith<$Res>(_value.chatPartner, (value) {
+  $ChatBackendServiceUserCopyWith<$Res> get chatPartner {
+    return $ChatBackendServiceUserCopyWith<$Res>(_value.chatPartner, (value) {
       return _then(_value.copyWith(chatPartner: value) as $Val);
     });
   }
@@ -103,11 +102,11 @@ abstract class _$$ChatBackendServiceChatImplCopyWith<$Res>
   $Res call(
       {String chatId,
       String currentUserId,
-      ChatBackendServicePerson chatPartner,
+      ChatBackendServiceUser chatPartner,
       List<ChatBackendServiceMessage> messages});
 
   @override
-  $ChatBackendServicePersonCopyWith<$Res> get chatPartner;
+  $ChatBackendServiceUserCopyWith<$Res> get chatPartner;
 }
 
 /// @nodoc
@@ -140,7 +139,7 @@ class __$$ChatBackendServiceChatImplCopyWithImpl<$Res>
       chatPartner: null == chatPartner
           ? _value.chatPartner
           : chatPartner // ignore: cast_nullable_to_non_nullable
-              as ChatBackendServicePerson,
+              as ChatBackendServiceUser,
       messages: null == messages
           ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
@@ -164,7 +163,7 @@ class _$ChatBackendServiceChatImpl implements _ChatBackendServiceChat {
   @override
   final String currentUserId;
   @override
-  final ChatBackendServicePerson chatPartner;
+  final ChatBackendServiceUser chatPartner;
   final List<ChatBackendServiceMessage> _messages;
   @override
   List<ChatBackendServiceMessage> get messages {
@@ -207,7 +206,7 @@ abstract class _ChatBackendServiceChat implements ChatBackendServiceChat {
   const factory _ChatBackendServiceChat(
           {required final String chatId,
           required final String currentUserId,
-          required final ChatBackendServicePerson chatPartner,
+          required final ChatBackendServiceUser chatPartner,
           required final List<ChatBackendServiceMessage> messages}) =
       _$ChatBackendServiceChatImpl;
 
@@ -216,7 +215,7 @@ abstract class _ChatBackendServiceChat implements ChatBackendServiceChat {
   @override
   String get currentUserId;
   @override
-  ChatBackendServicePerson get chatPartner;
+  ChatBackendServiceUser get chatPartner;
   @override
   List<ChatBackendServiceMessage> get messages;
   @override
@@ -226,30 +225,30 @@ abstract class _ChatBackendServiceChat implements ChatBackendServiceChat {
 }
 
 /// @nodoc
-mixin _$ChatBackendServicePerson {
+mixin _$ChatBackendServiceUser {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ChatBackendServicePersonCopyWith<ChatBackendServicePerson> get copyWith =>
+  $ChatBackendServiceUserCopyWith<ChatBackendServiceUser> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ChatBackendServicePersonCopyWith<$Res> {
-  factory $ChatBackendServicePersonCopyWith(ChatBackendServicePerson value,
-          $Res Function(ChatBackendServicePerson) then) =
-      _$ChatBackendServicePersonCopyWithImpl<$Res, ChatBackendServicePerson>;
+abstract class $ChatBackendServiceUserCopyWith<$Res> {
+  factory $ChatBackendServiceUserCopyWith(ChatBackendServiceUser value,
+          $Res Function(ChatBackendServiceUser) then) =
+      _$ChatBackendServiceUserCopyWithImpl<$Res, ChatBackendServiceUser>;
   @useResult
   $Res call({String id, String name, String? imageUrl});
 }
 
 /// @nodoc
-class _$ChatBackendServicePersonCopyWithImpl<$Res,
-        $Val extends ChatBackendServicePerson>
-    implements $ChatBackendServicePersonCopyWith<$Res> {
-  _$ChatBackendServicePersonCopyWithImpl(this._value, this._then);
+class _$ChatBackendServiceUserCopyWithImpl<$Res,
+        $Val extends ChatBackendServiceUser>
+    implements $ChatBackendServiceUserCopyWith<$Res> {
+  _$ChatBackendServiceUserCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -281,25 +280,25 @@ class _$ChatBackendServicePersonCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$ChatBackendServicePersonImplCopyWith<$Res>
-    implements $ChatBackendServicePersonCopyWith<$Res> {
-  factory _$$ChatBackendServicePersonImplCopyWith(
-          _$ChatBackendServicePersonImpl value,
-          $Res Function(_$ChatBackendServicePersonImpl) then) =
-      __$$ChatBackendServicePersonImplCopyWithImpl<$Res>;
+abstract class _$$ChatBackendServiceUserImplCopyWith<$Res>
+    implements $ChatBackendServiceUserCopyWith<$Res> {
+  factory _$$ChatBackendServiceUserImplCopyWith(
+          _$ChatBackendServiceUserImpl value,
+          $Res Function(_$ChatBackendServiceUserImpl) then) =
+      __$$ChatBackendServiceUserImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String name, String? imageUrl});
 }
 
 /// @nodoc
-class __$$ChatBackendServicePersonImplCopyWithImpl<$Res>
-    extends _$ChatBackendServicePersonCopyWithImpl<$Res,
-        _$ChatBackendServicePersonImpl>
-    implements _$$ChatBackendServicePersonImplCopyWith<$Res> {
-  __$$ChatBackendServicePersonImplCopyWithImpl(
-      _$ChatBackendServicePersonImpl _value,
-      $Res Function(_$ChatBackendServicePersonImpl) _then)
+class __$$ChatBackendServiceUserImplCopyWithImpl<$Res>
+    extends _$ChatBackendServiceUserCopyWithImpl<$Res,
+        _$ChatBackendServiceUserImpl>
+    implements _$$ChatBackendServiceUserImplCopyWith<$Res> {
+  __$$ChatBackendServiceUserImplCopyWithImpl(
+      _$ChatBackendServiceUserImpl _value,
+      $Res Function(_$ChatBackendServiceUserImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -309,7 +308,7 @@ class __$$ChatBackendServicePersonImplCopyWithImpl<$Res>
     Object? name = null,
     Object? imageUrl = freezed,
   }) {
-    return _then(_$ChatBackendServicePersonImpl(
+    return _then(_$ChatBackendServiceUserImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -328,8 +327,8 @@ class __$$ChatBackendServicePersonImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ChatBackendServicePersonImpl implements _ChatBackendServicePerson {
-  const _$ChatBackendServicePersonImpl(
+class _$ChatBackendServiceUserImpl implements _ChatBackendServiceUser {
+  const _$ChatBackendServiceUserImpl(
       {required this.id, required this.name, required this.imageUrl});
 
   @override
@@ -341,14 +340,14 @@ class _$ChatBackendServicePersonImpl implements _ChatBackendServicePerson {
 
   @override
   String toString() {
-    return 'ChatBackendServicePerson(id: $id, name: $name, imageUrl: $imageUrl)';
+    return 'ChatBackendServiceUser(id: $id, name: $name, imageUrl: $imageUrl)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ChatBackendServicePersonImpl &&
+            other is _$ChatBackendServiceUserImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.imageUrl, imageUrl) ||
@@ -361,16 +360,16 @@ class _$ChatBackendServicePersonImpl implements _ChatBackendServicePerson {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ChatBackendServicePersonImplCopyWith<_$ChatBackendServicePersonImpl>
-      get copyWith => __$$ChatBackendServicePersonImplCopyWithImpl<
-          _$ChatBackendServicePersonImpl>(this, _$identity);
+  _$$ChatBackendServiceUserImplCopyWith<_$ChatBackendServiceUserImpl>
+      get copyWith => __$$ChatBackendServiceUserImplCopyWithImpl<
+          _$ChatBackendServiceUserImpl>(this, _$identity);
 }
 
-abstract class _ChatBackendServicePerson implements ChatBackendServicePerson {
-  const factory _ChatBackendServicePerson(
+abstract class _ChatBackendServiceUser implements ChatBackendServiceUser {
+  const factory _ChatBackendServiceUser(
       {required final String id,
       required final String name,
-      required final String? imageUrl}) = _$ChatBackendServicePersonImpl;
+      required final String? imageUrl}) = _$ChatBackendServiceUserImpl;
 
   @override
   String get id;
@@ -380,7 +379,7 @@ abstract class _ChatBackendServicePerson implements ChatBackendServicePerson {
   String? get imageUrl;
   @override
   @JsonKey(ignore: true)
-  _$$ChatBackendServicePersonImplCopyWith<_$ChatBackendServicePersonImpl>
+  _$$ChatBackendServiceUserImplCopyWith<_$ChatBackendServiceUserImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 

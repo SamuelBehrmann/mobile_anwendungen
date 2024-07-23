@@ -1,4 +1,4 @@
 abstract interface class CreatePostNavigationService {
   void goHome();
-  void showSnackBar(String message);
+  void showSnackBar({required String message});
 }

@@ -22,43 +22,67 @@ class PostControllerImpl extends _$PostControllerImpl
     final Stream<PostBackendServicePost> postStream =
         backendService.getPostStream(postId: postId);
 
-    _postStreamSubscription = postStream
-        .map(PostModelPost.fromBackendServicePost)
-        .listen((PostModelPost post) => state = state.copyWith(post: post));
+    _postStreamSubscription =
+        postStream.map(PostModelPost.fromBackendServicePost).listen(
+              (PostModelPost post) => state = PostModel.data(post: post),
+            );
 
     ref.onDispose(() {
       _postStreamSubscription?.cancel();
       _postStreamSubscription = null;
     });
 
-    return const PostModel(
-      // TODO: fetch from auth
-      currentUserId: 'currentUserId',
-    );
+    return const PostModel.loading();
   }
 
   @override
   void goBack() => navigationService.goBack();
 
   @override
-  void setSelectedMessageToReply({String? messageId}) =>
-      state = state.copyWith(selectedReplyId: messageId);
+  void setSelectedMessageToReply({String? messageId}) => state = state.mapData(
+        (PostModelData data) => data.copyWith(selectedReplyId: messageId),
+      );
 
   @override
-  void submitReply({
-    required String message,
-  }) {
-    if (state.selectedReplyId == null || state.post == null) {
+  void submitReply({required String message}) {
+    if (message.isEmpty) {
+      state = state.mapData(
+        (PostModelData data) => data.copyWith(selectedReplyId: null),
+      );
+      navigationService.showSnackBar(
+        message: 'Stell sicher das du eine Nachricht eingegeben hast',
+      );
       return;
     }
-    unawaited(
-      backendService
-          .submitReply(
-            postId: state.post!.id,
-            message: message,
-            replyToMessageId: state.selectedReplyId!,
-          )
-          .then((_) => state = state.copyWith(selectedReplyId: null)),
+
+    state.when(
+      data: (PostModelPost? post, String? selectedReplyId) =>
+          post == null || selectedReplyId == null
+              ? navigationService.showSnackBar(
+                  message:
+                      'Stell sicher das du einen Post und eine Nachricht ausgewählt hast',
+                )
+              : unawaited(
+                  backendService
+                      .submitReply(
+                        postId: post.id,
+                        message: message,
+                        replyToMessageId: selectedReplyId,
+                      )
+                      .then<void>(
+                        (_) => state = state.mapData(
+                          (PostModelData data) =>
+                              data.copyWith(selectedReplyId: null),
+                        ),
+                      )
+                      .catchError(
+                        (_, __) => navigationService.showSnackBar(
+                          message: 'Failed to submit reply',
+                        ),
+                      ),
+                ),
+      error: (_) {},
+      loading: () {},
     );
   }
 }

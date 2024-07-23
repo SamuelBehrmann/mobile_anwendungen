@@ -43,10 +43,11 @@ class MockCreatePostNavigationService extends _i1.Mock
       );
 
   @override
-  void showSnackBar(String? message) => super.noSuchMethod(
+  void showSnackBar({required String? message}) => super.noSuchMethod(
         Invocation.method(
           #showSnackBar,
-          [message],
+          [],
+          {#message: message},
         ),
         returnValueForMissingStub: null,
       );

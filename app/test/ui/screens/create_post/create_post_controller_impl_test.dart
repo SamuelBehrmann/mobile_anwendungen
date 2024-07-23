@@ -64,8 +64,9 @@ void main() {
         onSend: () {},
       );
       verify(
-        mockCreatePostNavigationService
-            .showSnackBar('Bitte fülle alle Felder aus'),
+        mockCreatePostNavigationService.showSnackBar(
+          message: 'Bitte fülle alle Felder aus',
+        ),
       ).called(1);
     },
   );
@@ -79,8 +80,9 @@ void main() {
         onSend: () {},
       );
       verify(
-        mockCreatePostNavigationService
-            .showSnackBar('Bitte fülle alle Felder aus'),
+        mockCreatePostNavigationService.showSnackBar(
+          message: 'Bitte fülle alle Felder aus',
+        ),
       ).called(1);
     },
   );
@@ -105,8 +107,9 @@ void main() {
       await Future<void>.delayed(Duration.zero);
 
       verify(
-        mockCreatePostNavigationService
-            .showSnackBar('Post erstellen fehlgeschlagen'),
+        mockCreatePostNavigationService.showSnackBar(
+          message: 'Post erstellen fehlgeschlagen',
+        ),
       ).called(1);
     },
   );

@@ -45,5 +45,5 @@ class GoRouterNavigationService extends NavigationServiceAggregator {
   }
 
   @override
-  void showSnackBar(String message) => _showSnackBar(message);
+  void showSnackBar({required String message}) => _showSnackBar(message);
 }

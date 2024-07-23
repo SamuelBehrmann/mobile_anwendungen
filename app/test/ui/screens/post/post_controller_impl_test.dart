@@ -68,9 +68,8 @@ void main() {
     ).thenAnswer((_) => Future<void>.value());
 
     final PostControllerImpl controller = createPostController()
-      ..state = PostModel(
+      ..state = PostModel.data(
         post: PostModelPost.fromBackendServicePost(testPost),
-        currentUserId: 'currentUserId',
         selectedReplyId: 'messageId',
       );
 

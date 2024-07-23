@@ -1,1 +1,41 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"mobile-anwendungen-4ab02","appId":"1:181853757614:android:38794639ac7c3e755c4d3f","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"mobile-anwendungen-4ab02","appId":"1:181853757614:ios:56a1f3c2ecc7129b5c4d3f","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"mobile-anwendungen-4ab02","appId":"1:181853757614:ios:56a1f3c2ecc7129b5c4d3f","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"mobile-anwendungen-4ab02","configurations":{"android":"1:181853757614:android:38794639ac7c3e755c4d3f","ios":"1:181853757614:ios:56a1f3c2ecc7129b5c4d3f","macos":"1:181853757614:ios:56a1f3c2ecc7129b5c4d3f","web":"1:181853757614:web:b7777c60683394715c4d3f","windows":"1:181853757614:web:00fac91dc0146b285c4d3f"}}}}}}
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "mobile-anwendungen-4ab02",
+                    "appId": "1:181853757614:android:38794639ac7c3e755c4d3f",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "ios": {
+                "default": {
+                    "projectId": "mobile-anwendungen-4ab02",
+                    "appId": "1:181853757614:ios:56a1f3c2ecc7129b5c4d3f",
+                    "uploadDebugSymbols": false,
+                    "fileOutput": "ios/Runner/GoogleService-Info.plist"
+                }
+            },
+            "macos": {
+                "default": {
+                    "projectId": "mobile-anwendungen-4ab02",
+                    "appId": "1:181853757614:ios:56a1f3c2ecc7129b5c4d3f",
+                    "uploadDebugSymbols": false,
+                    "fileOutput": "macos/Runner/GoogleService-Info.plist"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "mobile-anwendungen-4ab02",
+                    "configurations": {
+                        "android": "1:181853757614:android:38794639ac7c3e755c4d3f",
+                        "ios": "1:181853757614:ios:56a1f3c2ecc7129b5c4d3f",
+                        "macos": "1:181853757614:ios:56a1f3c2ecc7129b5c4d3f",
+                        "web": "1:181853757614:web:b7777c60683394715c4d3f",
+                        "windows": "1:181853757614:web:00fac91dc0146b285c4d3f"
+                    }
+                }
+            }
+        }
+    }
+}

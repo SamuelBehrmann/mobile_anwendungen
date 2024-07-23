@@ -22,20 +22,29 @@ class PostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        resizeToAvoidBottomInset: true,
         appBar: CustomAppBar(
-          title: model.post?.title,
+          title: model.when(
+            data: (PostModelPost post, _) => post.title,
+            loading: () => null,
+            error: (_) => null,
+          ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: controller.goBack,
           ),
         ),
-        body: model.post == null
-            ? _buildLoadingState()
-            : _buildDataState(model.post!),
+        body: model.when(
+          data: _buildDataState,
+          loading: _buildLoadingState,
+          error: _buildErrorState,
+        ),
       );
 
-  Widget _buildDataState(final PostModelPost post) => Builder(
+  Widget _buildErrorState(String? error) =>
+      error != null ? Center(child: Text(error)) : const SizedBox.shrink();
+
+  Widget _buildDataState(final PostModelPost post, String? selectedReplyId) =>
+      Builder(
         builder: (BuildContext context) => Stack(
           children: <Widget>[
             SafeArea(
@@ -54,7 +63,7 @@ class PostView extends StatelessWidget {
                 ],
               ),
             ),
-            if (model.selectedReplyId != null)
+            if (selectedReplyId != null)
               Align(
                 alignment: Alignment.bottomCenter,
                 child: _buildTextInputField(),
