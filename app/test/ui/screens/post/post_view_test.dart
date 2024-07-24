@@ -1,33 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:medi_support/ui/screens/create_post/create_post_controller.dart';
-import 'package:medi_support/ui/screens/create_post/create_post_view.dart';
 import 'package:medi_support/ui/screens/post/post_controller.dart';
 import 'package:medi_support/ui/screens/post/post_model.dart';
 import 'package:medi_support/ui/screens/post/post_view.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
+import 'package:mockito/mockito.dart';
 
 import '../../../mocks.mocks.dart';
 
 void main() {
   late final PostController controller;
 
-  setUp(() {
+  PostModel model = PostModel.data(
+    post: PostModelPost(
+      author: PostModelUser(
+        id: '',
+        name: '',
+        avatar: Uri.parse('www.google.de'),
+        titles: <String>[''],
+      ),
+      id: '',
+      title: 'post title',
+      content: '',
+      replies: <PostModelMessage>[],
+    ),
+  );
+
+  setUpAll(() {
     controller = MockPostController();
   });
 
-  testWidgets(
-      'CustomAppBar renders correctly without title and profile picture',
+  testWidgets('CustomAppBar renders correctly with buttons',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: PostView(
           controller: controller,
-          model: const PostModel(currentUserId: ''),
+          model: model,
         ),
       ),
     );
 
+    CustomAppBar customAppBar =
+        tester.widget<CustomAppBar>(find.byType(CustomAppBar).first);
+
+    expect(customAppBar.title, 'post title');
     expect(find.byType(CustomAppBar), findsOneWidget);
+    expect(find.byIcon(Icons.arrow_back), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.arrow_back));
+    verify(controller.goBack()).called(1);
+  });
+
+  testWidgets('CustomAppBar renders correctly without buttons',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: PostView(
+          controller: controller,
+          model: model,
+        ),
+      ),
+    );
+
+    // sam pls?????
   });
 }

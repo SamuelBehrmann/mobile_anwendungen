@@ -24,7 +24,7 @@ class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: CustomAppBar(
-          title: 'Search',
+          title: 'Suche',
           leading: IconButton(
             onPressed: controller.goBack,
             icon: const Icon(Icons.arrow_back),
@@ -46,7 +46,7 @@ class SearchView extends StatelessWidget {
         ),
       );
 
-  List<Widget> get _categories => <Widget>[
+  List<Widget> _categories() => <Widget>[
         IconRow(
           iconSize: _iconSize,
           icons: <IconWithLabel>[

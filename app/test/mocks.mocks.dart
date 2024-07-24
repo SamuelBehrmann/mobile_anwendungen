@@ -6,13 +6,19 @@
 import 'dart:async' as _i4;
 import 'dart:ui' as _i6;
 
+import 'package:medi_support/ui/screens/chat/chat_controller.dart' as _i10;
+import 'package:medi_support/ui/screens/chats/chats_controller.dart' as _i9;
 import 'package:medi_support/ui/screens/create_post/create_post_controller.dart'
     as _i5;
 import 'package:medi_support/ui/screens/create_post/services/create_post_backend_service.dart'
     as _i3;
 import 'package:medi_support/ui/screens/create_post/services/create_post_navigation_service.dart'
     as _i2;
+import 'package:medi_support/ui/screens/home/home_controller.dart' as _i8;
 import 'package:medi_support/ui/screens/post/post_controller.dart' as _i7;
+import 'package:medi_support/ui/screens/profile/profile_controller.dart'
+    as _i11;
+import 'package:medi_support/ui/screens/search/search_controller.dart' as _i12;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -47,10 +53,11 @@ class MockCreatePostNavigationService extends _i1.Mock
       );
 
   @override
-  void showSnackBar(String? message) => super.noSuchMethod(
+  void showSnackBar({required String? message}) => super.noSuchMethod(
         Invocation.method(
           #showSnackBar,
-          [message],
+          [],
+          {#message: message},
         ),
         returnValueForMissingStub: null,
       );
@@ -155,6 +162,189 @@ class MockPostController extends _i1.Mock implements _i7.PostController {
           #submitReply,
           [],
           {#message: message},
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [HomeController].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockHomeController extends _i1.Mock implements _i8.HomeController {
+  MockHomeController() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void openSearch() => super.noSuchMethod(
+        Invocation.method(
+          #openSearch,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void openPost({required String? postId}) => super.noSuchMethod(
+        Invocation.method(
+          #openPost,
+          [],
+          {#postId: postId},
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [ChatsController].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockChatsController extends _i1.Mock implements _i9.ChatsController {
+  MockChatsController() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void openChat(String? chatId) => super.noSuchMethod(
+        Invocation.method(
+          #openChat,
+          [chatId],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void filterChats(String? query) => super.noSuchMethod(
+        Invocation.method(
+          #filterChats,
+          [query],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [ChatController].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockChatController extends _i1.Mock implements _i10.ChatController {
+  MockChatController() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void sendMessage(String? message) => super.noSuchMethod(
+        Invocation.method(
+          #sendMessage,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void deleteMessage(String? messageId) => super.noSuchMethod(
+        Invocation.method(
+          #deleteMessage,
+          [messageId],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [ProfileController].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockProfileController extends _i1.Mock implements _i11.ProfileController {
+  MockProfileController() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void updateName(String? name) => super.noSuchMethod(
+        Invocation.method(
+          #updateName,
+          [name],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void updateEmail(String? email) => super.noSuchMethod(
+        Invocation.method(
+          #updateEmail,
+          [email],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void updatePhoneNumber(String? phoneNumber) => super.noSuchMethod(
+        Invocation.method(
+          #updatePhoneNumber,
+          [phoneNumber],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void updateDescription(String? description) => super.noSuchMethod(
+        Invocation.method(
+          #updateDescription,
+          [description],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void updatePassword(String? password) => super.noSuchMethod(
+        Invocation.method(
+          #updatePassword,
+          [password],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [SearchController].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSearchController extends _i1.Mock implements _i12.SearchController {
+  MockSearchController() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void openPost({required String? postId}) => super.noSuchMethod(
+        Invocation.method(
+          #openPost,
+          [],
+          {#postId: postId},
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onSearch({required String? query}) => super.noSuchMethod(
+        Invocation.method(
+          #onSearch,
+          [],
+          {#query: query},
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void discardQuery() => super.noSuchMethod(
+        Invocation.method(
+          #discardQuery,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void goBack() => super.noSuchMethod(
+        Invocation.method(
+          #goBack,
+          [],
         ),
         returnValueForMissingStub: null,
       );

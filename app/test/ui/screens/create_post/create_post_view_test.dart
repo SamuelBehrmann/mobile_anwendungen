@@ -15,25 +15,62 @@ void main() {
     controller = MockCreatePostController();
   });
 
-  testWidgets(
-      'CustomAppBar renders correctly without title and profile picture',
+  testWidgets('CustomAppBar renders correctly with buttons',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(home: CreatePostView(controller: controller)),
     );
 
-    CustomTextFormField test = tester
-        .widget<CustomTextFormField>(find.byType(CustomTextFormField).first);
-
-    expect(test.hint, 'Titel');
     expect(find.byType(CustomAppBar), findsOneWidget);
     expect(find.byIcon(Icons.close), findsOneWidget);
     expect(find.byIcon(Icons.send), findsOneWidget);
-    expect(find.text('Titel'), findsNWidgets(2));
-    expect(find.text('Ich habe ...'), findsOneWidget);
-    expect(find.text('Beitrag'), findsOneWidget);
+  });
+
+  testWidgets('send button working', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(home: CreatePostView(controller: controller)),
+    );
+
+    await tester.tap(find.byIcon(Icons.send));
+    tester.idle();
+    // wtf
+    verify(
+      controller.send(
+        title: 'test',
+        body: 'test',
+        onSend: () {},
+      ),
+    ).called(1);
+  });
+
+  testWidgets('close button working', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(home: CreatePostView(controller: controller)),
+    );
+
+    expect(find.byIcon(Icons.close), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.close));
-    verify(controller.goHome());
+    verify(controller.goHome()).called(1);
+  });
+
+  testWidgets(
+      'both CustomTextFormFields exist and have the right lable and hint',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(home: CreatePostView(controller: controller)),
+    );
+
+    CustomTextFormField formField1 = tester
+        .widget<CustomTextFormField>(find.byType(CustomTextFormField).first);
+
+    CustomTextFormField formField2 = tester
+        .widget<CustomTextFormField>(find.byType(CustomTextFormField).last);
+
+    expect(formField1.label, 'Titel');
+    expect(formField1.hint, 'Titel');
+
+    expect(formField2.label, 'Beitrag');
+    expect(formField2.hint, 'Ich habe ...');
   });
 }
