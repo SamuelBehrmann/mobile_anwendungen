@@ -1,10 +1,6 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:medi_support/ui/widgets/custom_bottom_navigation_bar.dart';
-import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
-import 'package:medi_support/ui/widgets/custom_card.dart';
 import 'package:medi_support/ui/widgets/custom_search_bar.dart';
 
 void main() {

@@ -3,8 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 
 void main() {
-  testWidgets(
-      'CustomAppBar renders correctly without title and profile picture',
+  testWidgets('CustomAppBar renders correctly with title',
       (WidgetTester tester) async {
     const String testTitle = 'Test Title';
     await tester.pumpWidget(
