@@ -47,7 +47,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
               FocusScope.of(context).unfocus();
               _clearController();
             },
-            child: const Icon(Icons.send),
+            child: const Icon(
+              Icons.send,
+              semanticLabel: 'Send',
+            ),
           ),
         ),
         onSubmitted: (String text) {

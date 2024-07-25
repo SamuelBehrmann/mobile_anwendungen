@@ -1,0 +1,7 @@
+appId: de.htwg.moba.medi_support
+---
+- launchApp
+- tapOn: "Lesen"
+- tapOn: "Reply"
+- inputText: "Hello, Maestro!"
+- tapOn: "Send"

@@ -36,6 +36,7 @@ class Message extends StatelessWidget {
         child: const Icon(
           Icons.reply,
           size: 16,
+          semanticLabel: 'Reply',
         ),
       );
 
