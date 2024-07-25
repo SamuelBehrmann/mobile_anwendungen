@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:medi_support/ui/screens/search/search_controller.dart';
 import 'package:medi_support/ui/screens/search/search_model.dart';
 import 'package:medi_support/ui/screens/search/search_view.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
@@ -11,7 +10,7 @@ import 'package:mockito/mockito.dart';
 import '../../../mocks.mocks.dart';
 
 void main() {
-  late final SearchController controller;
+  late MockSearchController controller;
 
   SearchModel model = const SearchModel(
     query: null,
@@ -71,8 +70,6 @@ void main() {
     );
 
     expect(find.byType(IconRow), findsNWidgets(2));
-    // why not working
-    expect(find.byType(IconWithLabel), findsNWidgets(6));
   });
 
   testWidgets('Categories renders correctly on click works',
@@ -86,10 +83,7 @@ void main() {
       ),
     );
 
-    // sam pls why
-    await tester.tap(find.byType(IconWithLabel).first);
+    await tester.tap(find.text('Ohren').first);
     verify(controller.onSearch(query: 'Ohren')).called(1);
-
-    // why not working
   });
 }

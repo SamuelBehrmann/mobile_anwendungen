@@ -9,7 +9,7 @@ import 'package:medi_support/ui/widgets/custom_text_form_field.dart';
 import '../../../mocks.mocks.dart';
 
 void main() {
-  late final ProfileController controller;
+  late ProfileController controller;
 
   ProfileModel model = const ProfileModel.data(
     user: ProfileModelUser(

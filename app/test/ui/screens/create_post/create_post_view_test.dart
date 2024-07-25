@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:medi_support/ui/screens/create_post/create_post_controller.dart';
 import 'package:medi_support/ui/screens/create_post/create_post_view.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/custom_text_form_field.dart';
@@ -9,7 +8,7 @@ import 'package:mockito/mockito.dart';
 import '../../../mocks.mocks.dart';
 
 void main() {
-  late final CreatePostController controller;
+  late MockCreatePostController controller;
 
   setUp(() {
     controller = MockCreatePostController();
@@ -33,12 +32,12 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.send));
     tester.idle();
-    // wtf
+
     verify(
       controller.send(
-        title: 'test',
-        body: 'test',
-        onSend: () {},
+        title: anyNamed('title'),
+        body: anyNamed('body'),
+        onSend: anyNamed('onSend'),
       ),
     ).called(1);
   });

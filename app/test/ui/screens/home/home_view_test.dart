@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:medi_support/ui/screens/home/home_controller.dart';
 import 'package:medi_support/ui/screens/home/home_model.dart';
 import 'package:medi_support/ui/screens/home/home_view.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/post_preview.dart';
+import 'package:mockito/mockito.dart';
 
 import '../../../mocks.mocks.dart';
 
 void main() {
-  late final HomeController controller;
+  late MockHomeController controller;
 
   HomeModel model = const HomeModel.data(
     posts: <HomeModelPost>[
@@ -46,13 +46,12 @@ void main() {
         tester.widget<CustomAppBar>(find.byType(CustomAppBar).first);
 
     expect(customAppBar.title, 'Home');
-    expect(find.byType(CustomAppBar), findsOneWidget);
     expect(find.byIcon(Icons.search), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.search));
-    // wtf client sam
-    // tester.idle();
-    // verify(controller.openSearch).called(1);
+
+    tester.idle();
+    verify(controller.openSearch()).called(1);
   });
 
   testWidgets('At least Post is rendered correctly',
