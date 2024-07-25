@@ -9,7 +9,7 @@ import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import '../../../mocks.mocks.dart';
 
 void main() {
-  late final ChatsController controller;
+  late ChatsController controller;
 
   ChatsModel model = const ChatsModel.data(
     chats: <ChatsModelChat>[
@@ -17,6 +17,15 @@ void main() {
         id: 'id',
         name: 'name',
         message: 'test',
+        profilePicturePath: 'www.google.de',
+      ),
+    ],
+    filteredChats: <ChatsModelChat>[
+      ChatsModelChat(
+        id: 'id',
+        name: 'name',
+        message: 'test',
+        profilePicturePath: 'www.google.de',
       ),
     ],
   );
@@ -55,8 +64,6 @@ void main() {
 
     ChatList chatList = tester.widget<ChatList>(find.byType(ChatList).first);
 
-    expect(find.byType(ChatList), findsOneWidget);
-    // warum nicht 1? sam
-    // expect(chatList.chats.length, 1);
+    expect(chatList.chats.length, 1);
   });
 }
