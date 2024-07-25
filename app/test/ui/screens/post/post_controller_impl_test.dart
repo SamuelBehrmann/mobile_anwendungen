@@ -67,11 +67,14 @@ void main() {
       ),
     ).thenAnswer((_) => Future<void>.value(null));
 
-    final PostControllerImpl controller = createPostController()
-      ..state = PostModel.data(
-        post: PostModelPost.fromBackendServicePost(testPost),
-        selectedReplyId: 'messageId',
-      );
+    final PostControllerImpl controller = createPostController();
+
+    await Future<void>.delayed(Duration.zero);
+
+    controller.state = PostModel.data(
+      post: PostModelPost.fromBackendServicePost(testPost),
+      selectedReplyId: 'messageId',
+    );
 
     await Future<void>.delayed(Duration.zero);
     controller.submitReply(message: 'message');
