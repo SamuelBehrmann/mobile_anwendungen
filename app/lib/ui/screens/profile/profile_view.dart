@@ -67,29 +67,38 @@ class ProfileView extends StatelessWidget {
         ),
       );
 
-  Widget _buildPasswordInput(ProfileModelData data) => CustomTextFormField(
-        onChanged: controller.updatePassword,
-        initialText: data.user.name,
-        label: 'Password',
-        hint: 'Edit your password',
-        icon: Icons.lock_outline,
-        isPasswordField: true,
+  Widget _buildPasswordInput(ProfileModelData data) => Builder(
+        builder: (BuildContext context) => CustomTextFormField(
+          onChanged: controller.updatePassword,
+          initialText: data.user.name,
+          label: 'Password',
+          hint: 'Edit your password',
+          icon: Icons.lock_outline,
+          isPasswordField: true,
+          onTapOutside: () => FocusScope.of(context).unfocus(),
+        ),
       );
 
-  Widget _buildPhoneNumberInput(ProfileModelData data) => CustomTextFormField(
-        onChanged: controller.updatePhoneNumber,
-        initialText: data.user.phoneNumber,
-        label: 'Phone Number',
-        hint: 'Edit your phone number',
-        icon: Icons.smartphone_outlined,
+  Widget _buildPhoneNumberInput(ProfileModelData data) => Builder(
+        builder: (BuildContext context) => CustomTextFormField(
+          onChanged: controller.updatePhoneNumber,
+          initialText: data.user.phoneNumber,
+          label: 'Phone Number',
+          hint: 'Edit your phone number',
+          icon: Icons.smartphone_outlined,
+          onTapOutside: () => FocusScope.of(context).unfocus(),
+        ),
       );
 
-  Widget _buildEmailInput(ProfileModelData data) => CustomTextFormField(
-        onChanged: controller.updateEmail,
-        initialText: data.user.email,
-        label: 'Email',
-        hint: 'Edit your email',
-        icon: Icons.email_outlined,
+  Widget _buildEmailInput(ProfileModelData data) => Builder(
+        builder: (BuildContext context) => CustomTextFormField(
+          onChanged: controller.updateEmail,
+          initialText: data.user.email,
+          label: 'Email',
+          hint: 'Edit your email',
+          icon: Icons.email_outlined,
+          onTapOutside: () => FocusScope.of(context).unfocus(),
+        ),
       );
 
   Widget _buildAvatar(final Uri? imageUrl) => CircleAvatar(
@@ -117,6 +126,7 @@ class ProfileView extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
               maxLines: _nameMaxLines,
               onChanged: (String value) => controller.updateName(value),
+              onTapOutside: (_) => FocusScope.of(context).unfocus(),
             ),
             TextFormField(
               initialValue: description,
@@ -129,6 +139,7 @@ class ProfileView extends StatelessWidget {
               minLines: _descriptionMinLines,
               maxLines: _descriptionMaxLines,
               onChanged: (String value) => controller.updateDescription(value),
+              onTapOutside: (_) => FocusScope.of(context).unfocus(),
             ),
           ],
         ),
