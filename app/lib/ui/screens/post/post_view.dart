@@ -10,6 +10,7 @@ class PostView extends StatelessWidget {
   static const EdgeInsets _screenPadding = EdgeInsets.all(16);
   static const EdgeInsets _textInputFieldPadding = EdgeInsets.all(8);
   static const double _verticalDividerWidth = 32;
+  static const double _maxReplyRecursionDepth = 5;
 
   final PostController controller;
   final PostModel model;
@@ -119,7 +120,7 @@ class PostView extends StatelessWidget {
 
   List<Widget> _buildReplyRekursive(
     PostModelMessage message,
-    int rekursionDepth,
+    int recursionDepth,
   ) =>
       <Widget>[
         IntrinsicHeight(
@@ -127,7 +128,7 @@ class PostView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ...List<Widget>.generate(
-                rekursionDepth,
+                recursionDepth,
                 (_) => Builder(
                   builder: (BuildContext context) => VerticalDivider(
                     width: _verticalDividerWidth,
@@ -157,8 +158,12 @@ class PostView extends StatelessWidget {
         ),
         ...message.replies
             .mapIndexed(
-              (int index, PostModelMessage reply) =>
-                  _buildReplyRekursive(reply, rekursionDepth + 1),
+              (int index, PostModelMessage reply) => _buildReplyRekursive(
+                reply,
+                recursionDepth < _maxReplyRecursionDepth
+                    ? recursionDepth + 1
+                    : recursionDepth,
+              ),
             )
             .flattened,
       ];
