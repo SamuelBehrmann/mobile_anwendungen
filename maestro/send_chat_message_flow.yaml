@@ -1,7 +1,9 @@
 appId: de.htwg.moba.medi_support
 ---
 # Precondition: App started and on Homescreen
-- tapOn: "Lesen"
-- tapOn: "Reply"
+- tapOn: "Chat\nTab 3 of 4"
+- tapOn:
+    point: "50%,22%"
+- tapOn: "Type a message"
 - inputText: "Hello, Maestro!"
 - tapOn: "Send"
