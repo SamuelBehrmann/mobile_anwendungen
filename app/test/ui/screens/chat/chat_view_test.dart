@@ -9,7 +9,7 @@ import 'package:mockito/mockito.dart';
 import '../../../mocks.mocks.dart';
 
 void main() {
-  late final ChatController controller;
+  late ChatController controller;
 
   ChatModel model = ChatModel.data(
     groupedMessages: <MapEntry<String, List<ChatModelMessage>>>[
@@ -62,8 +62,8 @@ void main() {
       ),
     );
 
-    // wtf httpclient sam
-    expect(find.byType(ListView), findsOneWidget);
+    expect(find.byType(ListView), findsAtLeast(1));
+    expect(find.text('test'), findsOneWidget);
   });
 
   testWidgets('SendMessageArea renders correctly and is working',
@@ -76,9 +76,6 @@ void main() {
         ),
       ),
     );
-
-    TextField textField =
-        tester.widget<TextField>(find.byType(TextField).first);
 
     expect(find.byType(TextField), findsOneWidget);
 
