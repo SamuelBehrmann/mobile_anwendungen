@@ -72,7 +72,7 @@ void main() {
     expect(find.byType(IconRow), findsNWidgets(2));
   });
 
-  testWidgets('Categories renders correctly on click works',
+  testWidgets('Tapping a category calls controller',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
