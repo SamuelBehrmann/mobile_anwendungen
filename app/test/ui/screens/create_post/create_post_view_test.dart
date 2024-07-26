@@ -54,7 +54,7 @@ void main() {
   });
 
   testWidgets(
-      'both CustomTextFormFields exist and have the right lable and hint',
+      'Both input fields are configured correctly',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(home: CreatePostView(controller: controller)),
