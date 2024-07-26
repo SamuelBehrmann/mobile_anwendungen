@@ -23,7 +23,7 @@ void main() {
     expect(find.byType(CustomTextField), findsOneWidget);
   });
 
-  testWidgets('CustomTextField renders correctly whit onSubmitted working',
+  testWidgets('CustomTextField renders correctly with onSubmitted working',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
