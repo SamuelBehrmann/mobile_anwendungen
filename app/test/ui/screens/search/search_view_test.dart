@@ -59,7 +59,7 @@ void main() {
     expect(customSearchBar.currentQuery, null);
   });
 
-  testWidgets('Categories renders correctly', (WidgetTester tester) async {
+  testWidgets('Categories render correctly', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: SearchView(
