@@ -69,7 +69,7 @@ void main() {
       expect(contentFinder, findsOneWidget);
 
       final Text titleWidget = tester.widget(titleFinder) as Text;
-      final Text contentWidget = tester.widget(contentFinder) as Text;
+      final Text contentWidget = tester.widget<Text>(contentFinder);
 
       expect(titleWidget.overflow, TextOverflow.ellipsis);
       expect(contentWidget.overflow, TextOverflow.ellipsis);
