@@ -31,8 +31,8 @@ class _CreatePostViewState extends State<CreatePostView> {
 
   Widget _buildTitleField() => Builder(
         builder: (BuildContext context) => CustomTextFormField(
-          hint: "Titel",
-          label: 'Titel',
+          hint: "Title",
+          label: 'Title',
           controller: titleController,
           onTapOutside: FocusScope.of(context).unfocus,
         ),
@@ -40,8 +40,8 @@ class _CreatePostViewState extends State<CreatePostView> {
 
   Widget _buildBodyField() => Builder(
         builder: (BuildContext context) => CustomTextFormField(
-          hint: "Ich habe ...",
-          label: 'Beitrag',
+          hint: "I have ...",
+          label: 'Post',
           controller: bodyController,
           minLines: 5,
           maxLines: 25,

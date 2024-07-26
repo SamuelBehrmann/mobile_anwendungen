@@ -15,7 +15,7 @@ class MainView extends StatefulWidget {
     ),
     CustomBottomNavBarItem(
       icon: Icons.chat,
-      label: 'Chat',
+      label: 'Chats',
     ),
     CustomBottomNavBarItem(
       icon: Icons.person,
