@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:medi_support/ui/widgets/custom_card.dart';
@@ -9,7 +8,8 @@ void main() {
     child: Text('Test'),
   );
 
-  testWidgets('CustomCard renders correctly', (WidgetTester tester) async {
+  testWidgets('CustomCard is configured correctly',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -18,10 +18,18 @@ void main() {
       ),
     );
 
-    expect(find.byType(CustomCard), findsOneWidget);
-
     expect(find.byType(Card), findsOneWidget);
-
     expect(find.text('Test'), findsOneWidget);
+    expect(
+      tester.widget<Card>(find.byType(Card)).shape,
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: const BorderSide(
+          strokeAlign: BorderSide.strokeAlignInside,
+          color: Color(0xffeaddff),
+          width: 1,
+        ),
+      ),
+    );
   });
 }

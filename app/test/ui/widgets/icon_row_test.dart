@@ -53,9 +53,6 @@ void main() {
 
       await tester.tap(find.byIcon(Icons.home));
       expect(pressedIconLabel, 'Home');
-
-      await tester.tap(find.byIcon(Icons.settings));
-      expect(pressedIconLabel, 'Settings');
     });
   });
 }

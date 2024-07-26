@@ -38,8 +38,7 @@ void main() {
     controller = MockChatController();
   });
 
-  testWidgets('CustomAppBar renders correctly with buttons',
-      (WidgetTester tester) async {
+  testWidgets('CustomAppBar renders correctly', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: ChatView(

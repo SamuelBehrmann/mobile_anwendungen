@@ -5,6 +5,7 @@ import 'package:medi_support/ui/screens/chats/chats_model.dart';
 import 'package:medi_support/ui/screens/chats/chats_view.dart';
 import 'package:medi_support/ui/screens/chats/widgets/chats_list.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
+import 'package:medi_support/ui/widgets/custom_search_bar.dart';
 
 import '../../../mocks.mocks.dart';
 
@@ -50,6 +51,19 @@ void main() {
 
     expect(find.byType(CustomAppBar), findsOneWidget);
     expect(customAppBar.title, 'Chats');
+  });
+
+  testWidgets('Searchbar is rendered correctly', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: ChatsView(
+          controller: controller,
+          model: model,
+        ),
+      ),
+    );
+
+    expect(find.byType(CustomSearchBar), findsOneWidget);
   });
 
   testWidgets('ChatList is rendered correctly', (WidgetTester tester) async {

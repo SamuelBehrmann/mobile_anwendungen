@@ -47,12 +47,9 @@ void main() {
     expect(customAppBar.title, 'post title');
     expect(find.byType(CustomAppBar), findsOneWidget);
     expect(find.byIcon(Icons.arrow_back), findsOneWidget);
-
-    await tester.tap(find.byIcon(Icons.arrow_back));
-    verify(controller.goBack()).called(1);
   });
 
-  testWidgets('CustomAppBar renders correctly without buttons',
+  testWidgets('Tapping back button calls controller',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
@@ -63,6 +60,7 @@ void main() {
       ),
     );
 
-    // sam pls?????
+    await tester.tap(find.byIcon(Icons.arrow_back));
+    verify(controller.goBack()).called(1);
   });
 }

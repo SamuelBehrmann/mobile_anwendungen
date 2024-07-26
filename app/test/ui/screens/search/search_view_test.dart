@@ -20,7 +20,7 @@ void main() {
     controller = MockSearchController();
   });
 
-  testWidgets('CustomAppBar renders correctly with buttons',
+  testWidgets('CustomAppBar is configured correctly',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
@@ -37,6 +37,18 @@ void main() {
     expect(customAppBar.title, 'Suche');
     expect(find.byType(CustomAppBar), findsOneWidget);
     expect(find.byIcon(Icons.arrow_back), findsOneWidget);
+  });
+
+  testWidgets('Tapping back button calls controller',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SearchView(
+          controller: controller,
+          model: model,
+        ),
+      ),
+    );
 
     await tester.tap(find.byIcon(Icons.arrow_back));
     verify(controller.goBack()).called(1);

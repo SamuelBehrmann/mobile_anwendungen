@@ -5,22 +5,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:medi_support/ui/widgets/custom_text_field.dart';
 
 void main() {
-  final Completer<void> completerSubmit = Completer<void>();
-  final Completer<void> completerOnTabOutside = Completer<void>();
-  CustomTextField customTextField = CustomTextField(
-    onSubmitted: completerSubmit.complete,
-    onTapOutside: completerOnTabOutside.complete,
-  );
-  testWidgets('CustomTextField renders correctly', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: customTextField,
-        ),
-      ),
-    );
+  late Completer<void> completerSubmit;
+  late Completer<void> completerOnTabOutside;
+  late CustomTextField customTextField;
 
-    expect(find.byType(CustomTextField), findsOneWidget);
+  setUp(() {
+    completerSubmit = Completer<void>();
+    completerOnTabOutside = Completer<void>();
+    customTextField = CustomTextField(
+      onSubmitted: completerSubmit.complete,
+      onTapOutside: completerOnTabOutside.complete,
+    );
   });
 
   testWidgets('CustomTextField renders correctly with onSubmitted working',

@@ -20,11 +20,9 @@ void main() {
     ),
   );
 
-  setUp(() {
-    controller = MockProfileController();
-  });
+  setUp(() => controller = MockProfileController());
 
-  testWidgets('CustomAppBar renders correctly with buttons',
+  testWidgets('CustomAppBar is configured correctly',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(

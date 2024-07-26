@@ -31,7 +31,7 @@ void main() {
     controller = MockHomeController();
   });
 
-  testWidgets('CustomAppBar renders correctly with buttons',
+  testWidgets('CustomAppBar is configured correctly',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
@@ -47,15 +47,28 @@ void main() {
 
     expect(customAppBar.title, 'Home');
     expect(find.byIcon(Icons.search), findsOneWidget);
-
-    await tester.tap(find.byIcon(Icons.search));
-
-    tester.idle();
-    verify(controller.openSearch()).called(1);
   });
 
-  testWidgets('At least Post is rendered correctly',
-      (WidgetTester tester) async {
+  testWidgets(
+    'Search button calls controller',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: HomeView(
+            controller: controller,
+            model: model,
+          ),
+        ),
+      );
+
+      await tester.tap(find.byIcon(Icons.search));
+
+      tester.idle();
+      verify(controller.openSearch()).called(1);
+    },
+  );
+
+  testWidgets('Posts are shown', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: HomeView(
