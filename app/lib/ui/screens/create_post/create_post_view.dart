@@ -12,6 +12,8 @@ class CreatePostView extends StatefulWidget {
 }
 
 class _CreatePostViewState extends State<CreatePostView> {
+  static const EdgeInsets _screenPadding =
+      EdgeInsets.symmetric(horizontal: 16, vertical: 8);
   late final TextEditingController bodyController;
   late final TextEditingController titleController;
 
@@ -28,26 +30,6 @@ class _CreatePostViewState extends State<CreatePostView> {
     titleController.dispose();
     super.dispose();
   }
-
-  Widget _buildTitleField() => Builder(
-        builder: (BuildContext context) => CustomTextFormField(
-          hint: "Titel",
-          label: 'Titel',
-          controller: titleController,
-          onTapOutside: FocusScope.of(context).unfocus,
-        ),
-      );
-
-  Widget _buildBodyField() => Builder(
-        builder: (BuildContext context) => CustomTextFormField(
-          hint: "Ich habe ...",
-          label: 'Beitrag',
-          controller: bodyController,
-          minLines: 5,
-          maxLines: 25,
-          onTapOutside: FocusScope.of(context).unfocus,
-        ),
-      );
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -77,16 +59,31 @@ class _CreatePostViewState extends State<CreatePostView> {
           ],
         ),
         body: ListView(
+          padding: _screenPadding,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _buildTitleField(),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _buildBodyField(),
-            ),
+            _buildTitleField(),
+            _buildBodyField(),
           ],
+        ),
+      );
+
+  Widget _buildTitleField() => Builder(
+        builder: (BuildContext context) => CustomTextFormField(
+          hint: "Titel",
+          label: 'Titel',
+          controller: titleController,
+          onTapOutside: FocusScope.of(context).unfocus,
+        ),
+      );
+
+  Widget _buildBodyField() => Builder(
+        builder: (BuildContext context) => CustomTextFormField(
+          hint: "Ich habe ...",
+          label: 'Beitrag',
+          controller: bodyController,
+          minLines: 5,
+          maxLines: 25,
+          onTapOutside: FocusScope.of(context).unfocus,
         ),
       );
 }

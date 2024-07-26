@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 class ChatView extends StatelessWidget {
   // _buildMessageList
   static const EdgeInsets _messagePadding =
-      EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0);
+      EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0);
   static const EdgeInsets _chatListPadding = EdgeInsets.all(0);
   static const EdgeInsets _messageContentPadding = EdgeInsets.all(6.0);
   static const SizedBox _sizedBox = SizedBox(height: 8.0, width: 6);
@@ -17,7 +17,7 @@ class ChatView extends StatelessWidget {
   static final BorderRadius _messageBorderRadius = BorderRadius.circular(12);
   // _buildSendMessageArea
   static const EdgeInsets containerPadding =
-      EdgeInsets.symmetric(horizontal: 24.0);
+      EdgeInsets.symmetric(horizontal: 16.0);
   static const EdgeInsets textFieldPadding =
       EdgeInsets.only(bottom: 24.0, top: 8);
   static const EdgeInsets contentPadding =
@@ -36,6 +36,10 @@ class ChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: CustomAppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: controller.goBack,
+          ),
           title: model.map(
             data: (ChatModelData chat) => chat.chatPartner.name,
             loading: (_) => null,
@@ -207,13 +211,10 @@ class ChatView extends StatelessWidget {
     );
   }
 
-  Widget _buildLoadingState(ChatsModelLoading value) => const Center(
-        child: CircularProgressIndicator(),
-      );
+  Widget _buildLoadingState(ChatsModelLoading value) =>
+      const Center(child: CircularProgressIndicator());
 
   Widget _buildErrorState(ChatsModelError error) => error.message != null
-      ? Center(
-          child: Text(error.message!),
-        )
+      ? Center(child: Text(error.message!))
       : const SizedBox();
 }

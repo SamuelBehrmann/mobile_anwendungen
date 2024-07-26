@@ -5,6 +5,10 @@ import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/post_preview.dart';
 
 class HomeView extends StatelessWidget {
+  static const EdgeInsets _screenPadding =
+      EdgeInsets.symmetric(horizontal: 16, vertical: 24);
+  static const double _separatorSize = 16;
+
   final HomeModel model;
   final HomeController controller;
 
@@ -37,7 +41,7 @@ class HomeView extends StatelessWidget {
   Widget _buildData(List<HomeModelPost> posts) => CustomScrollView(
         slivers: <Widget>[
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+            padding: _screenPadding,
             sliver: SliverList.separated(
               itemBuilder: (_, int index) {
                 final HomeModelPost post = posts[index];
@@ -54,7 +58,8 @@ class HomeView extends StatelessWidget {
                   postId: post.postId,
                 );
               },
-              separatorBuilder: (_, __) => const SizedBox(height: 16),
+              separatorBuilder: (_, __) =>
+                  const SizedBox(height: _separatorSize),
               itemCount: posts.length,
             ),
           ),

@@ -130,4 +130,7 @@ class ChatControllerImpl extends _$ChatControllerImpl
     groupedMessages.add(currentGroup);
     return groupedMessages;
   }
+
+  @override
+  void goBack() => navigationService.goBack();
 }
