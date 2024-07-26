@@ -42,7 +42,7 @@ void main() {
     expect(completerSubmit.isCompleted, isTrue);
   });
 
-  testWidgets('CustomTextField renders correctly whit onTabOutside working',
+  testWidgets('CustomTextField renders correctly with onTabOutside working',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
