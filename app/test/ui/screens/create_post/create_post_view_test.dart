@@ -25,7 +25,7 @@ void main() {
     expect(find.byIcon(Icons.send), findsOneWidget);
   });
 
-  testWidgets('send button working', (WidgetTester tester) async {
+  testWidgets('Send button calls controller', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(home: CreatePostView(controller: controller)),
     );
