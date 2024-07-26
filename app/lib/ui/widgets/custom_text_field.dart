@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatefulWidget {
   final void Function(String message) onSubmitted;
   final VoidCallback? onTapOutside;
+  final String? hint;
 
   const CustomTextField({
     super.key,
     required this.onSubmitted,
+    this.hint,
     this.onTapOutside,
   });
 
@@ -15,6 +17,9 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
+  static final BorderRadius _buttonBorderRadius = BorderRadius.circular(32.0);
+  static const EdgeInsets contentPadding =
+      EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0);
   late final TextEditingController _controller;
 
   @override
@@ -39,15 +44,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
         autofocus: true,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          labelText: 'Enter a reply',
-          suffixIcon: GestureDetector(
-            onTap: () {
+          hintText: widget.hint,
+          contentPadding: contentPadding,
+          border: OutlineInputBorder(
+            borderRadius: _buttonBorderRadius,
+          ),
+          suffixIcon: IconButton(
+            icon: const Icon(Icons.send),
+            onPressed: () {
               widget.onSubmitted(_controller.text);
               FocusScope.of(context).unfocus();
               _clearController();
             },
-            child: const Icon(Icons.send),
           ),
         ),
         onSubmitted: (String text) {

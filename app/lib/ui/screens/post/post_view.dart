@@ -8,9 +8,9 @@ import 'package:medi_support/ui/widgets/message.dart';
 
 class PostView extends StatelessWidget {
   static const EdgeInsets _screenPadding = EdgeInsets.all(16);
-  static const EdgeInsets _textInputFieldPadding =
-      EdgeInsets.symmetric(horizontal: 16, vertical: 8);
   static const double _verticalDividerWidth = 32;
+  static const EdgeInsets _textInputFieldPadding =
+      EdgeInsets.fromLTRB(16, 8, 16, 0);
 
   final PostController controller;
   final PostModel model;
@@ -106,12 +106,11 @@ class PostView extends StatelessWidget {
             child: Padding(
               padding: _textInputFieldPadding,
               child: CustomTextField(
-                onSubmitted: (String message) {
-                  controller.submitReply(message: message);
-                },
-                onTapOutside: () {
-                  controller.setSelectedMessageToReply(messageId: null);
-                },
+                hint: 'Type a reply',
+                onSubmitted: (String message) =>
+                    controller.submitReply(message: message),
+                onTapOutside: () =>
+                    controller.setSelectedMessageToReply(messageId: null),
               ),
             ),
           ),
