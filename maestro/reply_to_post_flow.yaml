@@ -1,7 +1,7 @@
 appId: de.htwg.moba.medi_support
 ---
 # Precondition: App started and on Homescreen
-- tapOn: "Lesen"
+- tapOn: "Read"
 - tapOn: "Reply"
 - inputText: "Hello, Maestro!"
 - tapOn: "Send"
