@@ -1,0 +1,7 @@
+appId: de.htwg.moba.medi_support
+---
+# Precondition: App started and on Homescreen
+- tapOn: "Search"
+- tapOn: "Search"
+- inputText: "aua"
+- tapOn: "meine lunge tut weh\naua"

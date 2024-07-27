@@ -50,7 +50,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
             borderRadius: _buttonBorderRadius,
           ),
           suffixIcon: IconButton(
-            icon: const Icon(Icons.send),
+            icon: const Icon(
+              Icons.send,
+              semanticLabel: 'Send',
+            ),
             onPressed: () {
               widget.onSubmitted(_controller.text);
               FocusScope.of(context).unfocus();

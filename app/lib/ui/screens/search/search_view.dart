@@ -50,9 +50,24 @@ class SearchView extends StatelessWidget {
         IconRow(
           iconSize: _iconSize,
           icons: <IconWithLabel>[
-            IconWithLabel(SvgPicture.asset('assets/svg/ear.svg'), 'Ohren'),
-            IconWithLabel(SvgPicture.asset('assets/svg/lungs.svg'), 'Lunge'),
-            IconWithLabel(SvgPicture.asset('assets/svg/physician.svg'), 'Arzt'),
+            IconWithLabel(
+              SvgPicture.asset(
+                'assets/svg/ear.svg',
+              ),
+              'Ears',
+            ),
+            IconWithLabel(
+              SvgPicture.asset(
+                'assets/svg/lungs.svg',
+              ),
+              'Lungs',
+            ),
+            IconWithLabel(
+              SvgPicture.asset(
+                'assets/svg/physician.svg',
+              ),
+              'Doctor',
+            ),
           ],
           onIconPressed: ({required String value}) =>
               controller.onSearch(query: value),
@@ -60,9 +75,12 @@ class SearchView extends StatelessWidget {
         IconRow(
           iconSize: 24,
           icons: <IconWithLabel>[
-            IconWithLabel(SvgPicture.asset('assets/svg/stomack.svg'), 'Magen'),
-            IconWithLabel(SvgPicture.asset('assets/svg/tooth.svg'), 'Zahn'),
-            IconWithLabel(SvgPicture.asset('assets/svg/heart.svg'), 'Herz'),
+            IconWithLabel(
+              SvgPicture.asset('assets/svg/stomack.svg'),
+              'Stomach',
+            ),
+            IconWithLabel(SvgPicture.asset('assets/svg/tooth.svg'), 'Teeth'),
+            IconWithLabel(SvgPicture.asset('assets/svg/heart.svg'), 'Hearth'),
           ],
           onIconPressed: ({required String value}) =>
               controller.onSearch(query: value),

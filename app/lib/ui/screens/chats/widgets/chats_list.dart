@@ -16,24 +16,23 @@ class ChatList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListView.builder(
-      padding: padding,
-      itemCount: chats.length,
-      itemBuilder: (BuildContext context, int index) {
-        final ChatsModelChat chat = chats[index];
-        return ListTile(
-          leading: CircleAvatar(
-            child: chat.profilePicturePath != null
-                ? CustomCachedNetworkImage(
-                    imageUrl: chat.profilePicturePath!,
-                  )
-                : const Icon(
-                    Icons.person_outline,
-                  ),
-          ),
-          title: Text(chat.name),
-          subtitle: Text(chat.message),
-          onTap: () => onChatSelected(chat.id),
-        );
-      },
-    );
+        padding: padding,
+        itemCount: chats.length,
+        itemBuilder: (BuildContext context, int index) {
+          final ChatsModelChat chat = chats[index];
+          return ListTile(
+            leading: CircleAvatar(
+              child: chat.profilePicturePath != null
+                  ? CustomCachedNetworkImage(imageUrl: chat.profilePicturePath!)
+                  : const Icon(Icons.person_outline),
+            ),
+            title: Text(
+              chat.name,
+              semanticsLabel: "Chat with ${chat.name}",
+            ),
+            subtitle: Text(chat.message),
+            onTap: () => onChatSelected(chat.id),
+          );
+        },
+      );
 }
