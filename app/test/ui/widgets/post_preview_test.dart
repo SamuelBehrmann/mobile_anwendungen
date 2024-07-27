@@ -22,6 +22,7 @@ void main() {
               title: mockTitle,
               content: mockContent,
               onPostTap: (String s) {},
+              buttonLabel: '',
             ),
           ),
         ),
@@ -42,6 +43,7 @@ void main() {
               title: 'Another Post',
               content: 'More content here.',
               onPostTap: (String s) {},
+              buttonLabel: '',
             ),
           ),
         ),
@@ -63,6 +65,7 @@ void main() {
               title: 'Test Title',
               content: 'Test content goes here.',
               onPostTap: (String s) {},
+              buttonLabel: '',
             ),
           ),
         ),
@@ -97,6 +100,7 @@ void main() {
               onPostTap: (String postId) {
                 tappedPostId = postId;
               },
+              buttonLabel: '',
             ),
           ),
         ),

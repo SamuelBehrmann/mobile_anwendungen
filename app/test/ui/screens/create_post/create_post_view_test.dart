@@ -53,8 +53,7 @@ void main() {
     verify(controller.goHome()).called(1);
   });
 
-  testWidgets(
-      'Both input fields are configured correctly',
+  testWidgets('Both input fields are configured correctly',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(home: CreatePostView(controller: controller)),
@@ -66,10 +65,10 @@ void main() {
     CustomTextFormField formField2 = tester
         .widget<CustomTextFormField>(find.byType(CustomTextFormField).last);
 
-    expect(formField1.label, 'Titel');
-    expect(formField1.hint, 'Titel');
+    expect(formField1.label, 'Title');
+    expect(formField1.hint, 'Title');
 
-    expect(formField2.label, 'Beitrag');
-    expect(formField2.hint, 'Ich habe ...');
+    expect(formField2.label, 'Post');
+    expect(formField2.hint, 'I have ...');
   });
 }

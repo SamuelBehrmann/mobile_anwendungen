@@ -40,7 +40,7 @@ class SearchView extends StatelessWidget {
                 onDiscard: controller.discardQuery,
               ),
               const SizedBox(height: _verticalSpacerSize),
-              if (model.query == null) ..._categories else _resultList(),
+              if (model.query == null) ..._categories() else _resultList(),
             ],
           ),
         ),

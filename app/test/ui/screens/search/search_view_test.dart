@@ -95,7 +95,7 @@ void main() {
       ),
     );
 
-    await tester.tap(find.text('Ohren').first);
-    verify(controller.onSearch(query: 'Ohren')).called(1);
+    await tester.tap(find.text('Ears').first);
+    verify(controller.onSearch(query: 'Ears')).called(1);
   });
 }
