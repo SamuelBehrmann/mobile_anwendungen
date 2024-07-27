@@ -46,6 +46,7 @@ class HomeView extends StatelessWidget {
               itemBuilder: (_, int index) {
                 final HomeModelPost post = posts[index];
                 return PostPreview(
+                  buttonLabel: 'Read',
                   onPostTap: (String postId) =>
                       controller.openPost(postId: postId),
                   title: post.title,
