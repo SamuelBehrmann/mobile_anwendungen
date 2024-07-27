@@ -9,6 +9,9 @@ import 'package:medi_support/ui/widgets/icon_row.dart';
 class SearchView extends StatelessWidget {
   static const EdgeInsets _searchPadding =
       EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+  static const double _iconSize = 24;
+  static const double _verticalSpacerSize = 16;
+  static const int _postPreviewMaxLines = 1;
 
   const SearchView({
     super.key,
@@ -27,24 +30,25 @@ class SearchView extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
           ),
         ),
-        body: Column(
-          children: <Widget>[
-            Padding(
-              padding: _searchPadding,
-              child: CustomSearchBar(
+        body: Padding(
+          padding: _searchPadding,
+          child: Column(
+            children: <Widget>[
+              CustomSearchBar(
                 onSearch: (String query) => controller.onSearch(query: query),
                 currentQuery: model.query,
                 onDiscard: controller.discardQuery,
               ),
-            ),
-            if (model.query == null) ..._categories else _resultList(),
-          ],
+              const SizedBox(height: _verticalSpacerSize),
+              if (model.query == null) ..._categories else _resultList(),
+            ],
+          ),
         ),
       );
 
   List<Widget> get _categories => <Widget>[
         IconRow(
-          iconSize: 24,
+          iconSize: _iconSize,
           icons: <IconWithLabel>[
             IconWithLabel(
               SvgPicture.asset(
@@ -91,13 +95,13 @@ class SearchView extends StatelessWidget {
             title: Text(
               model.filteredResults[index].title,
               textAlign: TextAlign.left,
-              maxLines: 1,
+              maxLines: _postPreviewMaxLines,
               overflow: TextOverflow.ellipsis,
             ),
             subtitle: Text(
               model.filteredResults[index].body,
               textAlign: TextAlign.left,
-              maxLines: 1,
+              maxLines: _postPreviewMaxLines,
               overflow: TextOverflow.ellipsis,
             ),
             onTap: () => controller.openPost(
