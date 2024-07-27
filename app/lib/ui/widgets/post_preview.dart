@@ -5,11 +5,20 @@ import 'package:medi_support/ui/widgets/custom_card.dart';
 part 'post_preview.freezed.dart';
 
 class PostPreview extends StatelessWidget {
+  static const double _contentSpacing = 16;
+  static const double _textSpacing = 8;
+  static const double _horizontalTitleGap = 16;
+  static const double _minVerticalTitlePadding = 0;
+  static const double _minTileHeight = 0;
+  static const int _maxPostContentLines = 3;
+  static const int _maxPostTitleLines = 1;
+
   final String title;
   final String content;
   final String postId;
   final PostPreviewAccount account;
   final void Function(String postId) onPostTap;
+  final String buttonLabel;
 
   const PostPreview({
     super.key,
@@ -18,6 +27,7 @@ class PostPreview extends StatelessWidget {
     required this.account,
     required this.postId,
     required this.onPostTap,
+    required this.buttonLabel,
   });
 
   @override
@@ -26,12 +36,12 @@ class PostPreview extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             _buildHeader(),
-            const SizedBox(height: 16),
+            const SizedBox(height: _contentSpacing),
             SizedBox(
               width: double.infinity,
               child: _buildContent(),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: _contentSpacing),
             _buildActions(),
           ],
         ),
@@ -43,9 +53,9 @@ class PostPreview extends StatelessWidget {
           child:
               CustomCachedNetworkImage(imageUrl: account.imageUrl.toString()),
         ),
-        minTileHeight: 0,
-        horizontalTitleGap: 16,
-        minVerticalPadding: 0,
+        minTileHeight: _minTileHeight,
+        horizontalTitleGap: _horizontalTitleGap,
+        minVerticalPadding: _minVerticalTitlePadding,
         visualDensity: VisualDensity.compact,
         title: Text(account.name),
         subtitle: Text(account.titles.join(', ')),
@@ -60,14 +70,14 @@ class PostPreview extends StatelessWidget {
               title,
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.start,
-              maxLines: 1,
+              maxLines: _maxPostTitleLines,
               overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: _textSpacing),
             Text(
               content,
               style: Theme.of(context).textTheme.bodySmall,
-              maxLines: 3,
+              maxLines: _maxPostContentLines,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.start,
             ),
@@ -75,14 +85,12 @@ class PostPreview extends StatelessWidget {
         ),
       );
 
-  Widget _buildActions() => Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          FilledButton(
-            onPressed: () => onPostTap(postId),
-            child: const Text('Lesen'),
-          ),
-        ],
+  Widget _buildActions() => Align(
+        alignment: Alignment.centerRight,
+        child: FilledButton(
+          onPressed: () => onPostTap(postId),
+          child: Text(buttonLabel),
+        ),
       );
 }
 
