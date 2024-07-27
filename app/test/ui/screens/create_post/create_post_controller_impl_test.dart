@@ -1,18 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:medi_support/ui/screens/create_post/create_post_controller_impl.dart';
-import 'package:medi_support/ui/screens/create_post/services/create_post_backend_service.dart';
-import 'package:medi_support/ui/screens/create_post/services/create_post_navigation_service.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'create_post_controller_impl_test.mocks.dart';
-
-@GenerateMocks(<Type>[
-  CreatePostNavigationService,
-  CreatePostBackendService,
-])
-class CreatePostControllerImplTest {}
+import '../../../mocks.mocks.dart';
 
 void main() {
   late MockCreatePostBackendService mockCreatePostBackendService;

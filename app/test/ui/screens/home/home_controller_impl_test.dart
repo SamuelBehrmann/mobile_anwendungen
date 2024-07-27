@@ -1,9 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:medi_support/ui/screens/chats/chats_controller_impl.dart';
-import 'package:medi_support/ui/screens/chats/chats_model.dart';
-import 'package:medi_support/ui/screens/chats/services/chats_backend_service.dart';
 import 'package:medi_support/ui/screens/home/home_controller_impl.dart';
+import 'package:medi_support/ui/screens/home/services/home_backend_service.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../mocks.mocks.dart';
@@ -16,7 +14,7 @@ void main() {
       mockHomeBackendService = MockHomeBackendService();
       mockHomeNavigationService = MockHomeNavigationService();
       when(mockHomeBackendService.getHomePostsStream(maxCount: 20)).thenAnswer(
-        (_) => const Stream.empty(),
+        (_) => const Stream<List<HomeBackendServicePost>>.empty(),
       );
     },
   );

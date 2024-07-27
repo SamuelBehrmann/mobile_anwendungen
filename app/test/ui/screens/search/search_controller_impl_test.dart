@@ -3,17 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:medi_support/ui/screens/search/search_controller_impl.dart';
 import 'package:medi_support/ui/screens/search/search_model.dart';
 import 'package:medi_support/ui/screens/search/services/search_backend_service.dart';
-import 'package:medi_support/ui/screens/search/services/search_navigation_service.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'search_controller_impl_test.mocks.dart';
-
-@GenerateMocks(<Type>[
-  SearchNavigationService,
-  SearchBackendService,
-])
-class SearchControllerImplTest {}
+import '../../../mocks.mocks.dart';
 
 void main() {
   late MockSearchBackendService mockSearchBackendService;

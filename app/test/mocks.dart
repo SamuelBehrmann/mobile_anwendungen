@@ -11,10 +11,14 @@ import 'package:medi_support/ui/screens/home/home_controller.dart';
 import 'package:medi_support/ui/screens/home/services/home_backend_service.dart';
 import 'package:medi_support/ui/screens/home/services/home_navigation_service.dart';
 import 'package:medi_support/ui/screens/post/post_controller.dart';
+import 'package:medi_support/ui/screens/post/services/post_backend_service.dart';
+import 'package:medi_support/ui/screens/post/services/post_navigation_service.dart';
 import 'package:medi_support/ui/screens/profile/profile_controller.dart';
 import 'package:medi_support/ui/screens/profile/services/profile_backend_service.dart';
 import 'package:medi_support/ui/screens/profile/services/profile_navigation_service.dart';
 import 'package:medi_support/ui/screens/search/search_controller.dart';
+import 'package:medi_support/ui/screens/search/services/search_backend_service.dart';
+import 'package:medi_support/ui/screens/search/services/search_navigation_service.dart';
 import 'package:mockito/annotations.dart';
 
 @GenerateMocks(<Type>[
@@ -22,6 +26,8 @@ import 'package:mockito/annotations.dart';
   CreatePostBackendService,
   CreatePostController,
   PostController,
+  PostNavigationService,
+  PostBackendService,
   HomeController,
   HomeBackendService,
   HomeNavigationService,
@@ -30,10 +36,12 @@ import 'package:mockito/annotations.dart';
   ProfileNavigationService,
   ProfileBackendService,
   SearchController,
+  SearchNavigationService,
+  SearchBackendService,
   ChatsBackendService,
   ChatsNavigationService,
   ChatController,
   ChatNavigationService,
-  ChatBackendService
+  ChatBackendService,
 ])
 class Mocks {}

@@ -3,17 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:medi_support/ui/screens/post/post_controller_impl.dart';
 import 'package:medi_support/ui/screens/post/post_model.dart';
 import 'package:medi_support/ui/screens/post/services/post_backend_service.dart';
-import 'package:medi_support/ui/screens/post/services/post_navigation_service.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'post_controller_impl_test.mocks.dart';
-
-@GenerateMocks(<Type>[
-  PostNavigationService,
-  PostBackendService,
-])
-class PostControllerImplTest {}
+import '../../../mocks.mocks.dart';
 
 void main() {
   late MockPostBackendService mockPostBackendService;
