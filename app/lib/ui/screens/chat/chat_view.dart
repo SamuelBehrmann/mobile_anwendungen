@@ -4,6 +4,7 @@ import 'package:medi_support/ui/screens/chat/chat_model.dart';
 import 'package:medi_support/ui/widgets/custom_app_bar.dart';
 import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 import 'package:intl/intl.dart';
+import 'package:medi_support/ui/widgets/custom_text_field.dart';
 
 class ChatView extends StatelessWidget {
   // _buildMessageList
@@ -16,13 +17,7 @@ class ChatView extends StatelessWidget {
   static const double _messageWidth = 0.75;
   static final BorderRadius _messageBorderRadius = BorderRadius.circular(12);
   // _buildSendMessageArea
-  static const EdgeInsets containerPadding =
-      EdgeInsets.symmetric(horizontal: 16.0);
-  static const EdgeInsets textFieldPadding =
-      EdgeInsets.only(bottom: 24.0, top: 8);
-  static const EdgeInsets contentPadding =
-      EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0);
-  static final BorderRadius _buttonBorderRadius = BorderRadius.circular(30.0);
+  static const EdgeInsets _textFieldPadding = EdgeInsets.fromLTRB(16, 8, 16, 0);
 
   final ChatModel model;
   final ChatController controller;
@@ -180,42 +175,18 @@ class ChatView extends StatelessWidget {
     }
   }
 
-  Widget _buildSendMessageArea() {
-    final TextEditingController messageController = TextEditingController();
-
-    return Padding(
-      padding: containerPadding,
-      child: Container(
-        padding: textFieldPadding,
-        child: SizedBox(
-          width: double.infinity,
-          child: TextField(
-            controller: messageController,
-            decoration: InputDecoration(
-              hintText: "Type a message",
-              contentPadding: contentPadding,
-              border: OutlineInputBorder(
-                borderRadius: _buttonBorderRadius,
-              ),
-              suffixIcon: IconButton(
-                icon: const Icon(
-                  Icons.send,
-                  semanticLabel: 'Send',
-                ),
-                onPressed: () {
-                  final String messageText = messageController.text;
-                  if (messageText.isNotEmpty) {
-                    controller.sendMessage(messageText);
-                    messageController.clear();
-                  }
-                },
-              ),
+  Widget _buildSendMessageArea() => SafeArea(
+        child: Padding(
+          padding: _textFieldPadding,
+          child: SizedBox(
+            width: double.infinity,
+            child: CustomTextField(
+              onSubmitted: (String message) => controller.sendMessage(message),
+              hint: "Type a message",
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 
   Widget _buildLoadingState(ChatsModelLoading value) =>
       const Center(child: CircularProgressIndicator());

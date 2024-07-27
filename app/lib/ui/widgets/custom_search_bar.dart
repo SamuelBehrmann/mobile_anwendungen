@@ -60,7 +60,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               Icons.search_outlined,
               size: _iconSize,
             ),
-            hintText: 'Search',
+            hintText: 'Type to search',
             border: const OutlineInputBorder(
               borderRadius: _borderRadius,
             ),
