@@ -3,22 +3,38 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
-import 'dart:ui' as _i6;
+import 'dart:async' as _i6;
+import 'dart:ui' as _i8;
 
-import 'package:medi_support/ui/screens/chat/chat_controller.dart' as _i10;
-import 'package:medi_support/ui/screens/chats/chats_controller.dart' as _i9;
-import 'package:medi_support/ui/screens/create_post/create_post_controller.dart'
-    as _i5;
-import 'package:medi_support/ui/screens/create_post/services/create_post_backend_service.dart'
+import 'package:medi_support/ui/screens/chat/chat_controller.dart' as _i19;
+import 'package:medi_support/ui/screens/chat/services/chat_backend_service.dart'
     as _i3;
+import 'package:medi_support/ui/screens/chat/services/chat_navigation_service.dart'
+    as _i20;
+import 'package:medi_support/ui/screens/chats/chats_controller.dart' as _i13;
+import 'package:medi_support/ui/screens/chats/services/chats_backend_service.dart'
+    as _i17;
+import 'package:medi_support/ui/screens/chats/services/chats_navigation_service.dart'
+    as _i18;
+import 'package:medi_support/ui/screens/create_post/create_post_controller.dart'
+    as _i7;
+import 'package:medi_support/ui/screens/create_post/services/create_post_backend_service.dart'
+    as _i5;
 import 'package:medi_support/ui/screens/create_post/services/create_post_navigation_service.dart'
-    as _i2;
-import 'package:medi_support/ui/screens/home/home_controller.dart' as _i8;
-import 'package:medi_support/ui/screens/post/post_controller.dart' as _i7;
-import 'package:medi_support/ui/screens/profile/profile_controller.dart'
+    as _i4;
+import 'package:medi_support/ui/screens/home/home_controller.dart' as _i10;
+import 'package:medi_support/ui/screens/home/services/home_backend_service.dart'
     as _i11;
-import 'package:medi_support/ui/screens/search/search_controller.dart' as _i12;
+import 'package:medi_support/ui/screens/home/services/home_navigation_service.dart'
+    as _i12;
+import 'package:medi_support/ui/screens/post/post_controller.dart' as _i9;
+import 'package:medi_support/ui/screens/profile/profile_controller.dart'
+    as _i14;
+import 'package:medi_support/ui/screens/profile/services/profile_backend_service.dart'
+    as _i2;
+import 'package:medi_support/ui/screens/profile/services/profile_navigation_service.dart'
+    as _i15;
+import 'package:medi_support/ui/screens/search/search_controller.dart' as _i16;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -34,11 +50,33 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeProfileBackendServiceUser_0 extends _i1.SmartFake
+    implements _i2.ProfileBackendServiceUser {
+  _FakeProfileBackendServiceUser_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeChatBackendServiceUser_1 extends _i1.SmartFake
+    implements _i3.ChatBackendServiceUser {
+  _FakeChatBackendServiceUser_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [CreatePostNavigationService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockCreatePostNavigationService extends _i1.Mock
-    implements _i2.CreatePostNavigationService {
+    implements _i4.CreatePostNavigationService {
   MockCreatePostNavigationService() {
     _i1.throwOnMissingStub(this);
   }
@@ -67,13 +105,13 @@ class MockCreatePostNavigationService extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockCreatePostBackendService extends _i1.Mock
-    implements _i3.CreatePostBackendService {
+    implements _i5.CreatePostBackendService {
   MockCreatePostBackendService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<void> createPost({
+  _i6.Future<void> createPost({
     required String? title,
     required String? content,
   }) =>
@@ -86,16 +124,16 @@ class MockCreatePostBackendService extends _i1.Mock
             #content: content,
           },
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 }
 
 /// A class which mocks [CreatePostController].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockCreatePostController extends _i1.Mock
-    implements _i5.CreatePostController {
+    implements _i7.CreatePostController {
   MockCreatePostController() {
     _i1.throwOnMissingStub(this);
   }
@@ -104,7 +142,7 @@ class MockCreatePostController extends _i1.Mock
   void send({
     required String? title,
     required String? body,
-    required _i6.VoidCallback? onSend,
+    required _i8.VoidCallback? onSend,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -132,7 +170,7 @@ class MockCreatePostController extends _i1.Mock
 /// A class which mocks [PostController].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPostController extends _i1.Mock implements _i7.PostController {
+class MockPostController extends _i1.Mock implements _i9.PostController {
   MockPostController() {
     _i1.throwOnMissingStub(this);
   }
@@ -170,8 +208,59 @@ class MockPostController extends _i1.Mock implements _i7.PostController {
 /// A class which mocks [HomeController].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockHomeController extends _i1.Mock implements _i8.HomeController {
+class MockHomeController extends _i1.Mock implements _i10.HomeController {
   MockHomeController() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void openSearch() => super.noSuchMethod(
+        Invocation.method(
+          #openSearch,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void openPost({required String? postId}) => super.noSuchMethod(
+        Invocation.method(
+          #openPost,
+          [],
+          {#postId: postId},
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [HomeBackendService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockHomeBackendService extends _i1.Mock
+    implements _i11.HomeBackendService {
+  MockHomeBackendService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Stream<List<_i11.HomeBackendServicePost>> getHomePostsStream(
+          {required int? maxCount}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getHomePostsStream,
+          [],
+          {#maxCount: maxCount},
+        ),
+        returnValue: _i6.Stream<List<_i11.HomeBackendServicePost>>.empty(),
+      ) as _i6.Stream<List<_i11.HomeBackendServicePost>>);
+}
+
+/// A class which mocks [HomeNavigationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockHomeNavigationService extends _i1.Mock
+    implements _i12.HomeNavigationService {
+  MockHomeNavigationService() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -198,7 +287,7 @@ class MockHomeController extends _i1.Mock implements _i8.HomeController {
 /// A class which mocks [ChatsController].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockChatsController extends _i1.Mock implements _i9.ChatsController {
+class MockChatsController extends _i1.Mock implements _i13.ChatsController {
   MockChatsController() {
     _i1.throwOnMissingStub(this);
   }
@@ -222,37 +311,10 @@ class MockChatsController extends _i1.Mock implements _i9.ChatsController {
       );
 }
 
-/// A class which mocks [ChatController].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockChatController extends _i1.Mock implements _i10.ChatController {
-  MockChatController() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  void sendMessage(String? message) => super.noSuchMethod(
-        Invocation.method(
-          #sendMessage,
-          [message],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void deleteMessage(String? messageId) => super.noSuchMethod(
-        Invocation.method(
-          #deleteMessage,
-          [messageId],
-        ),
-        returnValueForMissingStub: null,
-      );
-}
-
 /// A class which mocks [ProfileController].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockProfileController extends _i1.Mock implements _i11.ProfileController {
+class MockProfileController extends _i1.Mock implements _i14.ProfileController {
   MockProfileController() {
     _i1.throwOnMissingStub(this);
   }
@@ -303,10 +365,67 @@ class MockProfileController extends _i1.Mock implements _i11.ProfileController {
       );
 }
 
+/// A class which mocks [ProfileNavigationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockProfileNavigationService extends _i1.Mock
+    implements _i15.ProfileNavigationService {
+  MockProfileNavigationService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void showSnackBar({required String? message}) => super.noSuchMethod(
+        Invocation.method(
+          #showSnackBar,
+          [],
+          {#message: message},
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [ProfileBackendService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockProfileBackendService extends _i1.Mock
+    implements _i2.ProfileBackendService {
+  MockProfileBackendService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<_i2.ProfileBackendServiceUser> getUser() => (super.noSuchMethod(
+        Invocation.method(
+          #getUser,
+          [],
+        ),
+        returnValue: _i6.Future<_i2.ProfileBackendServiceUser>.value(
+            _FakeProfileBackendServiceUser_0(
+          this,
+          Invocation.method(
+            #getUser,
+            [],
+          ),
+        )),
+      ) as _i6.Future<_i2.ProfileBackendServiceUser>);
+
+  @override
+  _i6.Future<void> editUser(_i2.ProfileBackendServiceUser? user) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #editUser,
+          [user],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}
+
 /// A class which mocks [SearchController].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSearchController extends _i1.Mock implements _i12.SearchController {
+class MockSearchController extends _i1.Mock implements _i16.SearchController {
   MockSearchController() {
     _i1.throwOnMissingStub(this);
   }
@@ -348,4 +467,181 @@ class MockSearchController extends _i1.Mock implements _i12.SearchController {
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [ChatsBackendService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockChatsBackendService extends _i1.Mock
+    implements _i17.ChatsBackendService {
+  MockChatsBackendService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<List<_i17.ChatsBackendServiceChat>> getAllChats() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAllChats,
+          [],
+        ),
+        returnValue: _i6.Future<List<_i17.ChatsBackendServiceChat>>.value(
+            <_i17.ChatsBackendServiceChat>[]),
+      ) as _i6.Future<List<_i17.ChatsBackendServiceChat>>);
+}
+
+/// A class which mocks [ChatsNavigationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockChatsNavigationService extends _i1.Mock
+    implements _i18.ChatsNavigationService {
+  MockChatsNavigationService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void openChat({required String? chatId}) => super.noSuchMethod(
+        Invocation.method(
+          #openChat,
+          [],
+          {#chatId: chatId},
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [ChatController].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockChatController extends _i1.Mock implements _i19.ChatController {
+  MockChatController() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void sendMessage(String? message) => super.noSuchMethod(
+        Invocation.method(
+          #sendMessage,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void deleteMessage(String? messageId) => super.noSuchMethod(
+        Invocation.method(
+          #deleteMessage,
+          [messageId],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void goBack() => super.noSuchMethod(
+        Invocation.method(
+          #goBack,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [ChatNavigationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockChatNavigationService extends _i1.Mock
+    implements _i20.ChatNavigationService {
+  MockChatNavigationService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void showSnackBar({required String? message}) => super.noSuchMethod(
+        Invocation.method(
+          #showSnackBar,
+          [],
+          {#message: message},
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void goBack() => super.noSuchMethod(
+        Invocation.method(
+          #goBack,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [ChatBackendService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockChatBackendService extends _i1.Mock
+    implements _i3.ChatBackendService {
+  MockChatBackendService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Stream<_i3.ChatBackendServiceChat> getChatDataStream(String? chatId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getChatDataStream,
+          [chatId],
+        ),
+        returnValue: _i6.Stream<_i3.ChatBackendServiceChat>.empty(),
+      ) as _i6.Stream<_i3.ChatBackendServiceChat>);
+
+  @override
+  _i6.Future<void> addChatMessage(
+    String? chatId,
+    _i3.ChatBackendServiceMessage? message,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addChatMessage,
+          [
+            chatId,
+            message,
+          ],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> deleteChatMessage(
+    String? chatId,
+    String? messageId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteChatMessage,
+          [
+            chatId,
+            messageId,
+          ],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<_i3.ChatBackendServiceUser> getCurrentUser() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getCurrentUser,
+          [],
+        ),
+        returnValue: _i6.Future<_i3.ChatBackendServiceUser>.value(
+            _FakeChatBackendServiceUser_1(
+          this,
+          Invocation.method(
+            #getCurrentUser,
+            [],
+          ),
+        )),
+      ) as _i6.Future<_i3.ChatBackendServiceUser>);
 }
