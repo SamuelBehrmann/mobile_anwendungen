@@ -64,7 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '181853757614',
     projectId: 'mobile-anwendungen-4ab02',
     storageBucket: 'mobile-anwendungen-4ab02.appspot.com',
-    iosBundleId: 'de.htwg.mobi.mobileAnwendungen',
+    iosBundleId: 'de.htwg.moba.medi_support',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -73,7 +73,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '181853757614',
     projectId: 'mobile-anwendungen-4ab02',
     storageBucket: 'mobile-anwendungen-4ab02.appspot.com',
-    iosBundleId: 'de.htwg.mobi.mobileAnwendungen',
+    iosBundleId: 'de.htwg.moba.medi_support',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
@@ -85,5 +85,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'mobile-anwendungen-4ab02.appspot.com',
     measurementId: 'G-M5XED5N68P',
   );
-
 }

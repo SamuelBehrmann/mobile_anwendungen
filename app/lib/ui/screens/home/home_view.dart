@@ -28,7 +28,10 @@ class HomeView extends StatelessWidget {
       );
 
   Widget _buildSearchButton() => IconButton(
-        icon: const Icon(Icons.search),
+        icon: const Icon(
+          Icons.search,
+          semanticLabel: 'Search',
+        ),
         onPressed: controller.openSearch,
       );
 

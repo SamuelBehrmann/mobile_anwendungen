@@ -118,7 +118,10 @@ class ChatView extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(msg.content),
+                                Text(
+                                  msg.content,
+                                  semanticsLabel: msg.content,
+                                ),
                                 const SizedBox(height: 4),
                                 Text(
                                   DateFormat('h:mm a').format(msg.timestamp),
@@ -195,7 +198,10 @@ class ChatView extends StatelessWidget {
                 borderRadius: _buttonBorderRadius,
               ),
               suffixIcon: IconButton(
-                icon: const Icon(Icons.send),
+                icon: const Icon(
+                  Icons.send,
+                  semanticLabel: 'Send',
+                ),
                 onPressed: () {
                   final String messageText = messageController.text;
                   if (messageText.isNotEmpty) {
