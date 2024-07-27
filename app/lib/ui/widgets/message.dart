@@ -57,7 +57,7 @@ class Message extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          subtitle: userTitles.isEmpty
+          subtitle: userTitles.isNotEmpty
               ? Text(
                   userTitles.join(', '),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
