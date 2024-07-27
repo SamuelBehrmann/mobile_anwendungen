@@ -41,5 +41,8 @@ A page containing the chat between the currently logged in user and the particip
 An overview of all Personal data the user has regstered. Currently we support avatar, fullname, description, email, password and phonenumber. The user is able to edit all fields but the avatarImage.
 
 ## Architektur
+We decided to use MVC+S architecture with dependency inversion principle. This means each feature consists of three main components and 
+variable amounts of service interfaces. The three main components are the Model, View and Controller. The Model defines the data structure used by the feature / component. Its instantiated in the Controller which holds the business logic, handles state updates and communication with any needed service. The view is a pure visualization of the data defined by the model. 
 
-## App-Structure
+## App-Structure and layers
+![MVC+S architecture](https://imgur.com/a/c3Se3YZ)
