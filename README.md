@@ -29,6 +29,7 @@ Here the user can see the most recents posts and get an overview of all availabl
 
 #### Post details
 When interessted in a Post, a user can tap on it and read the full length of the content. On top of that he is also able to reply to the Post it self or to any of the replies by other users. 
+
 <img src="documentation/post.png" alt="MVC+S architecture" width="200px">
 
 #### Search
@@ -41,18 +42,22 @@ When the user is interessted in a specific topic he is able to search for keywor
 
 ### Create a post
 Here the user can easily create a new Post with a title and some content. He is able to submit his new post or discard if he is unsure of it.
+
 <img src="documentation/creare_post.png" alt="MVC+S architecture" width="200px">
 
 ### Chats
 An overview page for all personal chats with other users. Here the user also has the possibility to search / filter through his chats by message or name.
+
 <img src="documentation/chats.png" alt="MVC+S architecture" width="200px">
 
 #### Chat details
 A page containing the chat between the currently logged in user and the participant. A user is able to read previous messages, send new messages or delete a message. 
+
 <img src="documentation/chat.png" alt="MVC+S architecture" width="200px">
 
 ### Profile
 An overview of all Personal data the user has regstered. Currently we support avatar, fullname, description, email, password and phonenumber. The user is able to edit all fields but the avatarImage.
+
 <img src="documentation/profile.png" alt="MVC+S architecture" width="200px">
 
 ## Architektur
