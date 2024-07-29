@@ -65,7 +65,7 @@ We decided to use MVC+S architecture with dependency inversion principle. This m
 variable amounts of service interfaces. The three main components are the Model, View and Controller. The Model defines the data structure used by the feature / component. Its instantiated in the Controller which holds the business logic, handles state updates and communication with any needed service. The view is a pure visualization of the data defined by the model. 
 
 ### App-Structure and layers
-We decided to go with a feature based structuring instead of layer based structuring. This way each component has no dependencies to any other component and the files for that component are grouped in one place. This makes refactoring and editing component very easy. 
+We decided to go with a feature based structuring instead of layer based structuring. This way each component has no dependencies to any other component and the files for that component are grouped in one place. This makes refactoring and editing components very easy. 
 Below you can see a diagram of how the components are structured and how they interact with each other. 
 
 <img src="documentation/mvc.png" alt="MVC+S architecture" width="400px">
