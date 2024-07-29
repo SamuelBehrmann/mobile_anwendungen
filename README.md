@@ -12,11 +12,11 @@ read up on day to day medical topics that they are interessted in. They can shar
 by zertified medical staff. Because everyone is able to engage in the discussions, people get their questions answered and wrong information will be corrected. 
 
 ### Targeted Problem
-The main problem we try to fix is the lack of medical knowledge among the common person. This leads to overworked and overbooked 
+The main problem we try to fix is the lack of medical knowledge among the common people. This leads to overworked and overbooked 
 doctors. By solving this issue people who dearly need help can actually get appointments at doctors, since they are no longer held back from small and insignificant problems that people can fix themself. 
 
 ### Target groups
-Our target group is primarely the German low and middle class. After that we believe that this Project could also be very hepful for elderly people and medical students. 
+Our primary target group is the German low and middle class, aswell as elderly people and medical students who we believe could very much befenit from this project aswell. 
 
 ## Screens
 Our application features a wide variety of screens and features to ensure a maximum of user engagement. 
