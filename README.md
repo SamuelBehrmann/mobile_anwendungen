@@ -60,3 +60,8 @@ We decided to use MVC+S architecture with the dependency inversion principle. Th
 We decided to go with a feature-based structuring instead of layer-based structuring. This way, each component has no dependencies on any other component, and the files for that component are grouped in one place. This makes refactoring and editing components very easy. Below you can see a diagram of how the components are structured and how they interact with each other.
 
 <img src="documentation/mvc.png" alt="MVC+S architecture" width="400px">
+
+These MVC-Components are then assigned a route from (usually) the navigation service, which allows them to be accessed and pushed onto the navigation stack. 
+Below you can see how the app is structured using the MVC-Components and how they communicate with the services. 
+
+<img src="documentation/general_architecture.png" alt="MVC+S architecture" width="400px">
