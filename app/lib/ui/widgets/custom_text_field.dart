@@ -18,8 +18,11 @@ class CustomTextField extends StatefulWidget {
 
 class _CustomTextFieldState extends State<CustomTextField> {
   static final BorderRadius _buttonBorderRadius = BorderRadius.circular(32.0);
-  static const EdgeInsets contentPadding =
+  static const EdgeInsets _contentPadding =
       EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0);
+  static const IconData _sendIcon = Icons.send;
+  static const String _sendIconSemanticLabel = 'Send';
+
   late final TextEditingController _controller;
 
   @override
@@ -45,14 +48,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
           hintText: widget.hint,
-          contentPadding: contentPadding,
+          contentPadding: _contentPadding,
           border: OutlineInputBorder(
             borderRadius: _buttonBorderRadius,
           ),
           suffixIcon: IconButton(
             icon: const Icon(
-              Icons.send,
-              semanticLabel: 'Send',
+              _sendIcon,
+              semanticLabel: _sendIconSemanticLabel,
             ),
             onPressed: () {
               widget.onSubmitted(_controller.text);

@@ -32,7 +32,9 @@ class CustomTextFormField extends StatefulWidget {
 
 class CustomTextFormFieldState extends State<CustomTextFormField> {
   static const EdgeInsets _contentPadding = EdgeInsets.all(16);
-  static const double _paddingBetweenLabelField = 10;
+  static const double _paddingBetweenLabelField = 10.0;
+  static const double _visibilityIconSize = 24.0;
+
   late TextEditingController _controller;
   bool _passwordVisible = false;
 
@@ -76,6 +78,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
                         _passwordVisible
                             ? Icons.visibility
                             : Icons.visibility_off,
+                        size: _visibilityIconSize,
                       ),
                       onPressed: () {
                         setState(() {
