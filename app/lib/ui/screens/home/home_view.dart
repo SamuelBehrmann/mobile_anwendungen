@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
           title: 'Home',
           actions: <Widget>[_buildSearchButton()],
         ),
-        body: _buildContent(),
+        body: SafeArea(child: _buildContent()),
       );
 
   Widget _buildSearchButton() => IconButton(

@@ -58,12 +58,14 @@ class _CreatePostViewState extends State<CreatePostView> {
             ),
           ],
         ),
-        body: ListView(
-          padding: _screenPadding,
-          children: <Widget>[
-            _buildTitleField(),
-            _buildBodyField(),
-          ],
+        body: SafeArea(
+          child: ListView(
+            padding: _screenPadding,
+            children: <Widget>[
+              _buildTitleField(),
+              _buildBodyField(),
+            ],
+          ),
         ),
       );
 

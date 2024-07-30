@@ -30,9 +30,9 @@ class SearchView extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
           ),
         ),
-        body: Padding(
-          padding: _searchPadding,
-          child: Column(
+        body: SafeArea(
+          child: ListView(
+            padding: _searchPadding,
             children: <Widget>[
               CustomSearchBar(
                 onSearch: (String query) => controller.onSearch(query: query),
@@ -51,21 +51,15 @@ class SearchView extends StatelessWidget {
           iconSize: _iconSize,
           icons: <IconWithLabel>[
             IconWithLabel(
-              SvgPicture.asset(
-                'assets/svg/ear.svg',
-              ),
+              SvgPicture.asset('assets/svg/ear.svg'),
               'Ears',
             ),
             IconWithLabel(
-              SvgPicture.asset(
-                'assets/svg/lungs.svg',
-              ),
+              SvgPicture.asset('assets/svg/lungs.svg'),
               'Lungs',
             ),
             IconWithLabel(
-              SvgPicture.asset(
-                'assets/svg/physician.svg',
-              ),
+              SvgPicture.asset('assets/svg/physician.svg'),
               'Doctor',
             ),
           ],
@@ -87,26 +81,25 @@ class SearchView extends StatelessWidget {
         ),
       ];
 
-  Expanded _resultList() => Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: model.filteredResults.length,
-          itemBuilder: (BuildContext context, int index) => ListTile(
-            title: Text(
-              model.filteredResults[index].title,
-              textAlign: TextAlign.left,
-              maxLines: _postPreviewMaxLines,
-              overflow: TextOverflow.ellipsis,
-            ),
-            subtitle: Text(
-              model.filteredResults[index].body,
-              textAlign: TextAlign.left,
-              maxLines: _postPreviewMaxLines,
-              overflow: TextOverflow.ellipsis,
-            ),
-            onTap: () => controller.openPost(
-              postId: model.filteredResults[index].id,
-            ),
+  Widget _resultList() => ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: model.filteredResults.length,
+        itemBuilder: (BuildContext context, int index) => ListTile(
+          title: Text(
+            model.filteredResults[index].title,
+            textAlign: TextAlign.left,
+            maxLines: _postPreviewMaxLines,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: Text(
+            model.filteredResults[index].body,
+            textAlign: TextAlign.left,
+            maxLines: _postPreviewMaxLines,
+            overflow: TextOverflow.ellipsis,
+          ),
+          onTap: () => controller.openPost(
+            postId: model.filteredResults[index].id,
           ),
         ),
       );

@@ -16,10 +16,12 @@ class ChatsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: const CustomAppBar(title: 'Chats'),
-        body: model.when(
-          data: _buildData,
-          loading: _buildLoading,
-          error: _buildError,
+        body: SafeArea(
+          child: model.when(
+            data: _buildData,
+            loading: _buildLoading,
+            error: _buildError,
+          ),
         ),
       );
 
@@ -27,17 +29,13 @@ class ChatsView extends StatelessWidget {
 
   Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 
-  Widget _buildData(_, List<ChatsModelChat> filteredChats) => Column(
+  Widget _buildData(_, List<ChatsModelChat> filteredChats) => ListView(
+        padding: _searchPadding,
         children: <Widget>[
-          Padding(
-            padding: _searchPadding,
-            child: CustomSearchBar(onSearch: controller.filterChats),
-          ),
-          Expanded(
-            child: ChatList(
-              chats: filteredChats,
-              onChatSelected: (String chatId) => controller.openChat(chatId),
-            ),
+          CustomSearchBar(onSearch: controller.filterChats),
+          ChatList(
+            chats: filteredChats,
+            onChatSelected: (String chatId) => controller.openChat(chatId),
           ),
         ],
       );
