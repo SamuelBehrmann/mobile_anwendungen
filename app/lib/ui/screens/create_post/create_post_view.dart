@@ -13,7 +13,16 @@ class CreatePostView extends StatefulWidget {
 
 class _CreatePostViewState extends State<CreatePostView> {
   static const EdgeInsets _screenPadding =
-      EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+      EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0);
+  static const String _titleHint = "Title";
+  static const String _titleLabel = "Title";
+  static const String _bodyHint = "I have ...";
+  static const String _bodyLabel = "Post";
+  static const IconData _closeIcon = Icons.close;
+  static const IconData _sendIcon = Icons.send;
+  static const int _minLinesBody = 5;
+  static const int _maxLinesBody = 25;
+
   late final TextEditingController bodyController;
   late final TextEditingController titleController;
 
@@ -40,7 +49,7 @@ class _CreatePostViewState extends State<CreatePostView> {
               bodyController.clear();
               titleController.clear();
             },
-            icon: const Icon(Icons.close),
+            icon: const Icon(_closeIcon),
           ),
           actions: <Widget>[
             IconButton(
@@ -54,7 +63,7 @@ class _CreatePostViewState extends State<CreatePostView> {
                   },
                 );
               },
-              icon: const Icon(Icons.send),
+              icon: const Icon(_sendIcon),
             ),
           ],
         ),
@@ -69,8 +78,8 @@ class _CreatePostViewState extends State<CreatePostView> {
 
   Widget _buildTitleField() => Builder(
         builder: (BuildContext context) => CustomTextFormField(
-          hint: "Title",
-          label: 'Title',
+          hint: _titleHint,
+          label: _titleLabel,
           controller: titleController,
           onTapOutside: FocusScope.of(context).unfocus,
         ),
@@ -78,11 +87,11 @@ class _CreatePostViewState extends State<CreatePostView> {
 
   Widget _buildBodyField() => Builder(
         builder: (BuildContext context) => CustomTextFormField(
-          hint: "I have ...",
-          label: 'Post',
+          hint: _bodyHint,
+          label: _bodyLabel,
           controller: bodyController,
-          minLines: 5,
-          maxLines: 25,
+          minLines: _minLinesBody,
+          maxLines: _maxLinesBody,
           onTapOutside: FocusScope.of(context).unfocus,
         ),
       );

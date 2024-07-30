@@ -8,26 +8,29 @@ import 'package:medi_support/ui/widgets/icon_row.dart';
 
 class SearchView extends StatelessWidget {
   static const EdgeInsets _searchPadding =
-      EdgeInsets.symmetric(horizontal: 16, vertical: 8);
-  static const double _iconSize = 24;
-  static const double _verticalSpacerSize = 16;
+      EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0);
+  static const double _iconSize = 24.0;
+  static const double _verticalSpacerSize = 16.0;
   static const int _postPreviewMaxLines = 1;
+  static const String _appBarTitle = 'Suche';
+  static const IconData _backIcon = Icons.arrow_back;
 
   const SearchView({
     super.key,
     required this.controller,
     required this.model,
   });
+
   final SearchController controller;
   final SearchModel model;
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: CustomAppBar(
-          title: 'Suche',
+          title: _appBarTitle,
           leading: IconButton(
             onPressed: controller.goBack,
-            icon: const Icon(Icons.arrow_back),
+            icon: const Icon(_backIcon),
           ),
         ),
         body: Padding(
@@ -51,21 +54,15 @@ class SearchView extends StatelessWidget {
           iconSize: _iconSize,
           icons: <IconWithLabel>[
             IconWithLabel(
-              SvgPicture.asset(
-                'assets/svg/ear.svg',
-              ),
+              SvgPicture.asset('assets/svg/ear.svg'),
               'Ears',
             ),
             IconWithLabel(
-              SvgPicture.asset(
-                'assets/svg/lungs.svg',
-              ),
+              SvgPicture.asset('assets/svg/lungs.svg'),
               'Lungs',
             ),
             IconWithLabel(
-              SvgPicture.asset(
-                'assets/svg/physician.svg',
-              ),
+              SvgPicture.asset('assets/svg/physician.svg'),
               'Doctor',
             ),
           ],
@@ -73,14 +70,20 @@ class SearchView extends StatelessWidget {
               controller.onSearch(query: value),
         ),
         IconRow(
-          iconSize: 24,
+          iconSize: _iconSize,
           icons: <IconWithLabel>[
             IconWithLabel(
               SvgPicture.asset('assets/svg/stomack.svg'),
               'Stomach',
             ),
-            IconWithLabel(SvgPicture.asset('assets/svg/tooth.svg'), 'Teeth'),
-            IconWithLabel(SvgPicture.asset('assets/svg/heart.svg'), 'Hearth'),
+            IconWithLabel(
+              SvgPicture.asset('assets/svg/tooth.svg'),
+              'Teeth',
+            ),
+            IconWithLabel(
+              SvgPicture.asset('assets/svg/heart.svg'),
+              'Heart',
+            ),
           ],
           onIconPressed: ({required String value}) =>
               controller.onSearch(query: value),
