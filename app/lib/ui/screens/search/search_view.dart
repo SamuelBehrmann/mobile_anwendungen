@@ -13,6 +13,30 @@ class SearchView extends StatelessWidget {
   static const double _verticalSpacerSize = 16;
   static const int _postPreviewMaxLines = 1;
 
+  static final List<IconWithLabel> _upperCategories = <IconWithLabel>[
+    IconWithLabel(
+      SvgPicture.asset('assets/svg/ear.svg'),
+      'Ears',
+    ),
+    IconWithLabel(
+      SvgPicture.asset('assets/svg/lungs.svg'),
+      'Lungs',
+    ),
+    IconWithLabel(
+      SvgPicture.asset('assets/svg/physician.svg'),
+      'Doctor',
+    ),
+  ];
+
+  static final List<IconWithLabel> _lowerCategories = <IconWithLabel>[
+    IconWithLabel(
+      SvgPicture.asset('assets/svg/stomack.svg'),
+      'Stomach',
+    ),
+    IconWithLabel(SvgPicture.asset('assets/svg/tooth.svg'), 'Teeth'),
+    IconWithLabel(SvgPicture.asset('assets/svg/heart.svg'), 'Hearth'),
+  ];
+
   const SearchView({
     super.key,
     required this.controller,
@@ -49,33 +73,13 @@ class SearchView extends StatelessWidget {
   List<Widget> _categories() => <Widget>[
         IconRow(
           iconSize: _iconSize,
-          icons: <IconWithLabel>[
-            IconWithLabel(
-              SvgPicture.asset('assets/svg/ear.svg'),
-              'Ears',
-            ),
-            IconWithLabel(
-              SvgPicture.asset('assets/svg/lungs.svg'),
-              'Lungs',
-            ),
-            IconWithLabel(
-              SvgPicture.asset('assets/svg/physician.svg'),
-              'Doctor',
-            ),
-          ],
+          icons: _upperCategories,
           onIconPressed: ({required String value}) =>
               controller.onSearch(query: value),
         ),
         IconRow(
-          iconSize: 24,
-          icons: <IconWithLabel>[
-            IconWithLabel(
-              SvgPicture.asset('assets/svg/stomack.svg'),
-              'Stomach',
-            ),
-            IconWithLabel(SvgPicture.asset('assets/svg/tooth.svg'), 'Teeth'),
-            IconWithLabel(SvgPicture.asset('assets/svg/heart.svg'), 'Hearth'),
-          ],
+          iconSize: _iconSize,
+          icons: _lowerCategories,
           onIconPressed: ({required String value}) =>
               controller.onSearch(query: value),
         ),
