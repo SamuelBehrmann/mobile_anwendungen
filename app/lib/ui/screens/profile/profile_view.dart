@@ -50,10 +50,12 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: const CustomAppBar(title: _appBarTitle),
-        body: model.map(
-          loading: _buildLoading,
-          data: _buildData,
-          error: _buildError,
+        body: SafeArea(
+          child: model.map(
+            loading: _buildLoading,
+            data: _buildData,
+            error: _buildError,
+          ),
         ),
       );
 

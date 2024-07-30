@@ -15,6 +15,18 @@ class SearchView extends StatelessWidget {
   static const String _appBarTitle = 'Suche';
   static const IconData _backIcon = Icons.arrow_back;
 
+  static final List<IconWithLabel> _upperCategories = <IconWithLabel>[
+    IconWithLabel(SvgPicture.asset('assets/svg/ear.svg'), 'Ears'),
+    IconWithLabel(SvgPicture.asset('assets/svg/lungs.svg'), 'Lungs'),
+    IconWithLabel(SvgPicture.asset('assets/svg/physician.svg'), 'Doctor'),
+  ];
+
+  static final List<IconWithLabel> _lowerCategories = <IconWithLabel>[
+    IconWithLabel(SvgPicture.asset('assets/svg/stomack.svg'), 'Stomach'),
+    IconWithLabel(SvgPicture.asset('assets/svg/tooth.svg'), 'Teeth'),
+    IconWithLabel(SvgPicture.asset('assets/svg/heart.svg'), 'Hearth'),
+  ];
+
   const SearchView({
     super.key,
     required this.controller,
@@ -33,9 +45,9 @@ class SearchView extends StatelessWidget {
             icon: const Icon(_backIcon),
           ),
         ),
-        body: Padding(
-          padding: _searchPadding,
-          child: Column(
+        body: SafeArea(
+          child: ListView(
+            padding: _searchPadding,
             children: <Widget>[
               CustomSearchBar(
                 onSearch: (String query) => controller.onSearch(query: query),
@@ -52,64 +64,37 @@ class SearchView extends StatelessWidget {
   List<Widget> _categories() => <Widget>[
         IconRow(
           iconSize: _iconSize,
-          icons: <IconWithLabel>[
-            IconWithLabel(
-              SvgPicture.asset('assets/svg/ear.svg'),
-              'Ears',
-            ),
-            IconWithLabel(
-              SvgPicture.asset('assets/svg/lungs.svg'),
-              'Lungs',
-            ),
-            IconWithLabel(
-              SvgPicture.asset('assets/svg/physician.svg'),
-              'Doctor',
-            ),
-          ],
+          icons: _upperCategories,
           onIconPressed: ({required String value}) =>
               controller.onSearch(query: value),
         ),
         IconRow(
           iconSize: _iconSize,
-          icons: <IconWithLabel>[
-            IconWithLabel(
-              SvgPicture.asset('assets/svg/stomack.svg'),
-              'Stomach',
-            ),
-            IconWithLabel(
-              SvgPicture.asset('assets/svg/tooth.svg'),
-              'Teeth',
-            ),
-            IconWithLabel(
-              SvgPicture.asset('assets/svg/heart.svg'),
-              'Heart',
-            ),
-          ],
+          icons: _lowerCategories,
           onIconPressed: ({required String value}) =>
               controller.onSearch(query: value),
         ),
       ];
 
-  Expanded _resultList() => Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: model.filteredResults.length,
-          itemBuilder: (BuildContext context, int index) => ListTile(
-            title: Text(
-              model.filteredResults[index].title,
-              textAlign: TextAlign.left,
-              maxLines: _postPreviewMaxLines,
-              overflow: TextOverflow.ellipsis,
-            ),
-            subtitle: Text(
-              model.filteredResults[index].body,
-              textAlign: TextAlign.left,
-              maxLines: _postPreviewMaxLines,
-              overflow: TextOverflow.ellipsis,
-            ),
-            onTap: () => controller.openPost(
-              postId: model.filteredResults[index].id,
-            ),
+  Widget _resultList() => ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: model.filteredResults.length,
+        itemBuilder: (BuildContext context, int index) => ListTile(
+          title: Text(
+            model.filteredResults[index].title,
+            textAlign: TextAlign.left,
+            maxLines: _postPreviewMaxLines,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: Text(
+            model.filteredResults[index].body,
+            textAlign: TextAlign.left,
+            maxLines: _postPreviewMaxLines,
+            overflow: TextOverflow.ellipsis,
+          ),
+          onTap: () => controller.openPost(
+            postId: model.filteredResults[index].id,
           ),
         ),
       );

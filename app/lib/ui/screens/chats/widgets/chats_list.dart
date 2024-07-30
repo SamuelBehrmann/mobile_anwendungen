@@ -21,7 +21,9 @@ class ChatList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListView.builder(
         padding: padding,
+        shrinkWrap: true,
         itemCount: chats.length,
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           final ChatsModelChat chat = chats[index];
           return ListTile(
