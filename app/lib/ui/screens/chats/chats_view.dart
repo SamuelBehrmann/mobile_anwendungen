@@ -7,7 +7,8 @@ import 'package:medi_support/ui/widgets/custom_search_bar.dart';
 
 class ChatsView extends StatelessWidget {
   static const EdgeInsets _searchPadding =
-      EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+      EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0);
+
   final ChatsModel model;
   final ChatsController controller;
 

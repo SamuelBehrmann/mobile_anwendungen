@@ -17,6 +17,11 @@ class Message extends StatelessWidget {
     required this.replyCallback,
   });
 
+  static const double _replyIconSize = 16.0;
+  static const IconData _defaultAvatarIcon = Icons.person_outline;
+  static const IconData _replyIcon = Icons.reply;
+  static const String _replyLabel = 'Reply';
+
   @override
   Widget build(BuildContext context) => Column(
         mainAxisSize: MainAxisSize.min,
@@ -34,9 +39,9 @@ class Message extends StatelessWidget {
   Widget _buildReplyButton() => GestureDetector(
         onTap: replyCallback,
         child: const Icon(
-          Icons.reply,
-          size: 16,
-          semanticLabel: 'Reply',
+          _replyIcon,
+          size: _replyIconSize,
+          semanticLabel: _replyLabel,
         ),
       );
 
@@ -49,7 +54,7 @@ class Message extends StatelessWidget {
           leading: CircleAvatar(
             child: userAvatar != null
                 ? CustomCachedNetworkImage(imageUrl: userAvatar!.toString())
-                : const Icon(Icons.person_outline),
+                : const Icon(_defaultAvatarIcon),
           ),
           title: Text(
             username,

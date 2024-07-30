@@ -6,15 +6,37 @@ import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 import 'package:medi_support/ui/widgets/custom_text_form_field.dart';
 
 class ProfileView extends StatelessWidget {
-  static const EdgeInsets _screenPadding = EdgeInsets.all(16);
-  static const double _spaceBetweenGroups = 30;
-  static const double _emptySpaceAfterPassword = 80;
-  static const double _paddingBetweenAvatarName = 18;
-  static const double _paddingBetweenDescriptionField = 20;
-  static const double _avatarSize = 70;
+  // Screen padding
+  static const EdgeInsets _screenPadding = EdgeInsets.all(16.0);
+
+  // Spacing
+  static const double _spaceBetweenGroups = 30.0;
+  static const double _emptySpaceAfterPassword = 80.0;
+  static const double _paddingBetweenAvatarName = 18.0;
+  static const double _paddingBetweenDescriptionField = 20.0;
+
+  // Avatar
+  static const double _avatarSize = 70.0;
+
+  // Text field
   static const int _nameMaxLines = 1;
   static const int _descriptionMaxLines = 3;
   static const int _descriptionMinLines = 1;
+
+  // Strings and labels
+  static const String _appBarTitle = 'Profil';
+  static const String _passwordLabel = 'Password';
+  static const String _passwordHint = 'Edit your password';
+  static const IconData _passwordIcon = Icons.lock_outline;
+  static const String _phoneNumberLabel = 'Phone Number';
+  static const String _phoneNumberHint = 'Edit your phone number';
+  static const IconData _phoneNumberIcon = Icons.smartphone_outlined;
+  static const String _emailLabel = 'Email';
+  static const String _emailHint = 'Edit your email';
+  static const IconData _emailIcon = Icons.email_outlined;
+  static const String _nameHint = 'Name Lastname';
+  static const String _descriptionHint = 'Description';
+  static const IconData _defaultAvatarIcon = Icons.person_outline;
 
   final ProfileModel model;
   final ProfileController controller;
@@ -27,7 +49,7 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: const CustomAppBar(title: 'Profil'),
+        appBar: const CustomAppBar(title: _appBarTitle),
         body: model.map(
           loading: _buildLoading,
           data: _buildData,
@@ -71,9 +93,9 @@ class ProfileView extends StatelessWidget {
         builder: (BuildContext context) => CustomTextFormField(
           onChanged: controller.updatePassword,
           initialText: data.user.name,
-          label: 'Password',
-          hint: 'Edit your password',
-          icon: Icons.lock_outline,
+          label: _passwordLabel,
+          hint: _passwordHint,
+          icon: _passwordIcon,
           isPasswordField: true,
           onTapOutside: () => FocusScope.of(context).unfocus(),
         ),
@@ -83,9 +105,9 @@ class ProfileView extends StatelessWidget {
         builder: (BuildContext context) => CustomTextFormField(
           onChanged: controller.updatePhoneNumber,
           initialText: data.user.phoneNumber,
-          label: 'Phone Number',
-          hint: 'Edit your phone number',
-          icon: Icons.smartphone_outlined,
+          label: _phoneNumberLabel,
+          hint: _phoneNumberHint,
+          icon: _phoneNumberIcon,
           onTapOutside: () => FocusScope.of(context).unfocus(),
         ),
       );
@@ -94,9 +116,9 @@ class ProfileView extends StatelessWidget {
         builder: (BuildContext context) => CustomTextFormField(
           onChanged: controller.updateEmail,
           initialText: data.user.email,
-          label: 'Email',
-          hint: 'Edit your email',
-          icon: Icons.email_outlined,
+          label: _emailLabel,
+          hint: _emailHint,
+          icon: _emailIcon,
           onTapOutside: () => FocusScope.of(context).unfocus(),
         ),
       );
@@ -106,7 +128,7 @@ class ProfileView extends StatelessWidget {
         child: imageUrl != null
             ? CustomCachedNetworkImage(imageUrl: imageUrl.toString())
             : const Icon(
-                Icons.person_outline,
+                _defaultAvatarIcon,
                 size: _avatarSize,
               ),
       );
@@ -119,7 +141,7 @@ class ProfileView extends StatelessWidget {
               initialValue: userName,
               textAlign: TextAlign.center,
               decoration: const InputDecoration(
-                hintText: 'Name Lastname',
+                hintText: _nameHint,
                 border: InputBorder.none,
                 isDense: true,
               ),
@@ -132,7 +154,7 @@ class ProfileView extends StatelessWidget {
               initialValue: description,
               textAlign: TextAlign.center,
               decoration: const InputDecoration(
-                hintText: 'Description',
+                hintText: _descriptionHint,
                 border: InputBorder.none,
                 isDense: true,
               ),

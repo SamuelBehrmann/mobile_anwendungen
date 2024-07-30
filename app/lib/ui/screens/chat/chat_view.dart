@@ -12,12 +12,13 @@ class ChatView extends StatelessWidget {
       EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0);
   static const EdgeInsets _chatListPadding = EdgeInsets.all(0);
   static const EdgeInsets _messageContentPadding = EdgeInsets.all(6.0);
-  static const SizedBox _sizedBox = SizedBox(height: 8.0, width: 6);
-  static const double _avatarRadius = 18;
+  static const SizedBox _sizedBox = SizedBox(height: 8.0, width: 6.0);
+  static const double _avatarRadius = 18.0;
   static const double _messageWidth = 0.75;
-  static final BorderRadius _messageBorderRadius = BorderRadius.circular(12);
+  static final BorderRadius _messageBorderRadius = BorderRadius.circular(12.0);
   // _buildSendMessageArea
-  static const EdgeInsets _textFieldPadding = EdgeInsets.fromLTRB(16, 8, 16, 0);
+  static const EdgeInsets _textFieldPadding =
+      EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0.0);
 
   final ChatModel model;
   final ChatController controller;
@@ -117,7 +118,7 @@ class ChatView extends StatelessWidget {
                                   msg.content,
                                   semanticsLabel: msg.content,
                                 ),
-                                const SizedBox(height: 4),
+                                const SizedBox(height: 4.0),
                                 Text(
                                   DateFormat('h:mm a').format(msg.timestamp),
                                   style: Theme.of(context).textTheme.labelSmall,
@@ -136,7 +137,7 @@ class ChatView extends StatelessWidget {
         },
       );
 
-  Widget _buildAvatar(final String? imageUrl) => CircleAvatar(
+  Widget _buildAvatar(String? imageUrl) => CircleAvatar(
         radius: _avatarRadius,
         child: imageUrl != null
             ? CustomCachedNetworkImage(imageUrl: imageUrl.toString())
@@ -182,7 +183,7 @@ class ChatView extends StatelessWidget {
             width: double.infinity,
             child: CustomTextField(
               onSubmitted: (String message) => controller.sendMessage(message),
-              hint: "Type a message",
+              hint: 'Type a message',
             ),
           ),
         ),

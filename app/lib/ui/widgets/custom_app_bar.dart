@@ -7,6 +7,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget> actions;
   final String? profilePicureUrl;
 
+  static const double _toolbarHeight = kToolbarHeight;
+  static const double _profilePictureWidth = 50.0;
+  static const double _profilePictureHeight = 50.0;
+  static const double _profilePicturePaddingRight = 16.0;
+  static const double _profilePicturePaddingBottom = 4.0;
+
   const CustomAppBar({
     super.key,
     this.title,
@@ -16,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(_toolbarHeight);
 
   @override
   Widget build(BuildContext context) => AppBar(
@@ -26,12 +32,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: <Widget>[
             if (profilePicureUrl != null)
               Padding(
-                padding: const EdgeInsets.only(right: 16.0, bottom: 4.0),
-                // refactor
+                padding: const EdgeInsets.only(
+                  right: _profilePicturePaddingRight,
+                  bottom: _profilePicturePaddingBottom,
+                ),
                 child: CustomCachedNetworkImage(
                   imageUrl: profilePicureUrl ?? '',
-                  width: 50,
-                  height: 50,
+                  width: _profilePictureWidth,
+                  height: _profilePictureHeight,
                 ),
               ),
             if (title != null)

@@ -6,8 +6,12 @@ import 'package:medi_support/ui/widgets/post_preview.dart';
 
 class HomeView extends StatelessWidget {
   static const EdgeInsets _screenPadding =
-      EdgeInsets.symmetric(horizontal: 16, vertical: 24);
-  static const double _separatorSize = 16;
+      EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0);
+  static const double _separatorSize = 16.0;
+  static const IconData _searchIcon = Icons.search;
+  static const String _searchSemanticLabel = 'Search';
+  static const String _homeTitle = 'Home';
+  static const String _readButtonLabel = 'Read';
 
   final HomeModel model;
   final HomeController controller;
@@ -21,7 +25,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: CustomAppBar(
-          title: 'Home',
+          title: _homeTitle,
           actions: <Widget>[_buildSearchButton()],
         ),
         body: _buildContent(),
@@ -29,8 +33,8 @@ class HomeView extends StatelessWidget {
 
   Widget _buildSearchButton() => IconButton(
         icon: const Icon(
-          Icons.search,
-          semanticLabel: 'Search',
+          _searchIcon,
+          semanticLabel: _searchSemanticLabel,
         ),
         onPressed: controller.openSearch,
       );
@@ -49,7 +53,7 @@ class HomeView extends StatelessWidget {
               itemBuilder: (_, int index) {
                 final HomeModelPost post = posts[index];
                 return PostPreview(
-                  buttonLabel: 'Read',
+                  buttonLabel: _readButtonLabel,
                   onPostTap: (String postId) =>
                       controller.openPost(postId: postId),
                   title: post.title,

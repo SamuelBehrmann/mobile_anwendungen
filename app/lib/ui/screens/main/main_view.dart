@@ -3,25 +3,36 @@ import 'package:go_router/go_router.dart';
 import 'package:medi_support/ui/widgets/custom_bottom_navigation_bar.dart';
 
 class MainView extends StatefulWidget {
+  static const IconData _homeIcon = Icons.home;
+  static const IconData _postIcon = Icons.add;
+  static const IconData _chatsIcon = Icons.chat;
+  static const IconData _profileIcon = Icons.person;
+
+  static const String _homeLabel = 'Home';
+  static const String _postLabel = 'Post';
+  static const String _chatsLabel = 'Chats';
+  static const String _profileLabel = 'Profile';
+
   static const List<CustomBottomNavBarItem> bottomNavBarItems =
       <CustomBottomNavBarItem>[
     CustomBottomNavBarItem(
-      icon: Icons.home,
-      label: 'Home',
+      icon: _homeIcon,
+      label: _homeLabel,
     ),
     CustomBottomNavBarItem(
-      icon: Icons.add,
-      label: 'Post',
+      icon: _postIcon,
+      label: _postLabel,
     ),
     CustomBottomNavBarItem(
-      icon: Icons.chat,
-      label: 'Chats',
+      icon: _chatsIcon,
+      label: _chatsLabel,
     ),
     CustomBottomNavBarItem(
-      icon: Icons.person,
-      label: 'Profile',
+      icon: _profileIcon,
+      label: _profileLabel,
     ),
   ];
+
   final StatefulNavigationShell navigationShell;
   const MainView({super.key, required this.navigationShell});
 
