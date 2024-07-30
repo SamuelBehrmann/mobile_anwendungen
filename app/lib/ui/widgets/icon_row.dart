@@ -17,6 +17,8 @@ class IconRow extends StatelessWidget {
     this.onIconPressed,
   });
 
+  static const double _labelSpacing = 4.0;
+
   @override
   Widget build(BuildContext context) => ColoredBox(
         color: Theme.of(context).colorScheme.surface,
@@ -31,6 +33,7 @@ class IconRow extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       element.icon,
+                      const SizedBox(height: _labelSpacing),
                       Text(
                         element.label,
                         style: Theme.of(context).textTheme.bodyMedium,

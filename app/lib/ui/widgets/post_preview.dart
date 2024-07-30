@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 import 'package:medi_support/ui/widgets/custom_card.dart';
+
 part 'post_preview.freezed.dart';
 
 class PostPreview extends StatelessWidget {
-  static const double _contentSpacing = 16;
-  static const double _textSpacing = 8;
-  static const double _horizontalTitleGap = 16;
-  static const double _minVerticalTitlePadding = 0;
-  static const double _minTileHeight = 0;
+  static const double _contentSpacing = 16.0;
+  static const double _textSpacing = 8.0;
+  static const double _horizontalTitleGap = 16.0;
+  static const double _minVerticalTitlePadding = 0.0;
+  static const double _minTileHeight = 0.0;
   static const int _maxPostContentLines = 3;
   static const int _maxPostTitleLines = 1;
 
@@ -39,7 +40,7 @@ class PostPreview extends StatelessWidget {
             const SizedBox(height: _contentSpacing),
             SizedBox(
               width: double.infinity,
-              child: _buildContent(),
+              child: _buildContent(context),
             ),
             const SizedBox(height: _contentSpacing),
             _buildActions(),
@@ -61,28 +62,26 @@ class PostPreview extends StatelessWidget {
         subtitle: Text(account.titles.join(', ')),
       );
 
-  Widget _buildContent() => Builder(
-        builder: (BuildContext context) => Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              title,
-              style: Theme.of(context).textTheme.bodyLarge,
-              textAlign: TextAlign.start,
-              maxLines: _maxPostTitleLines,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: _textSpacing),
-            Text(
-              content,
-              style: Theme.of(context).textTheme.bodySmall,
-              maxLines: _maxPostContentLines,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.start,
-            ),
-          ],
-        ),
+  Widget _buildContent(BuildContext context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: Theme.of(context).textTheme.bodyLarge,
+            textAlign: TextAlign.start,
+            maxLines: _maxPostTitleLines,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: _textSpacing),
+          Text(
+            content,
+            style: Theme.of(context).textTheme.bodySmall,
+            maxLines: _maxPostContentLines,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.start,
+          ),
+        ],
       );
 
   Widget _buildActions() => Align(
@@ -100,5 +99,5 @@ class PostPreviewAccount with _$PostPreviewAccount {
     required String name,
     required Iterable<String> titles,
     required Uri imageUrl,
-  }) = PostPreview_Account;
+  }) = _PostPreviewAccount;
 }

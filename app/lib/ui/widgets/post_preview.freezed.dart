@@ -69,22 +69,22 @@ class _$PostPreviewAccountCopyWithImpl<$Res, $Val extends PostPreviewAccount>
 }
 
 /// @nodoc
-abstract class _$$PostPreview_AccountImplCopyWith<$Res>
+abstract class _$$PostPreviewAccountImplCopyWith<$Res>
     implements $PostPreviewAccountCopyWith<$Res> {
-  factory _$$PostPreview_AccountImplCopyWith(_$PostPreview_AccountImpl value,
-          $Res Function(_$PostPreview_AccountImpl) then) =
-      __$$PostPreview_AccountImplCopyWithImpl<$Res>;
+  factory _$$PostPreviewAccountImplCopyWith(_$PostPreviewAccountImpl value,
+          $Res Function(_$PostPreviewAccountImpl) then) =
+      __$$PostPreviewAccountImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, Iterable<String> titles, Uri imageUrl});
 }
 
 /// @nodoc
-class __$$PostPreview_AccountImplCopyWithImpl<$Res>
-    extends _$PostPreviewAccountCopyWithImpl<$Res, _$PostPreview_AccountImpl>
-    implements _$$PostPreview_AccountImplCopyWith<$Res> {
-  __$$PostPreview_AccountImplCopyWithImpl(_$PostPreview_AccountImpl _value,
-      $Res Function(_$PostPreview_AccountImpl) _then)
+class __$$PostPreviewAccountImplCopyWithImpl<$Res>
+    extends _$PostPreviewAccountCopyWithImpl<$Res, _$PostPreviewAccountImpl>
+    implements _$$PostPreviewAccountImplCopyWith<$Res> {
+  __$$PostPreviewAccountImplCopyWithImpl(_$PostPreviewAccountImpl _value,
+      $Res Function(_$PostPreviewAccountImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -94,7 +94,7 @@ class __$$PostPreview_AccountImplCopyWithImpl<$Res>
     Object? titles = null,
     Object? imageUrl = null,
   }) {
-    return _then(_$PostPreview_AccountImpl(
+    return _then(_$PostPreviewAccountImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -113,8 +113,8 @@ class __$$PostPreview_AccountImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PostPreview_AccountImpl implements PostPreview_Account {
-  const _$PostPreview_AccountImpl(
+class _$PostPreviewAccountImpl implements _PostPreviewAccount {
+  const _$PostPreviewAccountImpl(
       {required this.name, required this.titles, required this.imageUrl});
 
   @override
@@ -133,7 +133,7 @@ class _$PostPreview_AccountImpl implements PostPreview_Account {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PostPreview_AccountImpl &&
+            other is _$PostPreviewAccountImpl &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other.titles, titles) &&
             (identical(other.imageUrl, imageUrl) ||
@@ -147,16 +147,16 @@ class _$PostPreview_AccountImpl implements PostPreview_Account {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PostPreview_AccountImplCopyWith<_$PostPreview_AccountImpl> get copyWith =>
-      __$$PostPreview_AccountImplCopyWithImpl<_$PostPreview_AccountImpl>(
+  _$$PostPreviewAccountImplCopyWith<_$PostPreviewAccountImpl> get copyWith =>
+      __$$PostPreviewAccountImplCopyWithImpl<_$PostPreviewAccountImpl>(
           this, _$identity);
 }
 
-abstract class PostPreview_Account implements PostPreviewAccount {
-  const factory PostPreview_Account(
+abstract class _PostPreviewAccount implements PostPreviewAccount {
+  const factory _PostPreviewAccount(
       {required final String name,
       required final Iterable<String> titles,
-      required final Uri imageUrl}) = _$PostPreview_AccountImpl;
+      required final Uri imageUrl}) = _$PostPreviewAccountImpl;
 
   @override
   String get name;
@@ -166,6 +166,6 @@ abstract class PostPreview_Account implements PostPreviewAccount {
   Uri get imageUrl;
   @override
   @JsonKey(ignore: true)
-  _$$PostPreview_AccountImplCopyWith<_$PostPreview_AccountImpl> get copyWith =>
+  _$$PostPreviewAccountImplCopyWith<_$PostPreviewAccountImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

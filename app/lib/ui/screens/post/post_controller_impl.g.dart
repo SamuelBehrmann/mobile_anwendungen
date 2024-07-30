@@ -7,7 +7,7 @@ part of 'post_controller_impl.dart';
 // **************************************************************************
 
 String _$postControllerImplHash() =>
-    r'65b519f2b0b0aa692a121710405a25383b428ddb';
+    r'3be8210e56fd6620f54072af2541ffd1b0de0e4d';
 
 /// Copied from Dart SDK
 class _SystemHash {

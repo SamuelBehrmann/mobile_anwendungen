@@ -7,11 +7,12 @@ import 'package:medi_support/ui/widgets/custom_text_field.dart';
 import 'package:medi_support/ui/widgets/message.dart';
 
 class PostView extends StatelessWidget {
-  static const EdgeInsets _screenPadding = EdgeInsets.all(16);
-  static const double _verticalDividerWidth = 32;
+  static const EdgeInsets _screenPadding = EdgeInsets.all(16.0);
+  static const double _verticalDividerWidth = 32.0;
   static const EdgeInsets _textInputFieldPadding =
-      EdgeInsets.fromLTRB(16, 8, 16, 0);
-  static const double _maxReplyRecursionDepth = 5;
+      EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0.0);
+  static const int _maxReplyRecursionDepth = 5;
+  static const String _typeReplyHint = 'Type a reply';
 
   final PostController controller;
   final PostModel model;
@@ -84,7 +85,7 @@ class PostView extends StatelessWidget {
             ...replies
                 .mapIndexed(
                   (int index, PostModelMessage message) =>
-                      _buildReplyRekursive(message, 1),
+                      _buildReplyRecursive(message, 1),
                 )
                 .flattened,
           ].toList(),
@@ -107,7 +108,7 @@ class PostView extends StatelessWidget {
             child: Padding(
               padding: _textInputFieldPadding,
               child: CustomTextField(
-                hint: 'Type a reply',
+                hint: _typeReplyHint,
                 onSubmitted: (String message) =>
                     controller.submitReply(message: message),
                 onTapOutside: () =>
@@ -118,7 +119,7 @@ class PostView extends StatelessWidget {
         ),
       );
 
-  List<Widget> _buildReplyRekursive(
+  List<Widget> _buildReplyRecursive(
     PostModelMessage message,
     int recursionDepth,
   ) =>
@@ -158,7 +159,7 @@ class PostView extends StatelessWidget {
         ),
         ...message.replies
             .mapIndexed(
-              (int index, PostModelMessage reply) => _buildReplyRekursive(
+              (int index, PostModelMessage reply) => _buildReplyRecursive(
                 reply,
                 recursionDepth < _maxReplyRecursionDepth
                     ? recursionDepth + 1

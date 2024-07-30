@@ -4,12 +4,14 @@ class CustomSearchBar extends StatefulWidget {
   final void Function(String query) onSearch;
   final void Function()? onDiscard;
   final String? currentQuery;
+  final String hintText;
 
   const CustomSearchBar({
     super.key,
     required this.onSearch,
     this.currentQuery,
     this.onDiscard,
+    this.hintText = 'Type to search',
   });
 
   @override
@@ -21,7 +23,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   static const double _iconSize = 22;
   static const BorderRadius _borderRadius =
       BorderRadius.all(Radius.circular(20));
-  static const double searchBarHeight = 40;
+  static const double _searchBarHeight = 40;
 
   late final TextEditingController _controller;
 
@@ -51,7 +53,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        height: searchBarHeight,
+        height: _searchBarHeight,
         child: TextField(
           controller: _controller,
           decoration: InputDecoration(
@@ -60,7 +62,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               Icons.search_outlined,
               size: _iconSize,
             ),
-            hintText: 'Type to search',
+            hintText: widget.hintText,
             border: const OutlineInputBorder(
               borderRadius: _borderRadius,
             ),

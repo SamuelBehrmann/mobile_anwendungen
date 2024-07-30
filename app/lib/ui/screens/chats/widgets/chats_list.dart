@@ -3,6 +3,10 @@ import 'package:medi_support/ui/screens/chats/chats_model.dart';
 import 'package:medi_support/ui/widgets/custom_cached_network_image.dart';
 
 class ChatList extends StatelessWidget {
+  static const EdgeInsets _defaultPadding = EdgeInsets.only(top: 8.0);
+  static const IconData _defaultAvatarIcon = Icons.person_outline;
+  static const String _prefix = "Chat with ";
+
   final List<ChatsModelChat> chats;
   final Function(String) onChatSelected;
   final EdgeInsets padding;
@@ -11,7 +15,7 @@ class ChatList extends StatelessWidget {
     super.key,
     required this.chats,
     required this.onChatSelected,
-    this.padding = const EdgeInsets.only(top: 8),
+    this.padding = _defaultPadding,
   });
 
   @override
@@ -26,11 +30,11 @@ class ChatList extends StatelessWidget {
             leading: CircleAvatar(
               child: chat.profilePicturePath != null
                   ? CustomCachedNetworkImage(imageUrl: chat.profilePicturePath!)
-                  : const Icon(Icons.person_outline),
+                  : const Icon(_defaultAvatarIcon),
             ),
             title: Text(
               chat.name,
-              semanticsLabel: "Chat with ${chat.name}",
+              semanticsLabel: "$_prefix${chat.name}",
             ),
             subtitle: Text(chat.message),
             onTap: () => onChatSelected(chat.id),
