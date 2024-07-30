@@ -51,7 +51,8 @@ class PostPreview extends StatelessWidget {
   Widget _buildHeader() => ListTile(
         contentPadding: EdgeInsets.zero,
         leading: CircleAvatar(
-          child: CustomCachedNetworkImage(imageUrl: account.imageUrl.toString()),
+          child:
+              CustomCachedNetworkImage(imageUrl: account.imageUrl.toString()),
         ),
         minTileHeight: _minTileHeight,
         horizontalTitleGap: _horizontalTitleGap,

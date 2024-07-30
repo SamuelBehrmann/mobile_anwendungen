@@ -18,7 +18,7 @@ class IconRow extends StatelessWidget {
   });
 
   static const double _labelSpacing = 4.0;
-  
+
   @override
   Widget build(BuildContext context) => ColoredBox(
         color: Theme.of(context).colorScheme.surface,
