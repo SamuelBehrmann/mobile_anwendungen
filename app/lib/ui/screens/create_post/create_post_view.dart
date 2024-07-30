@@ -14,6 +14,7 @@ class CreatePostView extends StatefulWidget {
 class _CreatePostViewState extends State<CreatePostView> {
   static const EdgeInsets _screenPadding =
       EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0);
+  static const SizedBox _paddingBetweenFields = SizedBox(height: 24.0);
   static const String _titleHint = "Title";
   static const String _titleLabel = "Title";
   static const String _bodyHint = "I have ...";
@@ -71,6 +72,7 @@ class _CreatePostViewState extends State<CreatePostView> {
           padding: _screenPadding,
           children: <Widget>[
             _buildTitleField(),
+            _paddingBetweenFields,
             _buildBodyField(),
           ],
         ),
